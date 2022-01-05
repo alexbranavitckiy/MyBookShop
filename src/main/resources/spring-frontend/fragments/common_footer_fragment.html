@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<footer class="Footer" th:fragment="footer">
+  <div class="wrap">
+    <div class="row Footer-main">
+      <div class="row-block"
+           th:replace="~{fragments/footer_left_side_info_block_fragment :: block}"></div>
+      <div class="row-block">
+        <ul class="menu menu_vt Footer-menu">
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.main}"  th:href="@{/}" href="/index.html">Главная</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.genres}"  th:href="@{/genres/index}"  href="/genres/index.html">Жанры</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.news}"  th:href="@{/books/recent}" href="/books/recent.html">Новинки</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.popular}"  th:href="@{/books/popular}" href="/books/popular.html">Популярное</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.authors}"    th:href="@{/authors/index}" href="/authors/index.html">Авторы</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row-block">
+        <ul class="menu menu_vt Footer-menu">
+          <li class="menu-item"><a class="menu-link"  th:text="#{topbar.entry}"   th:href="@{/signin}" href="/signin.html">Войти</a>
+          </li>
+          <li class="menu-item"><a class="menu-link" th:text="#{topbar.documentation}" th:href="@{/documents/index}" href="/documents/index.html">Документы</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"th:text="#{topbar.about.company}"  th:href="@{/about}" href="/about.html">О компании</a>
+          </li>
+          <li class="menu-item"><a class="menu-link" th:text="#{topbar.help}" th:href="@{/faq}" href="/faq.html">Помощь</a>
+          </li>
+          <li class="menu-item"><a class="menu-link"  th:text="#{topbar.contacts}" th:href="@{/contacts}" href="/contacts.html">Контакты</a>
+          </li>
+          <li>
+            <p>
+              <span th:text="#{topbar.language.selection}" >Выбор языка</span>
+              <select id="locales">
+                <option value=" "></option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+              </select>
+            </p>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="Footer-copy">
+    <div class="wrap">© 2021 Bookshop Pty Ltd. ALL RIGHTS RESERVED
+    </div>
+  </div>
+</footer>
+</html>
