@@ -1,18 +1,33 @@
 package com.example.MyBookShopApp.data;
 
-public class Author {
-    private Integer id;
-    private String firstName;
-    private String lastName;
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
+
+import javax.persistence.*;
+
+
+
+@Entity
+@Table(name = "authors")
+public class Author {
+
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String photo;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String slug;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String name;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
 
     public Integer getId() {
         return id;
@@ -22,19 +37,35 @@ public class Author {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
