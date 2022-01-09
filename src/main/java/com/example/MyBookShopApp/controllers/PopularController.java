@@ -1,8 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.BookService;
+import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +13,17 @@ import java.util.List;
 @Controller
 public class PopularController {
 
-    private final BookService bookService;
+    private final BookServiceImpl bookServiceImpl;
 
 
     @Autowired
-    public PopularController(BookService bookService) {
-        this.bookService = bookService;
+    public PopularController(BookServiceImpl bookServiceImpl) {
+        this.bookServiceImpl = bookServiceImpl;
     }
 
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks() {
-        return bookService.getBooksData();
+        return bookServiceImpl.getBooksData();
     }
 
 
@@ -35,7 +35,7 @@ public class PopularController {
 
     @ModelAttribute("booksList")
     public List<Book> bookList(){
-        return bookService.getBooksData();
+        return bookServiceImpl.getBooksData();
     }
 
 
