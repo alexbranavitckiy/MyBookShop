@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Author;
+import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.services.Impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,6 @@ public class AuthorsController {
 
     @Autowired
     private  AuthorServiceImpl authorServiceImpl;
-
-
-
 
 
 
@@ -36,5 +34,12 @@ public class AuthorsController {
     public String authorsBookPage() {
         return "books/author";
     }
+
+
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
+
 
 }

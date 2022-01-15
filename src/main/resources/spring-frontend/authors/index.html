@@ -26,21 +26,11 @@
             </h1>
             <div class="Section">
                 <div class="Authors">
-                    <div class="Authors-links"><a class="Authors-link" href="#a">А</a><a class="Authors-link" href="#b">Б</a><a
-                            class="Authors-link" href="#v">В</a><a class="Authors-link" href="#g">Г</a><a
-                            class="Authors-link" href="#d">Д</a><a class="Authors-link" href="#e">Е</a><a
-                            class="Authors-link" href="#e">Ё</a><a class="Authors-link" href="#ge">Ж</a><a
-                            class="Authors-link" href="#z">З</a><a class="Authors-link" href="#i">И</a><a
-                            class="Authors-link" href="#ik">Й</a><a class="Authors-link" href="#k">К</a><a
-                            class="Authors-link" href="#l">Л</a><a class="Authors-link" href="#m">М</a><a
-                            class="Authors-link" href="#n">Н</a><a class="Authors-link" href="#o">О</a><a
-                            class="Authors-link" href="#p">П</a><a class="Authors-link" href="#r">Р</a><a
-                            class="Authors-link" href="#s">С</a><a class="Authors-link" href="#t">Т</a><a
-                            class="Authors-link" href="#u">У</a><a class="Authors-link" href="#f">Ф</a><a
-                            class="Authors-link" href="#h">Х</a><a class="Authors-link" href="#c">Ц</a><a
-                            class="Authors-link" href="#ch">Ч</a><a class="Authors-link" href="#sh">Ш</a><a
-                            class="Authors-link" href="#shh">Щ</a><a class="Authors-link" href="#ye">Э</a><a
-                            class="Authors-link" href="#yu">Ю</a><a class="Authors-link" href="#ya">Я</a>
+                    <div class="Authors-links">
+                        <div class="Authors-link"
+                             th:each="letterABCD : ${ {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'} }">
+                            <a th:href="@{#(${letterABCD})}"><p th:text="${letterABCD}"></p></a>
+                        </div>
                     </div>
                     <div class="Authors-block">
                         <h2 class="Authors-title" id="a">А

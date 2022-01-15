@@ -5,17 +5,21 @@ import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService {
-
-
+public class BookServiceImpl {
 
 
     @Autowired
@@ -23,8 +27,53 @@ public class BookServiceImpl implements BookService {
 
 
     public List<Book> getBooksData() {
-        return (List<Book>) bookRepository.findAll();
+        return bookRepository.findAll();
     }
 
+    public List<Book> getBooksByAuthor(String authorName) {
+        return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
+    }
+
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findBooksByTitleContaining(title);
+    }
+
+    public List<Book> getBooksWithPriceBetween(Integer min, Integer max) {
+        return bookRepository.findBooksByPriceOldBetween(min, max);
+    }
+
+    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookByTitleContaining(searchWord, nextPage);
+    }
+
+    public List<Book> getBooksWithPrice(Integer price) {
+        return bookRepository.findBooksByPriceOldIs(price);
+    }
+
+    public List<Book> getBooksWithMaxPrice() {
+        return bookRepository.getBooksWithMaxDiscount();
+    }
+
+    public List<Book> getBestsellers() {
+        return bookRepository.getBestsellers();
+    }
+
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAll(nextPage);
+    }
+
+
+    public Page<Book> getPageOfDateBooks(Integer offset, Integer limit, String fromDate, String dateTo) {
+
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
+        return bookRepository.findAllByPubDateIsBetween(Date.valueOf(fromDate), Date.valueOf(dateTo), nextPage);
+    }
+
+    public Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
+        return bookRepository.findAll(nextPage);
+    }
 
 }

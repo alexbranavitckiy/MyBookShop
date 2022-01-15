@@ -36,15 +36,15 @@
 
                     <div class="Header-search">
                         <div class="search">
-                            <form class="form form_search"  th:action="@{/search/index}" action="#" method="post" data-searchlimit="20">
+                            <form class="form form_search" action="#" method="post" data-searchlimit="20"
+                                  th:object="${searchWordDto}">
                                 <input class="search-input" id="query" name="query" type="text"
-                                       placeholder="Search over 30 million book titles" value=""/>
-                                <button  th:action="@{/search/index}"  th:href="@{/search/index}"  th:text="#{topbar.search}" class="search-button" type="submit" name="search" id="search">Поиск
+                                       placeholder="Search over 30 million book titles" th:field="*{example}" value=""/>
+                                <button class="search-button" type="submit" name="search" id="search">Поиск
                                 </button>
                             </form>
                         </div>
                     </div>
-
 
 
                 </div>
@@ -61,18 +61,23 @@
         <div class="wrap">
             <nav class="menuModal" id="navigate">
                 <ul class="menu menu_main">
-                    <li class="menu-item"  th:class="${main}"><a th:text="#{topbar.main}"    class="menu-link" href="/index.html"  th:href="@{/}">Главная</a>
+                    <li class="menu-item" th:class="${main}"><a th:text="#{topbar.main}" class="menu-link"
+                                                                href="/index.html" th:href="@{/}">Главная</a>
                     </li>
                     <li class="menu-item" th:class="${genres}"><a class="menu-link"
-                                                               href="/genres/index.html" th:text="#{topbar.genres}"  th:href="@{/genres/index}">Жанры</a>
+                                                                  href="/genres/index.html" th:text="#{topbar.genres}"
+                                                                  th:href="@{/genres/index}">Жанры</a>
                     </li>
                     <li class="menu-item" th:class="${recent}"><a class="menu-link"
-                                                                  href="/books/recent.html" th:text="#{topbar.news}"   th:href="@{/books/recent}">Новинки</a>
+                                                                  href="/books/recent.html" th:text="#{topbar.news}"
+                                                                  th:href="@{/books/recentPage}">Новинки</a>
                     </li>
-                    <li class="menu-item" th:class="${popular}"><a class="menu-link" th:text="#{topbar.popular}"   th:href="@{/books/popular}"
+                    <li class="menu-item" th:class="${popular}"><a class="menu-link" th:text="#{topbar.popular}"
+                                                                   th:href="@{/books/popularPage}"
                                                                    href="/books/popular.html">Популярное</a>
                     </li>
-                    <li class="menu-item" th:class="${authors}"><a    class="menu-link" th:text="#{topbar.authors}" th:href="@{/authors/index}"
+                    <li class="menu-item" th:class="${authors}"><a class="menu-link" th:text="#{topbar.authors}"
+                                                                   th:href="@{/authors/index}"
                                                                    href="/authors/index.html">Авторы</a>
                     </li>
                 </ul>

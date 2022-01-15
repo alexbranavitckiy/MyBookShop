@@ -2,94 +2,52 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class BookController {
 
-    private final BookServiceImpl bookServiceImpl;
-
     @Autowired
-    public BookController(BookServiceImpl bookServiceImpl) {
-        this.bookServiceImpl = bookServiceImpl;
+    private BookServiceImpl bookServiceImpl;
+
+    @GetMapping("/books/by-author")
+    @ApiOperation("operation to get book list of bookshop by passed author first name")
+    public ResponseEntity<List<Book>> booksByAuthor(@RequestParam("author") String authorName) {
+        return ResponseEntity.ok(bookServiceImpl.getBooksByAuthor(authorName));
     }
 
-    @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
-        return bookServiceImpl.getBooksData();
+    @GetMapping("/books/by-title")
+    @ApiOperation("get books by title")
+    public ResponseEntity<List<Book>> booksByTitle(@RequestParam("title") String title) {
+        return ResponseEntity.ok(bookServiceImpl.getBooksByTitle(title));
     }
 
-    @ModelAttribute("booksList")
-    public List<Book> bookList() {
-        return bookServiceImpl.getBooksData();
+    @GetMapping("/books/by-price-range")
+    @ApiOperation("get books by price range from min price to max price")
+    public ResponseEntity<List<Book>> priceRangeBookss(@RequestParam("min") Integer min, @RequestParam("max") Integer max) {
+        return ResponseEntity.ok(bookServiceImpl.getBooksWithPriceBetween(min, max));
     }
 
-    @GetMapping("{/documents/index")
-    public String documentsPage() {
-
-        System.out.println("f");
-        return "documents/index";
+    @GetMapping("/books/with-max-discount")
+    @ApiOperation("get list of book with max price")
+    public ResponseEntity<List<Book>> maxPriceBooks() {
+        return ResponseEntity.ok(bookServiceImpl.getBooksWithMaxPrice());
     }
 
-
-    @GetMapping("/cart")
-    public String cartPage() {
-        return "cart";
+    @GetMapping("/books/bestsellers")
+    @ApiOperation("get bestseller book (which is_bestseller = 1)")
+    public ResponseEntity<List<Book>> bestSellerBooks() {
+        return ResponseEntity.ok(bookServiceImpl.getBestsellers());
     }
 
-    @GetMapping("/my")
-    public String myPage() {
-        return "my";
-    }
-
-    @GetMapping("/signin")
-    public String signupPage() {
-        return "signin";
-    }
-
-
-    @GetMapping("/about")
-    public String aboutPage() {
-        return "about";
-    }
-
-    @GetMapping("/faq")
-    public String faqPage() {
-        return "faq";
-    }
-
-    @GetMapping("/contacts")
-    public String contactsPage() {
-        return "contacts";
-    }
-
-
-
-    @GetMapping("search/")
-    public String searchPage() {
-        return "search/index";
-    }
-
-
-    @GetMapping("/profile")
-    public String profilePage() {
-        return "profile";
-    }
-
-    @GetMapping("/postponed")
-    public String postponedPage() {
-        return "postponed";
-    }
-
-
-    @GetMapping("/")
-    public String mainPage() {
-        return "index";
-    }
 
 }
