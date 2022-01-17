@@ -7,7 +7,9 @@ import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.services.BookService;
+import com.example.MyBookShopApp.services.BooksRatingAndPopulatityService;
 import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
+import com.example.MyBookShopApp.services.Impl.BooksRatingAndPopulatityServiceImpl;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,7 @@ public class MovePageController {
 
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
+    public List<Book> recommendedBooks()  {
         return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
     }
 
@@ -45,7 +47,7 @@ public class MovePageController {
 
     @ModelAttribute("popularBooks")
     public List<Book> popularBooks() {
-        return bookService.getPageOfNameSortBooks(0, 10, "isBestseller").getContent();
+        return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();
     }
 
 
@@ -71,7 +73,7 @@ public class MovePageController {
     @ResponseBody
     public RecommendedBooksPageDto getBooksPagePopular(@RequestParam("offset") Integer offset,
                                                        @RequestParam("limit") Integer limit) {
-        return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "isBestseller").getContent());
+        return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "coefficient").getContent());
     }
 
 
@@ -86,7 +88,7 @@ public class MovePageController {
                     from.substring(6, 10) + "-" + from.substring(3, 5) + "-" + from.substring(0, 2),
                     to.substring(6, 10) + "-" + to.substring(3, 5) + "-" + to.substring(0, 2)).getContent());
          }
-        return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "pubDate").getContent());
+        return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "coefficient").getContent());
     }
 
 

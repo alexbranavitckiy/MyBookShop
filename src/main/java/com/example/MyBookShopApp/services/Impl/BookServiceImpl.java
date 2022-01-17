@@ -1,32 +1,20 @@
 package com.example.MyBookShopApp.services.Impl;
 
-import com.example.MyBookShopApp.data.Author;
-import com.example.MyBookShopApp.data.Bestseller;
 import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.repository.BestsellerRepository;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
-
-
-
-    @Autowired
-    private BestsellerRepository bestsellerRepository;
 
 
     @Autowired
@@ -78,17 +66,14 @@ public class BookServiceImpl implements BookService {
     }
 
     public Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort) {
+
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
+
+
         return bookRepository.findAll(nextPage);
     }
 
-    public BestsellerRepository getBestsellerRepository() {
-        return bestsellerRepository;
-    }
 
-    public void setBestsellerRepository(BestsellerRepository bestsellerRepository) {
-        this.bestsellerRepository = bestsellerRepository;
-    }
 
     public BookRepository getBookRepository() {
         return bookRepository;

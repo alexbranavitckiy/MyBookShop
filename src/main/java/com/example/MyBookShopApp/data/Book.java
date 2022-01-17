@@ -27,10 +27,23 @@ public class Book {
     @JsonIgnore
     private Author author;
 
-    @Column(name = "is_bestseller")
-    @ApiModelProperty("if isBestseller = 1 so the book is considered to be bestseller and  if 0 the book is not a " +
-            "bestseller")
-    private Integer isBestseller;
+
+    @Column(name = "by_number_b")
+    @ApiModelProperty("the number of users who bought the book")
+    private double byNumberB;
+
+    @Column(name = "in_curt_number_c")
+    @ApiModelProperty("the number of users who have the book in their cart")
+    private double inCurtNumberC;
+
+    @Column(name = "delayed_count_k")
+    @ApiModelProperty("the number of users who have the book delayed.")
+    private double delayedCountK;
+
+
+    @Column(name = "coefficient")
+    @ApiModelProperty("Book popularity P = B + 0,7*C + 0,4*K")
+    private double coefficient;
 
     @ApiModelProperty("mnemonical identity sequence of characters")
     private String slug;
@@ -53,6 +66,7 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
+
     public Date getPubDate() {
         return pubDate;
     }
@@ -61,12 +75,46 @@ public class Book {
         this.pubDate = pubDate;
     }
 
-    public Integer getIsBestseller() {
-        return isBestseller;
+
+    private void count() {
+        System.out.println("count()");
+        this.coefficient = this.getByNumberB() + this.getInCurtNumberC() * 0.75 + this.delayedCountK * 0.4;
     }
 
-    public void setIsBestseller(Integer isBestseller) {
-        this.isBestseller = isBestseller;
+
+    public double getByNumberB() {
+        return byNumberB;
+    }
+
+    public void setByNumberB(double byNumberB) {
+        count();
+        this.byNumberB = byNumberB;
+    }
+
+    public double getInCurtNumberC() {
+        return inCurtNumberC;
+    }
+
+    public void setInCurtNumberC(double inCurtNumberC) {
+        this.inCurtNumberC = inCurtNumberC;
+        count();
+    }
+
+    public double getDelayedCountK() {
+        return delayedCountK;
+    }
+
+    public void setDelayedCountK(double delayedCountK) {
+        this.delayedCountK = delayedCountK;
+        count();
+    }
+
+    public double getCoefficient() {
+        return coefficient;
+    }
+
+    public void setCoefficient(double coefficient) {
+        this.coefficient = coefficient;
     }
 
     public String getSlug() {
@@ -139,7 +187,7 @@ public class Book {
                 "id=" + id +
                 ", pubDate=" + pubDate +
                 ", author=" + author +
-                ", isBestseller=" + isBestseller +
+                ", isBestseller=" +
                 ", slug='" + slug + '\'' +
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +

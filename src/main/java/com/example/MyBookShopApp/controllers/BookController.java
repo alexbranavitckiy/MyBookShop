@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.services.BookService;
+import com.example.MyBookShopApp.services.BooksRatingAndPopulatityService;
 import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BooksRatingAndPopulatityService booksRatingAndPopulatityService;
 
     @GetMapping("/books/by-author")
     @ApiOperation("operation to get book list of bookshop by passed author first name")
