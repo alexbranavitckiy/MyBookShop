@@ -14,7 +14,7 @@ public class Bestseller {
 
 
     @Id
-    @ApiModelProperty(value = "books_id=Bestseller_id", position = 1)
+    @ApiModelProperty(value = "", position = 1)
     private Integer id;
 
 

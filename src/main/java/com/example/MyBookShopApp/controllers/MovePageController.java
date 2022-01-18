@@ -57,6 +57,9 @@ public class MovePageController {
     }
 
 
+
+
+
     @ModelAttribute("sizeSearch")
     public String sizeList() {
         return "";
@@ -138,10 +141,16 @@ public class MovePageController {
         return bookService.getBooksData();
     }
 
-    @GetMapping("{/documents/index")
+    @GetMapping("/documents/index")
     public String documentsPage() {
         return "documents/index";
     }
+
+    @GetMapping("/tags/index")
+    public String tagsPage() {
+        return "tags/index";
+    }
+
 
 
     @GetMapping("/cart")

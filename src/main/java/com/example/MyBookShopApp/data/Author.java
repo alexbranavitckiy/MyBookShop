@@ -22,6 +22,8 @@ public class Author {
     @ApiModelProperty(value = "last name of author",example = "Blaskovits", position = 3)
     private String lastName;
 
+
+
     @OneToMany(mappedBy = "author")
     @JsonIgnore
     private List<Book> bookList = new ArrayList<>();

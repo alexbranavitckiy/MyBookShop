@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -23,9 +24,40 @@ public class Book {
     private Date pubDate;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JoinColumn(name = "author_id")
     private Author author;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "tags_id" )
+    private List<Tag> tags;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", pubDate=" + pubDate +
+                ", author=" + author +
+                ", tags=" + tags +
+                ", byNumberB=" + byNumberB +
+                ", inCurtNumberC=" + inCurtNumberC +
+                ", delayedCountK=" + delayedCountK +
+                ", coefficient=" + coefficient +
+                ", slug='" + slug + '\'' +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", priceOld=" + priceOld +
+                ", price=" + price +
+                '}';
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
 
     @Column(name = "by_number_b")
@@ -39,7 +71,6 @@ public class Book {
     @Column(name = "delayed_count_k")
     @ApiModelProperty("the number of users who have the book delayed.")
     private double delayedCountK;
-
 
     @Column(name = "coefficient")
     @ApiModelProperty("Book popularity P = B + 0,7*C + 0,4*K")
@@ -77,7 +108,6 @@ public class Book {
 
 
     private void count() {
-        System.out.println("count()");
         this.coefficient = this.getByNumberB() + this.getInCurtNumberC() * 0.75 + this.delayedCountK * 0.4;
     }
 
@@ -181,19 +211,4 @@ public class Book {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", pubDate=" + pubDate +
-                ", author=" + author +
-                ", isBestseller=" +
-                ", slug='" + slug + '\'' +
-                ", title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", description='" + description + '\'' +
-                ", priceOld=" + priceOld +
-                ", price=" + price +
-                '}';
-    }
 }
