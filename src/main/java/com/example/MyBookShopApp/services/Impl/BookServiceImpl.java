@@ -61,8 +61,6 @@ public class BookServiceImpl implements BookService {
     }
 
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
-
-
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findAll(nextPage);
     }
@@ -73,21 +71,14 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByPubDateIsBetween(Date.valueOf(fromDate), Date.valueOf(dateTo), nextPage);
     }
 
-    public Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort) {
-
+    public Page<Book> getPageOfNameSortBooksTag(Integer offset, Integer limit, String nameSort, Integer id) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
-        Optional<Tag> tag = tagRepository.findById(1);
-
-        List<Tag> arrayList = new ArrayList<>();
-
-        arrayList.add(tagRepository.getOne(1));
-        Book book = bookRepository.getOne(1);
-        book.setTags(arrayList);
-        bookRepository.save(book);
-        System.out.println(bookRepository.getOne(1));
-        System.out.println(bookRepository.findBooksByAuthorFirstNameContaining(book.getAuthor().getFirstName()));
+        return bookRepository.findAll(nextPage);
+    }
 
 
+    public Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
         return bookRepository.findAll(nextPage);
     }
 

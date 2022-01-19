@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.repository;
 
 
 import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,8 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
     List<Book> customFindAllBooks();
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
+
+    Page<Book> findBookByTagsContaining(Tag bookTitle, Pageable nextPage);
 
     Page<Book> findAllByPubDateIsBetween(Date pubDate, Date pubDate2, Pageable pageable);
 

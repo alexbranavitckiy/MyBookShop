@@ -47,12 +47,5 @@ public class Tag {
         this.listBook = listBook;
     }
 
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "id=" + id +
-                ", nameTag='" + nameTag + '\'' +
-                ", listBook=" + listBook +
-                '}';
-    }
+
 }

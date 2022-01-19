@@ -5,11 +5,13 @@ import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
+import com.example.MyBookShopApp.data.Tag;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.BooksRatingAndPopulatityService;
 import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
 import com.example.MyBookShopApp.services.Impl.BooksRatingAndPopulatityServiceImpl;
+import com.example.MyBookShopApp.services.TagService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,15 +26,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class MovePageController {
+public class PageController {
 
-
-    private BookService bookService;
+    private final BookService bookService;
+    private final TagService tagService;
 
     @Autowired
-    public MovePageController(BookServiceImpl bookService) {
+    public PageController(BookService bookService, TagService tagService) {
+        this.tagService = tagService;
         this.bookService = bookService;
     }
+
+    @ModelAttribute("tagList")
+    public List<Tag> gettagList() { return this.tagService.findAllTags(); }
+
 
 
     @ModelAttribute("recommendedBooks")
@@ -90,7 +97,7 @@ public class MovePageController {
             return new RecommendedBooksPageDto(bookService.getPageOfDateBooks(offset, limit,
                     from.substring(6, 10) + "-" + from.substring(3, 5) + "-" + from.substring(0, 2),
                     to.substring(6, 10) + "-" + to.substring(3, 5) + "-" + to.substring(0, 2)).getContent());
-         }
+        }
         return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "coefficient").getContent());
     }
 

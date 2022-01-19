@@ -27,29 +27,11 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "tags_id" )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "tags_id")
+    @JsonIgnore
     private List<Tag> tags;
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", pubDate=" + pubDate +
-                ", author=" + author +
-                ", tags=" + tags +
-                ", byNumberB=" + byNumberB +
-                ", inCurtNumberC=" + inCurtNumberC +
-                ", delayedCountK=" + delayedCountK +
-                ", coefficient=" + coefficient +
-                ", slug='" + slug + '\'' +
-                ", title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", description='" + description + '\'' +
-                ", priceOld=" + priceOld +
-                ", price=" + price +
-                '}';
-    }
 
     public List<Tag> getTags() {
         return tags;
@@ -210,5 +192,4 @@ public class Book {
     public void setPrice(Double price) {
         this.price = price;
     }
-
 }
