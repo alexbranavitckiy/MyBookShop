@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.data;
 
+import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -31,6 +32,11 @@ public class Book {
     @JoinColumn(name = "tags_id")
     @JsonIgnore
     private List<Tag> tags;
+
+    @ManyToMany()
+    @JoinColumn(name = "genre_id")
+    @JsonIgnore
+    private List<GenreEntity> genreEntities;
 
 
     public List<Tag> getTags() {
@@ -119,6 +125,14 @@ public class Book {
     public void setDelayedCountK(double delayedCountK) {
         this.delayedCountK = delayedCountK;
         count();
+    }
+
+    public List<GenreEntity> getGenreEntities() {
+        return genreEntities;
+    }
+
+    public void setGenreEntities(List<GenreEntity> genreEntities) {
+        this.genreEntities = genreEntities;
     }
 
     public double getCoefficient() {

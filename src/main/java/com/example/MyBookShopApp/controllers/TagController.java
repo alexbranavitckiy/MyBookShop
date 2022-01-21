@@ -3,13 +3,10 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
-import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.Tag;
-import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +76,4 @@ public class TagController {
     public String sizeList() {
         return "";
     }
-
-
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- После подключения jQuery, Popper и Bootstrap JS -->
+
+<section th:fragment="genres_fragments">
+    <!--end level
+    <div class="Tags-title">
+        <div class="Tag" th:each="menuItem : ${menuItemsList}" th:text="${menuItem.name}">
+            <section class="Tag" th:replace="~{fragments/genres_fragments :: menu}"
+                     th:with="menuItemsList=${menuItem.parentId}"></section>
+        </div>
+    </div>-->
+    <!--simple level-->
+    <meDiv class="card-link" th:each="menuItem , iState : ${tagList}">
+        <meDiv th:switch="${ menuItem.children.size()}">
+            <meDiv th:case="0">
+                <meDiv class="Tags list-group-item">
+                    <a class="Tag" th:text="${menuItem.name}"></a>
+                </meDiv>
+            </meDiv>
+            <meDiv th:case="*">
+                <div>
+                    <div class="Tags list-group-item"><a th:text="${menuItem.name}"
+                                          href="/genres/slug.html">Фантастика<span
+                            class="undefined-amount">(44333)</span></a>
+                        <div
+                                th:replace="~{fragments/genres_fragments :: genres_fragments(tagList=${menuItem.children})}"
+                                th:with="tagList=${menuItem.children}"></div>
+                    </div>
+                </div>
+            </meDiv>
+        </meDiv>
+    </meDiv>
+</section>
+</body>
+</html>

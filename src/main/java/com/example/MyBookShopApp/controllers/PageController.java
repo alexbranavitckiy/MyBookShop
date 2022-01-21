@@ -138,10 +138,7 @@ public class PageController {
         return "books/popular";
     }
 
-    @GetMapping("/genres/index")
-    public String recentBookPage() {
-        return "genres/index";
-    }
+
 
     @ModelAttribute("booksList")
     public List<Book> bookList() {

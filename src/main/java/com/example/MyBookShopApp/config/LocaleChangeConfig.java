@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.Locale;
 
@@ -26,6 +27,8 @@ public class LocaleChangeConfig implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
+
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
