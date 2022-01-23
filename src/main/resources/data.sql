@@ -23,12 +23,6 @@ insert into authors (id, first_name, last_name) values (21, 'Alexander', 'Cherri
 insert into authors (id, first_name, last_name) values (22, 'Alex', 'Cherrington');
 insert into authors (id, first_name, last_name) values (23, 'Ivan', 'Cherrington');
 
-
-
-
-
-
-
 insert into tag (id, name_tag) values (1, 'Marketing');
 insert into tag (id, name_tag) values (2, 'Services');
 insert into tag (id, name_tag) values (3, 'Training');
@@ -466,7 +460,6 @@ insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, c
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (331, '2013-05-15', 21, 28, 96, 79, 'book--sca-894', 'Soldier''s Sweetheart, A', 'http://dummyimage.com/669x740.png/dddddd/000000', 'I Was a Teenage Zombie', 4, 2650, 8);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (332, '1933-12-13', 21, 67, 39, 91, 'book--sqi-061', 'Fifth Estate, The', 'http://dummyimage.com/772x458.png/ff4444/ffffff', 'Super, The', 5, 4413, 9);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (333, '2010-01-24', 18, 92, 34, 89, 'book--sha-530', 'Bridge of Dragons', 'http://dummyimage.com/282x324.png/cc0000/ffffff', 'Downloading Nancy', 2, 3647, 5);
-insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (334, '1966-05-15', 20, 9, 17, 88, 'book--rdn-752', 'Embodiment of Evil (Encarnação do Demônio)', 'http://dummyimage.com/467x716.png/ff4444/ffffff', 'Rugrats Movie, The', 4, 2507, 0);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (335, '1914-12-26', 6, 27, 65, 18, 'book--dmw-124', 'Oleanna', 'http://dummyimage.com/631x384.png/ff4444/ffffff', 'Mademoiselle Chambon', 5, 4304, 3);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (336, '1946-06-27', 23, 98, 100, 9, 'book--mpp-119', 'Merrily We Live', 'http://dummyimage.com/475x469.png/dddddd/000000', 'Cars That Ate Paris, The', 1, 3212, 11);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (337, '1969-09-20', 17, 9, 45, 17, 'book--tyr-222', 'Problem Child', 'http://dummyimage.com/329x378.png/5fa2dd/ffffff', 'Jude', 5, 4049, 3);
@@ -485,7 +478,6 @@ insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, c
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (350, '1998-04-28', 23, 4, 60, 8, 'book--uxx-485', 'Divided We Fall (Musíme si pomáhat)', 'http://dummyimage.com/532x367.png/dddddd/000000', 'Cry Wolf', 1, 4570, 5);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (351, '1977-01-06', 1, 15, 7, 80, 'book--qqw-811', 'Traces of Red', 'http://dummyimage.com/309x635.png/5fa2dd/ffffff', 'Mega Python vs. Gatoroid', 2, 3847, 2);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (352, '2003-01-13', 17, 98, 74, 11, 'book--svh-729', 'Murder!', 'http://dummyimage.com/601x347.png/dddddd/000000', 'I Served the King of England (Obsluhoval jsem anglického krále)', 0, 3931, 11);
-insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (353, '2011-02-16', 12, 24, 56, 68, 'book--skz-757', 'Till Human Voices Wake Us', 'http://dummyimage.com/594x366.png/5fa2dd/ffffff', 'Cook the Thief His Wife & Her Lover, The', 2, 2781, 4);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (354, '1970-04-23', 8, 3, 49, 42, 'book--ply-243', 'Devil''s Knot', 'http://dummyimage.com/727x709.png/dddddd/000000', 'Palme', 5, 3283, 2);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (355, '1949-09-14', 13, 53, 71, 4, 'book--kbv-689', 'Woyzeck', 'http://dummyimage.com/649x430.png/dddddd/000000', 'Beginners', 4, 3515, 9);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (356, '1920-01-22', 19, 18, 38, 64, 'book--ihw-974', 'The 11 Commandments', 'http://dummyimage.com/367x402.png/5fa2dd/ffffff', 'Maxed Out: Hard Times, Easy Credit and the Era of Predatory Lenders', 3, 4801, 1);
@@ -900,7 +892,6 @@ insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, c
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (765, '1996-06-28', 9, 91, 38, 84, 'book--yec-715', 'Terraferma', 'http://dummyimage.com/511x406.png/ff4444/ffffff', 'Ten North Frederick', 5, 4428, 2);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (766, '1952-11-29', 8, 99, 12, 33, 'book--bgx-514', 'Outside the Law (Hors-la-loi)', 'http://dummyimage.com/410x445.png/cc0000/ffffff', 'Mutant Aliens', 2, 3569, 4);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (767, '1928-09-19', 10, 6, 56, 13, 'book--pqk-890', 'Conspiracy Theory', 'http://dummyimage.com/465x275.png/5fa2dd/ffffff', 'Hey Ram', 3, 3862, 1);
-insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (768, '1953-11-29', 2, 45, 7, 5, 'book--bfo-027', '35 Up', 'http://dummyimage.com/289x325.png/ff4444/ffffff', 'Quest', 1, 4187, 11);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (769, '1962-01-09', 19, 37, 24, 35, 'book--avc-090', 'Lost Son, The', 'http://dummyimage.com/647x517.png/ff4444/ffffff', 'In the Name of the King: A Dungeon Siege Tale', 4, 3552, 2);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (770, '1926-01-24', 10, 88, 56, 12, 'book--jmv-270', 'Standing Still', 'http://dummyimage.com/539x610.png/5fa2dd/ffffff', 'Catfish in Black Bean Sauce', 0, 3153, 0);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (771, '1907-11-22', 20, 97, 64, 83, 'book--ozq-744', 'Boxtrolls, The', 'http://dummyimage.com/769x522.png/cc0000/ffffff', 'Horse in the Gray Flannel Suit, The', 3, 3772, 4);
@@ -1056,7 +1047,6 @@ insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, c
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (921, '1930-07-24', 23, 4, 46, 48, 'book--gjr-444', 'Buddy', 'http://dummyimage.com/250x364.png/cc0000/ffffff', 'Four Stories of St. Julian ', 1, 4852, 9);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (922, '1994-02-18', 8, 42, 80, 44, 'book--sjh-104', 'Music and Lyrics', 'http://dummyimage.com/631x423.png/ff4444/ffffff', 'My Avatar and Me (Min Avatar og mig)', 3, 4483, 1);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (923, '1930-02-10', 16, 84, 18, 2, 'book--whl-002', 'California Dreamin'' (Nesfarsit)', 'http://dummyimage.com/284x656.png/cc0000/ffffff', 'Grave, The', 3, 4697, 9);
-insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (924, '1901-03-03', 21, 77, 86, 90, 'book--ykf-369', 'Love Happens', 'http://dummyimage.com/302x670.png/ff4444/ffffff', 'Lord of the Flies', 5, 4431, 3);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (925, '1945-08-09', 23, 91, 89, 19, 'book--ghb-132', 'Alla älskar Alice', 'http://dummyimage.com/567x598.png/ff4444/ffffff', 'First Person Plural', 3, 3951, 4);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (926, '1904-11-11', 18, 10, 76, 54, 'book--ijn-894', 'Missing, The', 'http://dummyimage.com/323x288.png/cc0000/ffffff', 'Desert Heat (Inferno)', 4, 4322, 5);
 insert into books (id, pub_date, author_id, in_curt_number_c, delayed_count_k, coefficient, slug, title, image, description, discount, price, by_number_b) values (927, '1912-12-30', 13, 62, 65, 19, 'book--kgk-781', 'Stella Street', 'http://dummyimage.com/786x745.png/cc0000/ffffff', 'Strawberry Blonde, The', 3, 4614, 2);
@@ -1339,13 +1329,13 @@ insert into genre (id, id_tag, parent_id, slug, name) values (1, 1, 0, 'book-sbd
 insert into genre (id, id_tag, parent_id, slug, name) values (2, 2, 0, 'book-hhw-435', 'Camido');
 insert into genre (id, id_tag, parent_id, slug, name) values (3, 3, 0, 'book-eeg-159', 'Rhynoodle');
 insert into genre (id, id_tag, parent_id, slug, name) values (4, 4, 0, 'book-hwh-279', 'Youspan');
-insert into genre (id, id_tag, parent_id, slug, name) values (5, 5, 0, 'book-nhp-967', 'Tagpad');
-insert into genre (id, id_tag, parent_id, slug, name) values (6, 6, 0, 'book-jwz-393', 'Einti');
-insert into genre (id, id_tag, parent_id, slug, name) values (7, 7, 0, 'book-qpt-810', 'Linkbridge');
-insert into genre (id, id_tag, parent_id, slug, name) values (8, 8, 0, 'book-uce-303', 'Fatz');
-insert into genre (id, id_tag, parent_id, slug, name) values (9, 9, 0, 'book-hab-705', 'Katz');
-insert into genre (id, id_tag, parent_id, slug, name) values (10, 10, 0, 'book-unj-696', 'Twitternation');
-insert into genre (id, id_tag, parent_id, slug, name) values (11, 11, 0, 'book-see-547', 'Quatz');
+insert into genre (id, id_tag, parent_id, slug, name) values (5, 5, 0, 'book-see-547', 'Tagpad');
+insert into genre (id, id_tag, parent_id, slug, name) values (6, 6, 0, 'book-see-548', 'Einti');
+insert into genre (id, id_tag, parent_id, slug, name) values (7, 7, 0, 'book-see-54', 'Linkbridge');
+insert into genre (id, id_tag, parent_id, slug, name) values (8, 8, 0, 'book-see-587', 'Fatz');
+insert into genre (id, id_tag, parent_id, slug, name) values (9, 9, 0, 'book-see-567', 'Katz');
+insert into genre (id, id_tag, parent_id, slug, name) values (10, 10, 0, 'book-see-447', 'Twitternation');
+insert into genre (id, id_tag, parent_id, slug, name) values (11, 11, 0, 'book-see-147', 'Quatz');
 insert into genre (id, id_tag, parent_id, slug, name) values (12, 12, 0, 'book-xmp-252', 'Jetpulse');
 insert into genre (id, id_tag, parent_id, slug, name) values (13, 13, 0, 'book-ujl-022', 'Skaboo');
 insert into genre (id, id_tag, parent_id, slug, name) values (14, 14, 0, 'book-uzm-802', 'Zoonoodle');
@@ -1617,7 +1607,6 @@ insert into genre (id, id_tag, parent_id, slug, name) values (279, 279, 8, 'book
 insert into genre (id, id_tag, parent_id, slug, name) values (280, 280, 7, 'book-alb-747', 'Cogilith');
 insert into genre (id, id_tag, parent_id, slug, name) values (281, 281, 3, 'book-trr-185', 'Eare');
 insert into genre (id, id_tag, parent_id, slug, name) values (282, 282, 4, 'book-dwf-355', 'Thoughtbeat');
-insert into genre (id, id_tag, parent_id, slug, name) values (283, 283, 7, 'book-sot-195', 'LiveZ');
 insert into genre (id, id_tag, parent_id, slug, name) values (284, 284, 1, 'book-jgp-264', 'Quamba');
 insert into genre (id, id_tag, parent_id, slug, name) values (285, 285, 12, 'book-lej-251', 'Thoughtsphere');
 insert into genre (id, id_tag, parent_id, slug, name) values (286, 286, 1, 'book-rez-843', 'Devpulse');

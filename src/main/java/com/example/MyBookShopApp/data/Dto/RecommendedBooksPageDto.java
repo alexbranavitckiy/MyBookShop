@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.data.Dto;
 
-import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.book.Book;
 
 import java.util.List;
 

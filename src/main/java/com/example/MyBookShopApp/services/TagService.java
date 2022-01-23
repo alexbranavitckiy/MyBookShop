@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.Tag;
+import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.data.other.Tag;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

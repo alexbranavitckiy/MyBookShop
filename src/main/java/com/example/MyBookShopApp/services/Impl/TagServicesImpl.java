@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.services.Impl;
 
-import com.example.MyBookShopApp.data.Book;
-import com.example.MyBookShopApp.data.Tag;
+import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.TagRepository;
 import com.example.MyBookShopApp.services.TagService;

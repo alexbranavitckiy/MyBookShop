@@ -1,7 +1,6 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.data.other;
 
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;

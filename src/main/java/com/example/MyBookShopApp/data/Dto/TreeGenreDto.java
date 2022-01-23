@@ -1,16 +1,12 @@
 package com.example.MyBookShopApp.data.Dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class TreeGenreDto {
 
-    private String idTag;
+    private String id;
 
     private String parentId;
 
@@ -18,29 +14,52 @@ public class TreeGenreDto {
 
     private String name;
 
-    public TreeGenreDto(String idTag, String parentId, String slug, String name) {
-        this.idTag = idTag;
+    private int sizeBookList;
+
+    private List<TreeGenreDto> children = new ArrayList<>();
+
+    public TreeGenreDto() {
+    }
+
+    public TreeGenreDto(String id, String parentId, String slug, String name, int sizeBookList) {
+        this.id = id;
         this.parentId = parentId;
         this.slug = slug;
         this.name = name;
+        this.sizeBookList = sizeBookList;
     }
 
-    @Override
-    public String toString() {
-        return "TreeGenreDto{" +
-                "idTag='" + idTag + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", slug='" + slug + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+
+
+    public void add(TreeGenreDto node) {
+        if (node.parentId == null || "".equals(node.parentId) || "0".equals(node.parentId)) {
+            // родительский узел
+            this.children.add(node);
+        } else if (node.parentId.equals(this.id)) {
+            // дочерний узел
+            this.children.add(node);
+        } else {
+            for (TreeGenreDto tmp_node : children) {
+                tmp_node.add(node);
+            }
+        }
     }
 
-    public String getIdTag() {
-        return idTag;
+    public int getSizeBook() {
+        return sizeBookList;
     }
 
-    public void setIdTag(String idTag) {
-        this.idTag = idTag;
+    public void setSizeBook(int sizeBook) {
+        this.sizeBookList = sizeBook;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getParentId() {
@@ -65,5 +84,24 @@ public class TreeGenreDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<TreeGenreDto> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TreeGenreDto> children) {
+        this.children = children;
+    }
+
+    @Override
+    public String toString() {
+        return "TreeGenreDto{" +
+                "id='" + id + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", slug='" + slug + '\'' +
+                ", name='" + name + '\'' +
+                ", sizeBookList=" + sizeBookList +
+                '}';
     }
 }

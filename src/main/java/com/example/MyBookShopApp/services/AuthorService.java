@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.Author;
+import com.example.MyBookShopApp.data.book.Author;
 
 import java.util.List;
 import java.util.Map;

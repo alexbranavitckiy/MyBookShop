@@ -1,28 +1,20 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
-import com.example.MyBookShopApp.data.Tag;
-import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.BooksRatingAndPopulatityService;
-import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
-import com.example.MyBookShopApp.services.Impl.BooksRatingAndPopulatityServiceImpl;
 import com.example.MyBookShopApp.services.TagService;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
-import org.springframework.web.servlet.ModelAndView;
 
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller

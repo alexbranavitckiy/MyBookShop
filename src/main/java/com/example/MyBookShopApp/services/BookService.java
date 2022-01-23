@@ -1,15 +1,14 @@
 package com.example.MyBookShopApp.services;
 
 
-import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.book.Book;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
-import java.sql.Date;
 import java.util.List;
 
 public interface BookService {
+
+    Page<Book> getPageBookBySlug(String slug,int offset,int limit);
 
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit);
 
@@ -30,7 +29,7 @@ public interface BookService {
     Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit);
 
 
-    Page<Book> getPageOfDateBooks(Integer offset, Integer limit,String fromDate, String dateTo);
+    Page<Book> getPageOfDateBooks(Integer offset, Integer limit, String fromDate, String dateTo);
 
     Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort);
 

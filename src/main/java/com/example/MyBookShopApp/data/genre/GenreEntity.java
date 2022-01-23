@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.data.genre;
 
-import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.book.Book;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,7 +19,9 @@ public class GenreEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String parentId;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL UNIQUE")
     private String slug;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -75,5 +77,17 @@ public class GenreEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "GenreEntity{" +
+                "id=" + id +
+                ", idTag='" + idTag + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", slug='" + slug + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

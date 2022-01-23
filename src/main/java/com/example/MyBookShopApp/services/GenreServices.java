@@ -8,14 +8,15 @@ import java.util.List;
 public interface GenreServices {
 
 
+    String getGenreByName(String slug);
+
     List<GenreEntity> getAllGenre();
 
-    boolean SaveGenre(GenreEntity genreEntity);
+    //List<TreeGenreDto> generationTreeGenre();
 
-    boolean SortGenre(GenreEntity genreEntity);
+    List<TreeGenreDto> getAllGenreDtoList();
 
-    List<TreeGenreDto> getAllGenreDto();
-
+    List<GenreEntity> getAllGenreAndSortByBook();
 
 }
 

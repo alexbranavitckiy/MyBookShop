@@ -1,6 +1,7 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.other.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -38,16 +39,6 @@ public class Book {
     @JsonIgnore
     private List<GenreEntity> genreEntities;
 
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-
     @Column(name = "by_number_b")
     @ApiModelProperty("the number of users who bought the book")
     private double byNumberB;
@@ -65,7 +56,9 @@ public class Book {
     private double coefficient;
 
     @ApiModelProperty("mnemonical identity sequence of characters")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL UNIQUE")
     private String slug;
+
     @ApiModelProperty("book title")
     private String title;
     @ApiModelProperty("image url")
@@ -85,20 +78,25 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
-
     public Date getPubDate() {
         return pubDate;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
 
-
     private void count() {
         this.coefficient = this.getByNumberB() + this.getInCurtNumberC() * 0.75 + this.delayedCountK * 0.4;
     }
-
 
     public double getByNumberB() {
         return byNumberB;
@@ -205,5 +203,17 @@ public class Book {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", slug='" + slug + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", priceOld=" + priceOld +
+                ", price=" + price +
+                '}';
     }
 }

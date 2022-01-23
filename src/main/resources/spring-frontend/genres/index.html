@@ -16,28 +16,25 @@
     <script defer src="/assets/js/scripts.min.js?v=52263780"></script>
     <script defer src="/assets/js/scripts.min.js?v=64223515"></script>
     <script defer src="/assets/js/scripts.min.js?v=64223515"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 <body class="Site">
 <header class="Header"
         th:replace="~{fragments/common_header_fragment :: head(genres='menu-item menu-item_ACTIVE', status='unauthorized')}">
 </header>
+
+
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title" th:text="#{topbar.genres}">Жанры
-            </h1>
-            <!--
-                        <div th:each=" list :${tagList}">
-                            <p th:text="${list.id}+'/'+${list.name}+'/'+${list.parentId}"></p>
-                        </div>-->
-            <div class=" list-group Tags_genres list-group-flush ">
-                <div  class="Tags Tags_embed">
+            <div class="  Tags_genres  ">
+                <h1 class="Middle-title Tag_lg" th:text="#{topbar.genres}">Жанры
+                </h1>
+                <div class="Tags Tags_embed">
                     <section th:each="menuItem : ${tagList}" class="Tags-title card">
-                        <div   class=" card-header  Tag_lg"><a class=" Tag_lg list-group-item"
-                                th:text="${menuItem.name}"
-                                href="/genres/slug.html">Фантастика<span
+                        <div class=" card-header  Tag_lg"><a style="color: #2c2c2c" class=" nav-link Tag_md  "
+                                                             th:href="@{/genres/SLUG(SLUG=${menuItem.getSlug()})}"  th:text="(${menuItem.name})+'('+(${menuItem.getSizeBook()-1})+')'"
+                                                             href="/genres/slug.html">Фантастика<span
                                 class="undefined-amount">(44333)</span></a>
                             <section
                                     th:replace="~{fragments/genres_fragments :: genres_fragments(tagList=${menuItem.children})}"
@@ -46,31 +43,6 @@
                     </section>
                 </div>
             </div>
-            <!--
-            <div class="Section">
-                <div th:each="list : ${tagList}" class="Tags Tags_genres">
-                    <div th:with="xxx=${list.id},zzz=${list.parentId}" class="Tags Tags_embed">
-                        <div th:if="${list.competIdPerentOAndValue(0,list.parentId)}" class="Tags-title">
-                            <div class="Tag"><a th:text="${list.name+'###'}" href="/genres/slug.html"><span
-                                    class="undefined-amount"></span></a>
-                            </div>
-                        </div>
-                        <div class="Tag"><a href="/genres/slug.html">Фантастика<span
-                                class="undefined-amount">(44333)</span></a>
-                        </div>
-                        <div class="Tags">
-                            <div class="Tags-title">
-                                <div class="Tag"><a href="/genres/slug.html">Детективы<span class="undefined-amount">(10)</span></a>
-                                </div>
-                            </div>
-                            <div class="Tag"><a href="/genres/slug.html">Триллер<span
-                                    class="undefined-amount">(134)</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
         </main>
     </div>
 </div>

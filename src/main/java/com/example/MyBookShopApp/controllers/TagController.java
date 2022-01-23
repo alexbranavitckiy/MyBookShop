@@ -1,10 +1,10 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
-import com.example.MyBookShopApp.data.Tag;
+import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
