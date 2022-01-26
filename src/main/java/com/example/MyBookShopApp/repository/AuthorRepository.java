@@ -10,6 +10,7 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
 
 
+    Author getBySlug(String slug);
 
 
 

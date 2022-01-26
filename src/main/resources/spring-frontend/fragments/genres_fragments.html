@@ -9,7 +9,7 @@
 
 <section th:fragment="genres_fragments">
 
-    <meDiv  class="" th:each="menuItem , iState : ${tagList}">
+    <th:block  class="" th:each="menuItem , iState : ${tagList}">
         <meDiv th:switch="${ menuItem.children.size()}">
             <meDiv th:case="0">
                 <meDiv  class="Tags ">
@@ -29,7 +29,7 @@
                 </div>
             </meDiv>
         </meDiv>
-    </meDiv>
+    </th:block>
 </section>
 </body>
 </html>

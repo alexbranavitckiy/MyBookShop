@@ -33,12 +33,37 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=(#{topbar.authors}))}"></ul>
-            <h1 class="Middle-title">
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=(${author.getLastName()}+' '+${author.getFirstName()}),breadTitle=(#{breadTitle.author.slug}),breadPath=(#{breadPath.author.slug}))}">
+            </ul>
+            <h1 class="" th:text="${author.getFirstName()} +' '+ ${author.getLastName()}">Жили бли java c++ c#
             </h1>
-            <div class="Section">
-                <div class="Cards Cards_refresh"
-                     th:replace="~{fragments/books_pool_fragment :: pool(category='author')}"></div>
+            <div class="Cards ">
+                <div class="Cards  Cards_search Cards_refresh">
+                    <div class="Card" th:each="book : ${authorsListBook}">
+                        <div class="Card-picture"><a href="#"><img th:src="${book.image}"
+                                                                   src="/assets/img/content/main/card.jpg"
+                                                                   alt="card.jpg"/></a>
+                        </div>
+                        <div class="">
+                            <strong class="Card-title"><a href="#" th:text="${book.title}"></a>
+                            </strong>
+                            <div class="Card-description" th:text="${book.author}"><p th:text="${book.pubDate}"></p>
+
+                                Кондратенко Александр Петрович
+                            </div>
+                            <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
+                                    class="Card-price" th:text="${book.price}">₽190.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p th:text="${author.getSlug()}"></p>
+                    <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
+                                                                     data-refreshshow="Author" data-refreshoffset="0"
+                                                                     data-refreshlimit="10"
+                                                                     th:attr="data-refreshquery=${SLUG}">Показать
+                        еще123</a>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

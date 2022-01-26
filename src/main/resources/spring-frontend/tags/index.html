@@ -13,25 +13,49 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=91228662">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=91228662">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=91228662">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=91228662"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.block').on('click', '.extremum-click', function () {
+                $(this).toggleClass('red').siblings('.extremum-slide').slideToggle(0);
+            });
+        });
+    </script>
+    <style>
+        .extremum-slide {
+            display: none;
+        }
+    </style>
+
 </head>
 <body class="Site">
 <header class="Header" th:replace="~{fragments/common_header_fragment :: head(status='unauthorized')}"></header>
 <div class="Middle">
     <div class="wrap">
+
         <main class="Middle-main">
+            <!--
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=${category})}"></ul>
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=(${category}),breadTitle=(#{breadTitle.tag}),breadPath=(#{breadPath.tag}))}"></ul>
+            </ul>-->
             <div class="Section">
                 <h1 class="Section-title" th:text="${category}">Психологическая проза
                 </h1>
                 <div class="Section-header">
                     <div class="Section-header-links">
-                        <a class="Section-header-link"
-                           href="/index.html#tags">Все
-                            тэги</a>
-                        <div class="Tags" id="tags" th:replace="~{fragments/tag_cloud_fragment :: cloud}"></div>
+                        <div class="block">
+                            <h1 class="extremum-click"><a style="color: #2b2b2b" id="submitButton"
+                                                          class="extremum-click submitButton Section-header-link"
+                            >Все
+                                тэги &darr;</a></h1>
+                            <div class="extremum-slide">
+                                <div class="extremum-slide Tags" id="tags"
+                                     th:replace="~{fragments/tag_cloud_fragment :: cloud}"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
@@ -44,7 +68,8 @@
                             <div class="Card-content">
                                 <strong class="Card-title"><a href="#" th:text="${book.title}"></a>
                                 </strong>
-                                <div class="Card-description" th:text="${book.author}"><p th:text="${book.pubDate}"></p>
+                                <div class="Card-description" th:text="${book.author}"><p
+                                        th:text="${book.pubDate}"></p>
 
                                     Кондратенко Александр Петрович
                                 </div>

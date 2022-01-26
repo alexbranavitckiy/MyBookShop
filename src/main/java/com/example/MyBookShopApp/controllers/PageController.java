@@ -32,8 +32,6 @@ public class PageController {
     @ModelAttribute("tagList")
     public List<Tag> gettagList() { return this.tagService.findAllTags(); }
 
-
-
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks()  {
         return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
@@ -55,10 +53,6 @@ public class PageController {
         return bookService.getPageOfNameSortBooks(0, 10, "pubDate").getContent();
     }
 
-
-
-
-
     @ModelAttribute("sizeSearch")
     public String sizeList() {
         return "";
@@ -77,7 +71,6 @@ public class PageController {
                                                        @RequestParam("limit") Integer limit) {
         return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "coefficient").getContent());
     }
-
 
     @GetMapping("/books/recent")
     @ResponseBody

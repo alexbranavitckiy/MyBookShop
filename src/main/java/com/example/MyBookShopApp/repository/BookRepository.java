@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.repository;
 
 
+import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.other.Tag;
@@ -43,7 +44,11 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-  //  @Query(value = "SELECT * FROM books WHERE books.slug =:slug ", nativeQuery = true)
+    Page<Book> findAllByAuthor(Author author, Pageable nextPage);
+
+
+
+    //  @Query(value = "SELECT * FROM books WHERE books.slug =:slug ", nativeQuery = true)
   //  Page<Book> findAllBySlugContaining(@Param("slug") String slug, Pageable nextPage);
 
 

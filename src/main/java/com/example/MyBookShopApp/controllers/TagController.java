@@ -23,6 +23,11 @@ public class TagController {
         this.tagService = tagService;
     }
 
+    @ModelAttribute("flagButton")
+    public boolean flagButton() {
+        return true;
+    }
+
     @ModelAttribute("tagBooks")
     public List<Book> tagBooks() {
         return null;
@@ -43,7 +48,9 @@ public class TagController {
     @GetMapping(value = {"/api/books/tag/"})
     public String tagsPage(@RequestParam(required = false, value = "ID") Integer ID,
                            Model model) {
-        model.addAttribute("tagBooks", tagService.getPageOfTagSortBooks(0, 10, tagService.findTagById(ID), "pubDate").getContent());
+        Tag tag = tagService.findTagById(ID);
+        model.addAttribute("category", tag.getNameTag());
+        model.addAttribute("tagBooks", tagService.getPageOfTagSortBooks(0, 10, tag, "pubDate").getContent());
         model.addAttribute("ID", ID);
         return "tags/index";
     }

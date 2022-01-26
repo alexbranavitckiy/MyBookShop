@@ -38,7 +38,7 @@
                             th:text="${authorList.key}">А
                         </h2>
                         <div style="color: #358b4b" th:each="author:${authorList.value}" class="Authors-letter">
-                            <div class="Authors-item"><a  href="/authors/slug.html"
+                            <div class="Authors-item"><a    th:href=" @{ /authors/SLUG/(SLUG=${author.getSlug()})}"
                                                           th:text="${author.getFirstName()+' '+author.getLastName()}">Абгарян
                                 Наринэ</a>
                             </div>

@@ -39,7 +39,7 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Genres')}"></ul>
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Genres',breadTitle=(${nameGenre}),breadPath=(#{breadPath.genres}))}"></ul>
             <div class="Section">
                 <div class="Section-header">
                     <h1 class="Section-title" th:text="${nameGenre}">Genres
@@ -61,9 +61,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
                 <myBlock class="emptyMe" id="myDiv1" th:if="${flagButton}">
                     <div
                             id="submitButton" class=" submitButton Cards-footer Cards-footer_center"><a

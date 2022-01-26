@@ -74,10 +74,8 @@ public class GenreController {
                                     @PathVariable(value = "SLUG", required = false) String SLUG, Model model) {
         model.addAttribute("SLUG", SLUG);
         Page<Book> page = bookService.getPageBookBySlug(SLUG, offset, limit);
-        model.addAttribute("flagButton", page.getTotalElements() >= (5 * offset));//page.getTotalElements() >= (5 * offset)
+        model.addAttribute("flagButton", page.getTotalElements() >= (5 * offset));
         model.addAttribute("nameGenre", genreServices.getGenreByName(SLUG));
-        System.out.println(page.getTotalElements() >= (5 * offset));
-        System.out.println((5 * offset));
         return new BooksPageDto(page.getContent());
     }
 

@@ -3,7 +3,13 @@
 <ul class="breadcrumbs" th:fragment="breadcrumps">
     <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}" href="/index.html">Главная</a>
     </li>
-    <li class="breadcrumbs-item"><a th:href="@{/genres/index}" href="/genres/index.html"  th:text="#{topbar.books}">Книги</a>
+    <li class="breadcrumbs-item" th:switch="${breadPath}">
+        <a th:case="#{breadPath.author}" th:href="@{/authors/index}" href="/genres/index.html"  th:text="#{breadTitle.author}">Книги</a>
+        <a th:case="#{breadPath.genres}" th:href="@{/genres/index}" href="/genres/index.html"  th:text="${breadTitle}">Книги</a>
+        <a th:case="#{breadPath.popular}" th:href="@{/genres/index}" href="/genres/index.html"  th:text="#{breadTitle.popular}">Книги</a>
+        <a th:case="#{breadPath.author.slug}" th:href="@{/genres/index}" href="/genres/index.html"  th:text="#{breadTitle.author.slug}">Книги</a>
+        <th:block th:case="#{breadPath.tag}"></th:block>
+        <a th:case="#{breadPath.resent}" th:href="@{/genres/index}" href="/genres/index.html"  th:text="#{breadTitle.resent}">Книги</a>
     </li>
     <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${category}"><span>Новинки</span>
     </li>
