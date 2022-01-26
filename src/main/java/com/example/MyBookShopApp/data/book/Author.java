@@ -29,6 +29,12 @@ public class Author {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL UNIQUE")
     private String slug;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String photo;
+
     @OneToMany(mappedBy = "author")
     @JsonIgnore
     private List<Book> bookList = new ArrayList<>();
@@ -39,6 +45,22 @@ public class Author {
 
     public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

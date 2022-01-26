@@ -23,8 +23,8 @@ public class AuthorsController {
 
 
     @Autowired
-    private AuthorsController(AuthorService authorService){
-        this.authorService=authorService;
+    private AuthorsController(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @ModelAttribute("SLUG")

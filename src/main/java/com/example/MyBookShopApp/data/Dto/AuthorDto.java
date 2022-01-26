@@ -18,6 +18,8 @@ public class AuthorDto {
         this.slug = slug;
     }
 
+
+
     public String getFirstName() {
         return firstName;
     }
@@ -41,8 +43,6 @@ public class AuthorDto {
     public void setSlug(String slug) {
         this.slug = slug;
     }
-
-
 
 
 }
