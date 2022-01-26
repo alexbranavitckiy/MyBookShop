@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
-
-
 import java.util.List;
 
 @Controller
@@ -30,10 +28,12 @@ public class PageController {
     }
 
     @ModelAttribute("tagList")
-    public List<Tag> gettagList() { return this.tagService.findAllTags(); }
+    public List<Tag> gettagList() {
+        return this.tagService.findAllTags();
+    }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks()  {
+    public List<Book> recommendedBooks() {
         return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
     }
 
@@ -46,7 +46,6 @@ public class PageController {
     public List<Book> popularBooks() {
         return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();
     }
-
 
     @ModelAttribute("resentBooks")
     public List<Book> bestsellersBooks() {
@@ -103,8 +102,7 @@ public class PageController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto, Model model) {
-
-        if (offset < 0) offset = 0;
+        if (offset < 0) return new BooksPageDto();
         Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
         model.addAttribute("searchWordDto", searchWordDto);
         model.addAttribute("searchResults",
@@ -123,8 +121,6 @@ public class PageController {
         return "books/popular";
     }
 
-
-
     @ModelAttribute("booksList")
     public List<Book> bookList() {
         return bookService.getBooksData();
@@ -139,8 +135,6 @@ public class PageController {
     public String tagsPage() {
         return "tags/index";
     }
-
-
 
     @GetMapping("/cart")
     public String cartPage() {
@@ -172,12 +166,10 @@ public class PageController {
         return "contacts";
     }
 
-
     @GetMapping("search/")
     public String searchPage() {
         return "search/index";
     }
-
 
     @GetMapping("/profile")
     public String profilePage() {
@@ -188,7 +180,6 @@ public class PageController {
     public String postponedPage() {
         return "postponed";
     }
-
 
     @GetMapping("/")
     public String mainPage() {

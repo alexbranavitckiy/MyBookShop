@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface GenreServices {
 
+    List<TreeGenreDto> generationTreeGenre();
 
     String getGenreByName(String slug);
 

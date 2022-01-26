@@ -25,7 +25,7 @@
             <h1 class="Middle-title" th:text="#{topbar.authors}">Авторы
             </h1>
             <div class="Section">
-                <div  class="Authors">
+                <div class="Authors">
                     <div class="Authors-links">
                         <div class="Authors-link"
                              th:each="authorList : ${authorsMap}">
@@ -37,10 +37,11 @@
                         <h2 class="Authors-title" id="a" th:id="${#strings.toLowerCase(authorList.key)}"
                             th:text="${authorList.key}">А
                         </h2>
-                        <div style="color: #358b4b" th:each="author:${authorList.value}" class="Authors-letter">
-                            <div class="Authors-item"><a    th:href=" @{ /authors/SLUG/(SLUG=${author.getSlug()})}"
-                                                          th:text="${author.getFirstName()+' '+author.getLastName()}">Абгарян
-                                Наринэ</a>
+                        <div style="color: #358b4b" th:each="author, iState:${authorList.value}" class="Authors-letter">
+                            <div class="Authors-item">
+                                    <a th:href=" @{ /authors/SLUG/(SLUG=${author.getSlug()})}"
+                                                                   th:text="${author.getFirstName()+' '+author.getLastName()}">Абгарян
+                                                                    Наринэ</a>
                             </div>
                         </div>
                     </div>

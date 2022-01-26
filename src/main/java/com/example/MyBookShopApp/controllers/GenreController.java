@@ -6,25 +6,27 @@ import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.Dto.TreeGenreDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.Impl.GenreServicesImpl;
+import com.example.MyBookShopApp.services.GenreServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
 public class GenreController {
 
 
-    @Autowired
-    private GenreServicesImpl genreServices;
+    private final GenreServices genreServices;
+    private final BookService bookService;
 
     @Autowired
-    private BookService bookService;
+    private GenreController(GenreServices genreServices, BookService bookService) {
+        this.genreServices = genreServices;
+        this.bookService = bookService;
+    }
 
     @ModelAttribute("nameGenre")
     public String nameGenre() {
@@ -43,16 +45,7 @@ public class GenreController {
 
     @ModelAttribute("tagList")
     public List<TreeGenreDto> getGenreList() {
-        List<TreeGenreDto> list2 = this.genreServices.getAllGenreDtoList();
-        TreeGenreDto node = new TreeGenreDto();
-        if (list2.size() > 0) {
-            for (TreeGenreDto test : list2) {
-                TreeGenreDto tn = new TreeGenreDto(test.getId(), test.getParentId(), test.getSlug(), test.getName(), test.getSizeBook());
-                node.add(tn);
-            }
-        }
-        node.getChildren().sort(((Comparator<TreeGenreDto>) (o1, o2) -> (o1.getSizeBook() - o2.getSizeBook())).reversed());
-        return node.getChildren();
+        return genreServices.generationTreeGenre();
     }
 
     @GetMapping(value = {"/genres/SLUG"})

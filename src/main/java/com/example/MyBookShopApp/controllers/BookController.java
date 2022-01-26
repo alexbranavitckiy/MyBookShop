@@ -2,7 +2,6 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.BooksRatingAndPopulatityService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +14,13 @@ import java.util.List;
 @RestController
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+
+    private final BookService bookService;
 
     @Autowired
-    private BooksRatingAndPopulatityService booksRatingAndPopulatityService;
+    private BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping("/books/by-author")
     @ApiOperation("operation to get book list of bookshop by passed author first name")

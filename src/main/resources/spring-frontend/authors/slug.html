@@ -22,7 +22,7 @@
         <main class="Middle-main">
             <ul class="breadcrumbs"
                 th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=(${author.getLastName()}+' '+${author.getFirstName()}),breadTitle=(#{breadTitle.author}),breadPath=(#{breadPath.author}))}"></ul>
-            <div th:replace="~{fragments/author_article_fragment :: article(author=(${author.getLastName()}+' '+${author.getFirstName()}))}"></div>
+            <div th:replace="~{fragments/author_article_fragment :: article(author=(${author}))}"></div>
             <div class="Section">
                 <div class="Section-header">
                     <h2 class="Section-title">Книги автора

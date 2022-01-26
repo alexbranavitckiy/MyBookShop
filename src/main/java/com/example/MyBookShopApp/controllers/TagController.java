@@ -44,7 +44,6 @@ public class TagController {
         return "category";
     }
 
-
     @GetMapping(value = {"/api/books/tag/"})
     public String tagsPage(@RequestParam(required = false, value = "ID") Integer ID,
                            Model model) {
@@ -60,14 +59,12 @@ public class TagController {
     public BooksPageDto tagsPageRest(@RequestParam(required = false, value = "offset") Integer offset,
                                      @RequestParam(required = false, value = "limit") Integer limit,
                                      @PathVariable(value = "ID", required = false) Integer IDPage, Model model) {
-        if (offset != null && offset < 0) offset = 0;
+        if (offset < 0) return new BooksPageDto();
         List<Book> bookPage = tagService.getPageOfTagSortBooks(offset, limit, tagService.findTagById(IDPage), "pubDate").getContent();
         model.addAttribute("ID", IDPage);
         model.addAttribute("tagBooks", bookPage);
-        System.out.println(bookPage);
         return new BooksPageDto(bookPage);
     }
-
 
     @ModelAttribute("tagList")
     public List<Tag> getTagListDesc() {

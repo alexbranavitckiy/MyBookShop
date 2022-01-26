@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,28 +30,30 @@ public class GenreServicesImpl implements GenreServices {
 
 
     @Override
-    public  String getGenreByName(String slug){
+    public String getGenreByName(String slug) {
 
         return genreEntityRepository.getBySlug(slug).getName();
     }
-
 
     @Override
     public List<GenreEntity> getAllGenreAndSortByBook() {
         return genreEntityRepository.findAll();
     }
-    //    public List<TreeGenreDto> generationTreeGenre() {
-    //        List<TreeGenreDto> list2 = getAllGenreDtoList();
-    //     //   list2.sort(Comparator.comparingInt(TreeGenreDto::getSizeBook));
-    //        TreeGenreDto node = new TreeGenreDto();
-    //        if (list2.size() > 0) {
-    //            for (TreeGenreDto test : list2) {
-    //                TreeGenreDto tn = new TreeGenreDto(test.getId(), test.getParentId(), test.getSlug(), test.getName(), test.getSizeBook());
-    //                node.add(tn);
-    //            }
-    //        }
-    //        return node.getChildren();
-    //    }
+
+    @Override
+    public List<TreeGenreDto> generationTreeGenre() {
+        List<TreeGenreDto> list2 = getAllGenreDtoList();
+        TreeGenreDto node = new TreeGenreDto();
+        if (list2.size() > 0) {
+            for (TreeGenreDto test : list2) {
+                TreeGenreDto tn = new TreeGenreDto(test.getId(), test.getParentId(), test.getSlug(), test.getName(), test.getSizeBook());
+                node.add(tn);
+            }
+        }
+        node.getChildren().sort(((Comparator<TreeGenreDto>) (o1, o2) -> (o1.getSizeBook() - o2.getSizeBook())).reversed());
+
+        return node.getChildren();
+    }
 
 
     @Override

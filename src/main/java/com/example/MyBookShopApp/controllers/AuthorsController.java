@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.data.Dto.AuthorDto;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
@@ -17,8 +18,14 @@ import java.util.Map;
 @Controller
 public class AuthorsController {
 
+
+    private final AuthorService authorService;
+
+
     @Autowired
-    private AuthorService authorService;
+    private AuthorsController(AuthorService authorService){
+        this.authorService=authorService;
+    }
 
     @ModelAttribute("SLUG")
     public String slugGenre() {
@@ -26,7 +33,7 @@ public class AuthorsController {
     }
 
     @ModelAttribute("authorsMap")
-    public Map<String, List<Author>> authorsMap() {
+    public Map<String, List<AuthorDto>> authorsMap() {
         return authorService.getAllAuthorsMap();
     }
 
@@ -53,7 +60,6 @@ public class AuthorsController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "SLUG", required = false) String SLUG, Model model) {
-        System.out.println("/books/author/SLUG 56");
         if (offset < 0) return new BooksPageDto();
         Page<Book> bookPage = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));

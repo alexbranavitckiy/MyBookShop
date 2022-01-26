@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.services.Impl;
 
+import com.example.MyBookShopApp.data.Dto.AuthorDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.repository.AuthorRepository;
@@ -20,12 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
-    @Autowired
-    private BookRepository bookRepository;
-
+    private AuthorServiceImpl(AuthorRepository authorRepository, BookRepository bookRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
+    }
 
     @Override
     public Page<Book> getPageBookByAuthorSlag(String slug, int offset, int limit) {
@@ -39,9 +42,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Map<String, List<Author>> getAllAuthorsMap() {
-        return authorRepository.findAll().stream().collect(Collectors.groupingBy((Author a) ->
-                a.getLastName().substring(0, 1)));
+    public Map<String, List<AuthorDto>> getAllAuthorsMap() {
+        return authorRepository.getAllBy().stream().collect(Collectors.groupingBy((AuthorDto a) ->
+                a.getFirstName().substring(0, 1)));
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.services;
 
+import com.example.MyBookShopApp.data.Dto.AuthorDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import org.springframework.data.domain.Page;
@@ -10,10 +11,10 @@ import java.util.Map;
 public interface AuthorService {
 
 
-     Map<String, List<Author>> getAllAuthorsMap();
 
      Page<Book> getPageBookByAuthorSlag(String slug, int offset, int limit);
 
+     Map<String, List<AuthorDto>> getAllAuthorsMap();
 
      Author getAuthorBySlug(String slug);
 }
