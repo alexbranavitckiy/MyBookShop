@@ -22,6 +22,8 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
     @Query("from Book")
     List<Book> customFindAllBooks();
 
+    Book findBookBySlug(String slug);
+
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
     Page<Book> findBookByTagsContaining(Tag bookTitle, Pageable nextPage);

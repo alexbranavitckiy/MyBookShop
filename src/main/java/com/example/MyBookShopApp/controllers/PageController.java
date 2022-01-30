@@ -7,12 +7,16 @@ import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.services.BookService;
+import com.example.MyBookShopApp.services.ResourceStorage;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -20,9 +24,11 @@ public class PageController {
 
     private final BookService bookService;
     private final TagService tagService;
+    private final ResourceStorage storage;
 
     @Autowired
-    public PageController(BookService bookService, TagService tagService) {
+    public PageController(ResourceStorage storage, BookService bookService, TagService tagService) {
+        this.storage = storage;
         this.tagService = tagService;
         this.bookService = bookService;
     }
@@ -63,6 +69,25 @@ public class PageController {
                                                            @RequestParam("limit") Integer limit) {
         return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "priceOld").getContent());
     }
+
+
+    @GetMapping("/books/{slug}")
+    public String bookPage(@PathVariable("slug") String slug, Model model) {
+        Book book = bookService.getBookBySlug(slug);
+        model.addAttribute("slugBook", book);
+        return "/books/slug";
+    }
+
+
+    @PostMapping("/{slug}/img/save")
+    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
+        String savePath = storage.saveNewBookImage(file, slug);
+        Book bookToUpdate = bookService.getBookBySlug(slug);
+        bookToUpdate.setImage(savePath);
+        bookService.saveBook(bookToUpdate);
+        return "redirect:/books/" + slug;
+    }
+
 
     @GetMapping("/books/popular")
     @ResponseBody

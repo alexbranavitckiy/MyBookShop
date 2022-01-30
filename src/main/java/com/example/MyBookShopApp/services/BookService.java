@@ -8,11 +8,15 @@ import java.util.List;
 
 public interface BookService {
 
-    Page<Book> getPageBookBySlug(String slug,int offset,int limit);
+    Page<Book> getPageBookBySlug(String slug, int offset, int limit);
 
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit);
 
     List<Book> getBooksData();
+
+    Book getBookBySlug(String slug);
+
+    boolean saveBook(Book book);
 
     List<Book> getBooksByAuthor(String authorName);
 

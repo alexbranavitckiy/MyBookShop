@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.other.Tag;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -39,6 +40,18 @@ public class Book {
     @JsonIgnore
     private List<GenreEntity> genreEntities;
 
+    @JsonGetter("authors")
+    public String authorsFullName(){
+        return author.toString();
+    }
+
+    @JsonProperty
+    public Integer dicsountPrice(){
+        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
+        return discountedPriceInt;
+    }
+
+
     @Column(name = "by_number_b")
     @ApiModelProperty("the number of users who bought the book")
     private double byNumberB;
@@ -61,6 +74,7 @@ public class Book {
 
     @ApiModelProperty("book title")
     private String title;
+
     @ApiModelProperty("image url")
     private String image;
 

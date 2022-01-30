@@ -24,9 +24,9 @@ public class BookServiceImpl implements BookService {
     private GenreEntityRepository genreEntityRepository;
 
     @Override
-    public Page<Book> getPageBookBySlug(String slug,int offset,int limit) {
+    public Page<Book> getPageBookBySlug(String slug, int offset, int limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findAllByGenreEntitiesContaining(genreEntityRepository.getBySlug(slug),nextPage);
+        return bookRepository.findAllByGenreEntitiesContaining(genreEntityRepository.getBySlug(slug), nextPage);
     }
 
     public List<Book> getBooksData() {
@@ -35,6 +35,17 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> getBooksByAuthor(String authorName) {
         return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
+    }
+
+    @Override
+    public Book getBookBySlug(String slug) {
+        return bookRepository.findBookBySlug(slug);
+    }
+
+    @Override
+    public boolean saveBook(Book book) {
+        bookRepository.save(book);
+        return false;
     }
 
     public List<Book> getBooksByTitle(String title) {
