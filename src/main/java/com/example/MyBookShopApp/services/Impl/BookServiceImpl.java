@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.services.Impl;
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreEntityRepository;
 import com.example.MyBookShopApp.services.BookService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -38,7 +40,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBookBySlug(String slug) {
+    public Optional<Book> getBookBySlug(String slug) {
+
+
         return bookRepository.findBookBySlug(slug);
     }
 
@@ -48,9 +52,19 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
-    public List<Book> getBooksByTitle(String title) {
-        return bookRepository.findBooksByTitleContaining(title);
+    @Override
+    public List<Book> getBooksByTitle(String title) throws BookStoreApiWrongException {
+        if (title.equals(" ") || title.length() < 1) {
+            throw new BookStoreApiWrongException("Wrong value passed to one or more parameters");
+        }
+        List<Book> date = bookRepository.findBooksByTitleContaining(title);
+        if (date.size() > 0) {
+            return date;
+        } else {
+            throw new BookStoreApiWrongException("No date found with specified parameters...");
+        }
     }
+
 
     public List<Book> getBooksWithPriceBetween(Integer min, Integer max) {
         return bookRepository.findBooksByPriceOldBetween(min, max);

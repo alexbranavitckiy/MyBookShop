@@ -51,6 +51,10 @@ public class Author {
         return description;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -68,9 +72,13 @@ public class Author {
         return firstName + ' ' + lastName;
     }
 
-    public String getSlug() { return slug; }
+    public String getSlug() {
+        return slug;
+    }
 
-    public void setSlug(String slug) { this.slug = slug; }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public Integer getId() {
         return id;

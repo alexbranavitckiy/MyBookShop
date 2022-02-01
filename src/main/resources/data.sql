@@ -2303,3 +2303,9 @@ insert into books_genre_entities  (list_book_id, genre_entities_id) values (38, 
 insert into books_genre_entities  (list_book_id, genre_entities_id) values (6, 11);
 insert into books_genre_entities  (list_book_id, genre_entities_id) values (11, 19);
 insert into books_genre_entities  (list_book_id, genre_entities_id) values (36, 8);
+
+
+insert into book_file (id, hash, type_id, path, book_id) values (1, 'fsdl342ladads76432', 5, 'кот_кошка_фон_jpg_взгляд.jpg', 543);
+insert into book_file (id, hash, type_id, path, book_id) values (2, 'asdl35436dads34235', 2, 'Sudden_Manhattan.epub',1);
+insert into book_file (id, hash, type_id, path, book_id) values (3, 'qwer342lafdss34123', 3, 'Sudden_Manhattan.fb2',1);
+insert into book_file (id, hash, type_id, path, book_id) values (4, 'hgfd342la543h34123', 1, '/Mysterious_Island.pdf', 2);

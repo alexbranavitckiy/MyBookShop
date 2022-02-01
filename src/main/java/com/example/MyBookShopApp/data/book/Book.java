@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.data.book;
 
+import com.example.MyBookShopApp.data.book.file.BookFile;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.other.Tag;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +31,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "tags_id")
@@ -139,6 +144,14 @@ public class Book {
         count();
     }
 
+    public List<BookFile> getBookFileList() {
+        return bookFileList;
+    }
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
+    }
+
     public List<GenreEntity> getGenreEntities() {
         return genreEntities;
     }
@@ -223,8 +236,10 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
+                ", pubDate=" + pubDate +
                 ", slug='" + slug + '\'' +
                 ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
                 ", priceOld=" + priceOld +
                 ", price=" + price +

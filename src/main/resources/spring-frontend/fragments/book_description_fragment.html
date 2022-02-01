@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div class="ProductCard-desc" th:fragment="bookDesc">
-    <div class="ProductCard-header">
-        <h1 class="ProductCard-title">Мара и морок
+<div  class="ProductCard-desc" th:fragment="bookDesc">
+    <div th:if="${not #strings.isEmpty(slugBook)}"  class="ProductCard-header">
+        <h1 class="ProductCard-title"  th:text="${slugBook.getTitle()}">Мара и
+            морок
         </h1>
         <div class="ProductCard-author"><span class="ProductCard-titleProp">Автор:</span>&#32;<a
-                href="#">Лия Арден</a>
+                th:text="${slugBook.author.getFullName()}"    href="#">Лия Арден</a>
         </div>
         <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
             <button class="trigger trigger_dropdown" type="button">
@@ -329,7 +330,8 @@
         </div>
     </div>
     <div class="ProductCard-text">
-        <p >Таких, как я, называют Марами - отмеченными самой богиней смерти Мораной. Когда-то у меня
+        <p th:if="${not #strings.isEmpty(slugBook)}" th:text="${slugBook.getDescription()}">Таких, как я, называют Марами -
+            отмеченными самой богиней смерти Мораной. Когда-то у меня
             и моих шести сестер был свой путь. Тогда люди нас уважали и просили о милосердии. Они
             приносили нам подношения и молились нам. Но 200 лет назад все изменилось, когда принц
             Серата осмелился поднять руку на одну из нас. Я пыталась отомстить, но погибли мы все.
@@ -338,6 +340,8 @@
             кого я никогда не пойду. Таких, как он, называют Морок, и их боятся абсолютно все.
         </p>
     </div>
-    <div th:replace="~{fragments/book_slug_buttons_fragment :: panel}"></div>
+
+
+    <div  th:if="${not #strings.isEmpty(slugBook)}" th:replace="~{fragments/book_slug_buttons_fragment :: panel(slugBook=${slugBook})}"></div>
 </div>
 </html>

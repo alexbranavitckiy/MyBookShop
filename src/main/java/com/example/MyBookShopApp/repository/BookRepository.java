@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndSortingRepository<Book, Integer> {
@@ -22,7 +23,7 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
     @Query("from Book")
     List<Book> customFindAllBooks();
 
-    Book findBookBySlug(String slug);
+    Optional<Book> findBookBySlug(String slug);
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 

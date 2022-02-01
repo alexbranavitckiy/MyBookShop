@@ -2,9 +2,11 @@ package com.example.MyBookShopApp.services;
 
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
 
@@ -14,13 +16,13 @@ public interface BookService {
 
     List<Book> getBooksData();
 
-    Book getBookBySlug(String slug);
+    Optional<Book> getBookBySlug(String slug);
 
     boolean saveBook(Book book);
 
     List<Book> getBooksByAuthor(String authorName);
 
-    List<Book> getBooksByTitle(String title);
+    List<Book> getBooksByTitle(String title) throws BookStoreApiWrongException;
 
     List<Book> getBooksWithPriceBetween(Integer min, Integer max);
 

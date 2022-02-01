@@ -43,6 +43,10 @@
                             </form>
                         </div>
                     </div>
+                    <th:block>
+                        <span th:if="${searchError}" th:text="${searchError.getLocalizedMessage()}" style="color: red"></span>
+                    </th:block>
+
                 </div>
                 <div class="row-block Header-cart" th:replace="~{fragments/cart_block_fragment :: ${status}}"></div>
                 <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">

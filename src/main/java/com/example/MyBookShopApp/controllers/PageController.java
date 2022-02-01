@@ -1,15 +1,23 @@
 package com.example.MyBookShopApp.controllers;
 
 
+import com.example.MyBookShopApp.data.ApiResponse;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.RecommendedBooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.other.Tag;
+import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.ResourceStorage;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +25,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @Controller
 public class PageController {
@@ -73,21 +84,35 @@ public class PageController {
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
-        Book book = bookService.getBookBySlug(slug);
-        model.addAttribute("slugBook", book);
-        return "/books/slug";
+        Optional<Book> bookOptional = bookService.getBookBySlug(slug);
+        bookOptional.ifPresent(book -> model.addAttribute("slugBook", book));
+        return "books/slug";
     }
 
 
-    @PostMapping("/{slug}/img/save")
+    @PostMapping("/books/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
         String savePath = storage.saveNewBookImage(file, slug);
-        Book bookToUpdate = bookService.getBookBySlug(slug);
-        bookToUpdate.setImage(savePath);
-        bookService.saveBook(bookToUpdate);
+        Optional<Book> bookOptional = bookService.getBookBySlug(slug);
+        bookOptional.ifPresent(book -> book.setImage(savePath));
+        bookOptional.ifPresent(bookService::saveBook);
         return "redirect:/books/" + slug;
     }
 
+    @GetMapping("/books/download/{hash}")
+    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
+        Path path = storage.getBookFilePath(hash);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file path: " + path);
+        MediaType mediaType = storage.getBookFileMime(hash);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file mime type: " + mediaType);
+        byte[] data = storage.getBookFileByteArray(hash);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file data len: " + data.length);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                .contentType(mediaType)
+                .contentLength(data.length)
+                .body(new ByteArrayResource(data));
+    }
 
     @GetMapping("/books/popular")
     @ResponseBody
@@ -113,13 +138,17 @@ public class PageController {
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model) {
-        Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
-        model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResults",
-                bookPage.getContent());
-        model.addAttribute("sizeSearch", bookPage.getTotalElements());
-        return "/search/index";
+                                   Model model) throws EmptySearchExceprtion {
+        if (searchWordDto!=null&& !searchWordDto.getExample().equals("favicon.ico")) {
+            Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
+            model.addAttribute("searchWordDto", searchWordDto);
+            model.addAttribute("searchResults",
+                    bookPage.getContent());
+            model.addAttribute("sizeSearch", bookPage.getTotalElements());
+            return "/search/index";
+        } else {
+            throw new EmptySearchExceprtion("Поиск по null невозможен");
+        }
     }
 
     @GetMapping("/search/page/{searchWord}")
@@ -210,5 +239,6 @@ public class PageController {
     public String mainPage() {
         return "index";
     }
+
 
 }
