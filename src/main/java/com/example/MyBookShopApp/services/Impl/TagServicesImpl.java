@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.services.Impl;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.other.Tag;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.TagRepository;
 import com.example.MyBookShopApp.services.TagService;
@@ -37,8 +38,11 @@ public class TagServicesImpl implements TagService {
 
 
     @Override
-    public Tag findTagById(int id) {
-        return tagRepository.getTagById(id);
+    public Tag findTagById(int id) throws EmptySearchExceprtion {
+        Optional<Tag> tagOptional = tagRepository.getTagById(id);
+        if (tagOptional.isPresent()) {
+            return tagOptional.get();
+        }else throw new EmptySearchExceprtion("Not found id_tag...");
     }
 
     @Override

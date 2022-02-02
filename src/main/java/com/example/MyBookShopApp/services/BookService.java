@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface BookService {
 
     Page<Book> getPageBookBySlug(String slug, int offset, int limit);
 
-    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit);
+    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) ;
 
     List<Book> getBooksData();
 

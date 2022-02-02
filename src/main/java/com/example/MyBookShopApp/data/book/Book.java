@@ -52,7 +52,7 @@ public class Book {
 
     @JsonProperty
     public Integer dicsountPrice(){
-        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
+        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price/priceOld));
         return discountedPriceInt;
     }
 

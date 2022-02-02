@@ -44,35 +44,7 @@ public class PageController {
         this.bookService = bookService;
     }
 
-    @ModelAttribute("tagList")
-    public List<Tag> gettagList() {
-        return this.tagService.findAllTags();
-    }
 
-    @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
-        return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("popularBooks")
-    public List<Book> popularBooks() {
-        return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();
-    }
-
-    @ModelAttribute("resentBooks")
-    public List<Book> bestsellersBooks() {
-        return bookService.getPageOfNameSortBooks(0, 10, "pubDate").getContent();
-    }
-
-    @ModelAttribute("sizeSearch")
-    public String sizeList() {
-        return "";
-    }
 
     @GetMapping("/books/recommended")
     @ResponseBody
@@ -135,35 +107,29 @@ public class PageController {
         return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "coefficient").getContent());
     }
 
-
-
-    @GetMapping(value = {"/search", "/search/{searchWord}"})
-    public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model) throws EmptySearchExceprtion {
-        if (!searchWordDto.getExample().equals("favicon.ico")) {
-            Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
-            model.addAttribute("searchWordDto", searchWordDto);
-            model.addAttribute("searchResults",
-                    bookPage.getContent());
-            model.addAttribute("sizeSearch", bookPage.getTotalElements());
-            return "/search/index";
-        } else {
-            throw new EmptySearchExceprtion("Поиск по null невозможен");
-        }
+    @ModelAttribute("tagList")
+    public List<Tag> gettagList() {
+        return this.tagService.findAllTags();
     }
 
-    @GetMapping("/search/page/{searchWord}")
-    @ResponseBody
-    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
-                                          @RequestParam("limit") Integer limit,
-                                          @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto, Model model) {
-        if (offset < 0) return new BooksPageDto();
-        Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
-        model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResults",
-                bookPage.getContent());
-        model.addAttribute("sizeSearch", bookPage.getTotalElements());
-        return new BooksPageDto(bookPage.getContent());
+    @ModelAttribute("recommendedBooks")
+    public List<Book> recommendedBooks() {
+        return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
+    }
+
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
+
+    @ModelAttribute("popularBooks")
+    public List<Book> popularBooks() {
+        return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();
+    }
+
+    @ModelAttribute("resentBooks")
+    public List<Book> bestsellersBooks() {
+        return bookService.getPageOfNameSortBooks(0, 10, "pubDate").getContent();
     }
 
     @GetMapping("/books/recentPage")
@@ -216,11 +182,6 @@ public class PageController {
         return "contacts";
     }
 
-    @GetMapping("search/")
-    public String searchPage() {
-        return "search/index";
-    }
-
     @GetMapping("/profile")
     public String profilePage() {
         return "profile";
@@ -235,6 +196,5 @@ public class PageController {
     public String mainPage() {
         return "index";
     }
-
 
 }

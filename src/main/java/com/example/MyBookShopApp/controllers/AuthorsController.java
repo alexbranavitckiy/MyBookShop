@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +19,7 @@ import java.util.Map;
 @Controller
 public class AuthorsController {
 
-
     private final AuthorService authorService;
-
 
     @Autowired
     private AuthorsController(AuthorService authorService) {
@@ -48,7 +47,7 @@ public class AuthorsController {
     }
 
     @GetMapping(value = {"/authors/SLUG/"})
-    public String getAuthors(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) {
+    public String getAuthors(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
         model.addAttribute("SLUG", SLUG);
         model.addAttribute("authorsListBookPage", authorService.getPageBookByAuthorSlag(SLUG, 0, 5));
@@ -59,17 +58,17 @@ public class AuthorsController {
     @ResponseBody
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
-                                          @PathVariable(value = "SLUG", required = false) String SLUG, Model model) {
+                                          @PathVariable(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
         if (offset < 0) return new BooksPageDto();
-        Page<Book> bookPage = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
+        Page<Book> bookPage = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
         model.addAttribute("sizeSearch", bookPage.getTotalElements());
         return new BooksPageDto(bookPage.getContent());
     }
 
 
     @GetMapping(value = {"/books/authors/page/SLUG"})
-    public String authorsListBook(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) {
+    public String authorsListBook(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
         model.addAttribute("SLUG", SLUG);
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
         model.addAttribute("authorsListBook", authorService.getPageBookByAuthorSlag(SLUG, 0, 20));

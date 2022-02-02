@@ -20,15 +20,7 @@ import java.util.StringJoiner;
 @RequestMapping("/books")
 public class BookshpCartController {
 
-    @ModelAttribute(name = "bookCart")
-    public List<Book> bookCart() {
-        return new ArrayList<>();
-    }
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
 
 
     private final BookRepository bookRepository;
@@ -41,8 +33,6 @@ public class BookshpCartController {
     @GetMapping("/cart")
     public String handleCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
                                     Model model) {
-        System.out.println("/cart");
-
         if (cartContents == null || cartContents.equals("")) {
             model.addAttribute("isCartEmpty", true);
         } else {
@@ -60,7 +50,6 @@ public class BookshpCartController {
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
     public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug, @CookieValue(name =
             "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
-        System.out.println("/changeBookStatus/cart/remove/{slug}");
         if (cartContents != null && !cartContents.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             cookieBooks.remove(slug);
@@ -77,7 +66,6 @@ public class BookshpCartController {
     @PostMapping("/changeBookStatus/{slug}")
     public String handleChangeBookStatus(@PathVariable("slug") String slug, @CookieValue(name = "cartContents",
             required = false) String cartContents, HttpServletResponse response, Model model) {
-        System.out.println("/changeBookStatus/{slug}");
         if (cartContents == null || cartContents.equals("")) {
             Cookie cookie = new Cookie("cartContents", slug);
             cookie.setPath("/books");
@@ -94,5 +82,13 @@ public class BookshpCartController {
         return "redirect:/books/" + slug;
     }
 
+    @ModelAttribute(name = "bookCart")
+    public List<Book> bookCart() {
+        return new ArrayList<>();
+    }
 
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
 }

@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.other.Tag;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface TagService {
 
     Page<Book> getPageOfTagSortBooks(Integer offset, Integer limit, Tag tag, String nameSort);
 
-    Tag  findTagById(int id);
+    Tag  findTagById(int id) throws EmptySearchExceprtion;
 
     List<Tag> findAllTags();
 

@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.services.Impl;
 import com.example.MyBookShopApp.data.Dto.AuthorDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.repository.AuthorRepository;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.services.AuthorService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,14 +33,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<Book> getPageBookByAuthorSlag(String slug, int offset, int limit) {
+    public Page<Book> getPageBookByAuthorSlag(String slug, int offset, int limit) throws EmptySearchExceprtion {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
         return bookRepository.findAllByAuthor(getAuthorBySlug(slug), nextPage);
     }
 
     @Override
-    public Author getAuthorBySlug(String slug) {
-        return authorRepository.getBySlug(slug);
+    public Author getAuthorBySlug(String slug) throws EmptySearchExceprtion{
+        Optional<Author> optionalAuthor = authorRepository.getBySlug(slug);
+        if (optionalAuthor.isPresent())
+            return optionalAuthor.get();
+        else throw new EmptySearchExceprtion("Not found Author by slug");
     }
 
     @Override

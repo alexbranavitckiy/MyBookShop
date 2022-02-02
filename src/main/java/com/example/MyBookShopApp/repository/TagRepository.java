@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Integer>, PagingAndSortingRepository<Tag, Integer> {
@@ -15,7 +16,7 @@ public interface TagRepository extends JpaRepository<Tag, Integer>, PagingAndSor
     @Query("from Tag order by listBook.size desc")
     List<Tag> getTagsOrderByDesc();
 
-    Tag getTagById(Integer id);
+   Optional<Tag> getTagById(Integer id);
 
 
 

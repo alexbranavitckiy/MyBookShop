@@ -37,14 +37,17 @@
                             <form class="form form_search" action="#" method="post" data-searchlimit="5"
                                   th:object="${searchWordDto}">
                                 <input class="search-input" id="query" name="query" type="text"
-                                       placeholder="Search over 30 million book titles" th:field="*{example}" value=""/>
+                                       placeholder="Search over 30 million book titles" th:field="*{example}"
+                                       oninvalid="this.setCustomValidity('Data is not valid!')" value=""
+                                       required/>
                                 <button class="search-button" type="submit" name="search" id="search">Поиск
                                 </button>
                             </form>
                         </div>
                     </div>
                     <th:block>
-                        <span th:if="${searchError}" th:text="${searchError.getLocalizedMessage()}" style="color: red"></span>
+                        <span th:if="${searchError}" th:text="${searchError.getLocalizedMessage()}"
+                              style="color: red"></span>
                     </th:block>
 
                 </div>

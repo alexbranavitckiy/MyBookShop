@@ -44,8 +44,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> getBookBySlug(String slug) {
-
-
         return bookRepository.findBookBySlug(slug);
     }
 
@@ -56,7 +54,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean saveBook(Book book) {
+
         bookRepository.save(book);
+
         return false;
     }
 
