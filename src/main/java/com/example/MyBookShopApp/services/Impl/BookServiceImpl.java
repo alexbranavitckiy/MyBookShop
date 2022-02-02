@@ -6,6 +6,7 @@ import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreEntityRepository;
 import com.example.MyBookShopApp.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
+
+
 
     @Autowired
     private BookRepository bookRepository;
@@ -44,6 +47,11 @@ public class BookServiceImpl implements BookService {
 
 
         return bookRepository.findBookBySlug(slug);
+    }
+
+    @Override
+    public List<Book> findBooksBySlugIn(String[] slugs) {
+        return bookRepository.findBooksBySlugIn(slugs);
     }
 
     @Override

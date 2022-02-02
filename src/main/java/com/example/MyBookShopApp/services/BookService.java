@@ -20,6 +20,9 @@ public interface BookService {
 
     boolean saveBook(Book book);
 
+
+    List<Book> findBooksBySlugIn(String[] slugs);
+
     List<Book> getBooksByAuthor(String authorName);
 
     List<Book> getBooksByTitle(String title) throws BookStoreApiWrongException;

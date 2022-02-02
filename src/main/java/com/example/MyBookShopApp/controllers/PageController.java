@@ -136,10 +136,11 @@ public class PageController {
     }
 
 
+
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                    Model model) throws EmptySearchExceprtion {
-        if (searchWordDto!=null&& !searchWordDto.getExample().equals("favicon.ico")) {
+        if (!searchWordDto.getExample().equals("favicon.ico")) {
             Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResults",
@@ -188,11 +189,6 @@ public class PageController {
     @GetMapping("/tags/index")
     public String tagsPage() {
         return "tags/index";
-    }
-
-    @GetMapping("/cart")
-    public String cartPage() {
-        return "cart";
     }
 
     @GetMapping("/my")

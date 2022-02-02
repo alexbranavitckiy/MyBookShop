@@ -15,9 +15,7 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(EmptySearchExceprtion.class)
     public String handlerSearchException(EmptySearchExceprtion ex, RedirectAttributes redirectAttributes) {
         Logger.getLogger(this.getClass().getSimpleName()).warning(ex.getLocalizedMessage());
-        redirectAttributes.addFlashAttribute("searchError",ex);
+        redirectAttributes.addFlashAttribute("searchError", ex);
         return "redirect:/";
     }
-
-
 }

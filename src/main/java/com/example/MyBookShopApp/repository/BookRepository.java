@@ -49,12 +49,6 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
 
     Page<Book> findAllByAuthor(Author author, Pageable nextPage);
 
-
-
-    //  @Query(value = "SELECT * FROM books WHERE books.slug =:slug ", nativeQuery = true)
-  //  Page<Book> findAllBySlugContaining(@Param("slug") String slug, Pageable nextPage);
-
-
-
+    List<Book> findBooksBySlugIn(String[] slugs);
 
 }
