@@ -41,7 +41,7 @@ public class SearchController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
                                                   SearchWordDto searchWordDto, Model model) throws EmptySearchExceprtion {
-        if (searchWordDto != null && searchWordDto.getExample().equals("")) {
+        if (searchWordDto != null && !searchWordDto.getExample().equals("")) {
             if (offset < 0) return new BooksPageDto();
             Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
             model.addAttribute("searchWordDto", searchWordDto);
