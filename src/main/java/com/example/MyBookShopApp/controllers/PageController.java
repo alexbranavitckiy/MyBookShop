@@ -113,9 +113,7 @@ public class PageController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
-        return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();
-    }
+    public List<Book> recommendedBooks() {return bookService.getPageOfNameSortBooks(0, 6, "priceOld").getContent();}
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
@@ -123,9 +121,7 @@ public class PageController {
     }
 
     @ModelAttribute("popularBooks")
-    public List<Book> popularBooks() {
-        return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();
-    }
+    public List<Book> popularBooks() {return bookService.getPageOfNameSortBooks(0, 10, "coefficient").getContent();}
 
     @ModelAttribute("resentBooks")
     public List<Book> bestsellersBooks() {
