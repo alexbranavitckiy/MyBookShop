@@ -44,8 +44,6 @@ public class PageController {
         this.bookService = bookService;
     }
 
-
-
     @GetMapping("/books/recommended")
     @ResponseBody
     public RecommendedBooksPageDto getBooksPageRecommended(@RequestParam("offset") Integer offset,
@@ -53,14 +51,12 @@ public class PageController {
         return new RecommendedBooksPageDto(bookService.getPageOfNameSortBooks(offset, limit, "priceOld").getContent());
     }
 
-
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         Optional<Book> bookOptional = bookService.getBookBySlug(slug);
         bookOptional.ifPresent(book -> model.addAttribute("slugBook", book));
         return "books/slug";
     }
-
 
     @PostMapping("/books/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {

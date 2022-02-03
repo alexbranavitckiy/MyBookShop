@@ -50,7 +50,6 @@ public class Book {
         return author.toString();
     }
 
-
     @Column(name = "by_number_b")
     @ApiModelProperty("the number of users who bought the book")
     private double byNumberB;

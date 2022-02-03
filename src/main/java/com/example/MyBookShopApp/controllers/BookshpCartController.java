@@ -20,15 +20,30 @@ import java.util.StringJoiner;
 @RequestMapping("/books")
 public class BookshpCartController {
 
-
-
-
     private final BookRepository bookRepository;
 
     @Autowired
     public BookshpCartController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+
+    @GetMapping("/postponed")
+    public String handlePostponedRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
+                                         Model model) {
+        if (cartContents == null || cartContents.equals("")) {
+            model.addAttribute("isCartEmpty", true);
+        } else {
+            model.addAttribute("isCartEmpty", false);
+            cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
+            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
+                    cartContents;
+            String[] cookieSlugs = cartContents.split("/");
+            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
+            model.addAttribute("bookCart", booksFromCookieSlugs);
+        }
+        return "postponed";
+    }
+
 
     @GetMapping("/cart")
     public String handleCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
@@ -48,11 +63,19 @@ public class BookshpCartController {
     }
 
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
-    public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug, @CookieValue(name =
-            "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
+    public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug,
+                                                  @CookieValue(name = "contents", required = false) String contents,
+                                                  @CookieValue(name = "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
         if (cartContents != null && !cartContents.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
-            cookieBooks.remove(slug);
+            if (cookieBooks.remove(slug)) {
+                if (contents != null) {
+                    Cookie cookieCont;
+                    cookieCont = new Cookie("contents", String.valueOf(Integer.parseInt(contents) - 1));
+                    cookieCont.setPath("/");
+                    response.addCookie(cookieCont);
+                }
+            }
             Cookie cookie = new Cookie("cartContents", String.join("/", cookieBooks));
             cookie.setPath("/books");
             response.addCookie(cookie);
@@ -64,20 +87,30 @@ public class BookshpCartController {
     }
 
     @PostMapping("/changeBookStatus/{slug}")
-    public String handleChangeBookStatus(@PathVariable("slug") String slug, @CookieValue(name = "cartContents",
-            required = false) String cartContents, HttpServletResponse response, Model model) {
+    public String handleChangeBookStatus(@PathVariable("slug") String slug,
+                                         @CookieValue(name = "cartContents", required = false) String cartContents,
+                                         @CookieValue(name = "contents", required = false) String contents, HttpServletResponse response, Model model) {
+        Cookie cookieCont;
         if (cartContents == null || cartContents.equals("")) {
+            if (contents == null || contents.equals("")) {
+                cookieCont = new Cookie("contents", "0");
+                cookieCont.setPath("/");
+                response.addCookie(cookieCont);
+            }
             Cookie cookie = new Cookie("cartContents", slug);
             cookie.setPath("/books");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
         } else if (!cartContents.contains(slug)) {
-            StringJoiner stringJoiner = new StringJoiner("/");
+            StringJoiner stringJoiner = new StringJoiner("/");// string concatenation
             stringJoiner.add(cartContents).add(slug);
             Cookie cookie = new Cookie("cartContents", stringJoiner.toString());
             cookie.setPath("/books");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
+            cookieCont = new Cookie("contents", String.valueOf(Integer.parseInt(contents) + 1));
+            cookieCont.setPath("/");
+            response.addCookie(cookieCont);
         }
         return "redirect:/books/" + slug;
     }
