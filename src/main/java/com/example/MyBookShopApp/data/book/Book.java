@@ -46,14 +46,8 @@ public class Book {
     private List<GenreEntity> genreEntities;
 
     @JsonGetter("authors")
-    public String authorsFullName(){
+    public String authorsFullName() {
         return author.toString();
-    }
-
-    @JsonProperty
-    public Integer dicsountPrice(){
-        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price/priceOld));
-        return discountedPriceInt;
     }
 
 
@@ -96,6 +90,12 @@ public class Book {
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
     private Double price;
+
+    @JsonProperty
+    @ApiModelProperty("calculation of the old price")
+    public Integer dicsountPrice() {//Math.round for rounding abd tiIntExact for transfer to int
+        return Math.toIntExact((priceOld- Math.round((priceOld * price)/100)));
+    }
 
     public Date getPubDate() {
         return pubDate;

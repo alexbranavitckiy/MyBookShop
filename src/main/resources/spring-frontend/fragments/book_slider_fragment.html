@@ -6,31 +6,39 @@
         </h2>
     </div>
     <div th:switch="${searh}" class="Slider Slider_carousel">
-        <div th:case="#{recommendedBooks}" class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
-                <div  class="Slider-item" th:each="book : ${recommendedBooks}">
-                    <div class="Slider-content">
-                        <div class="Card"><a class="Card-picture" th:href="@{'/books/'+${book.slug}}" ><img
-                                th:src="${book.image}" alt="card.jpg"/></a>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#"
-                                                              th:text="${book.title}">Техника</a>
-                                </strong>
-                                <div class="Card-description" th:text="${book.author}">Кондратенко Валерий
-                                    Петрович
-                                </div>
-                                <div class="Card-cost">
+        <div th:case="#{recommendedBooks}" class="Slider-box Cards" data-load="recommended" data-loadoffset="0"
+             data-loadlimit="6">
+            <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                <div class="Slider-content">
+                    <div class="Card"><a class="Card-picture" th:href="@{'/books/'+${book.slug}}"><img
+                            th:src="${book.image}" alt="card.jpg"/></a>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="#"
+                                                          th:text="${book.title}">Техника</a>
+                            </strong>
+                            <div class="Card-description" th:text="${book.author}">Кондратенко Валерий
+                                Петрович
+                            </div>
+                            <div class="Card-cost">
+
+                                <th:block th:if="${book.getPrice()==0}">
                                     <span class="Card-priceOld" th:text="${'$'+book.priceOld}">₽300.00</span>
-                                    <span class="Card-price" th:text="${'$'+ book.price}">₽190.00</span>
-                                </div>
+                                </th:block>
+
+                                <th:block th:if="${book.getPrice()!=0}">
+                                    <span class="Card-priceOld" th:text="${'$'+book.priceOld+'-'+book.getPrice()+'%'}">₽300.00</span>
+                                    <span class="Card-price" th:text="${'$'+ book.dicsountPrice()}">₽190.00</span>
+                                </th:block>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
         <div th:case="#{popular}" class="Slider-box Cards" data-load="popular" data-loadoffset="0" data-loadlimit="10">
-            <div  class="Slider-item" th:each="book : ${popularBooks}">
+            <div class="Slider-item" th:each="book : ${popularBooks}">
                 <div class="Slider-content">
-                    <div class="Card"><a class="Card-picture"  th:href="@{'/books/'+${book.slug}}"><img
+                    <div class="Card"><a class="Card-picture" th:href="@{'/books/'+${book.slug}}"><img
                             th:src="${book.image}" alt="card.jpg"/></a>
                         <div class="Card-content">
                             <strong class="Card-title"><a href="#"
@@ -48,10 +56,11 @@
                 </div>
             </div>
         </div>
-        <div th:case="#{resentBooks}" class="Slider-box Cards" data-load="recent" data-loadoffset="0" data-loadlimit="10">
-            <div  class="Slider-item" th:each="book : ${resentBooks}">
+        <div th:case="#{resentBooks}" class="Slider-box Cards" data-load="recent" data-loadoffset="0"
+             data-loadlimit="10">
+            <div class="Slider-item" th:each="book : ${resentBooks}">
                 <div class="Slider-content">
-                    <div class="Card"><a class="Card-picture"  th:href="@{'/books/'+${book.slug}}"><img
+                    <div class="Card"><a class="Card-picture" th:href="@{'/books/'+${book.slug}}"><img
                             th:src="${book.image}" alt="card.jpg"/></a>
                         <div class="Card-content">
                             <strong class="Card-title"><a href="#"
