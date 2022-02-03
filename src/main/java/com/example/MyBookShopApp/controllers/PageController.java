@@ -9,6 +9,7 @@ import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.ResourceStorage;
 import com.example.MyBookShopApp.services.TagService;
@@ -31,6 +32,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Controller
+@GlobalData
 public class PageController {
 
     private final BookService bookService;

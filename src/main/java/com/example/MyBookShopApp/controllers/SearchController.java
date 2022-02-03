@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@GlobalData
 public class SearchController {
 
     private final BookService bookService;

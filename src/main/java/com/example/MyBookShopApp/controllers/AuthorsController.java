@@ -6,6 +6,7 @@ import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@GlobalData
 @Controller
 public class AuthorsController {
 

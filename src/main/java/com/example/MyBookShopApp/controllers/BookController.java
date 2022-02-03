@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.data.ApiResponse;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.Impl.BookServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@GlobalData
 @RestController
 public class BookController {
 

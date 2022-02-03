@@ -6,6 +6,7 @@ import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@GlobalData
 public class TagController {
 
     private final TagService tagService;
@@ -26,12 +28,12 @@ public class TagController {
 
     @GetMapping(value = {"/api/books/tag/"})
     public String tagsPage(@RequestParam(required = false, value = "ID") Integer ID, Model model) throws EmptySearchExceprtion {
-        if (ID!=null){
-        Tag tag = tagService.findTagById(ID);
-        model.addAttribute("category", tag.getNameTag());
-        model.addAttribute("tagBooks", tagService.getPageOfTagSortBooks(0, 10, tag, "pubDate").getContent());
-        model.addAttribute("ID", ID);
-        return "tags/index";
+        if (ID != null) {
+            Tag tag = tagService.findTagById(ID);
+            model.addAttribute("category", tag.getNameTag());
+            model.addAttribute("tagBooks", tagService.getPageOfTagSortBooks(0, 10, tag, "pubDate").getContent());
+            model.addAttribute("ID", ID);
+            return "tags/index";
         } else throw new EmptySearchExceprtion("Not null id tag");
     }
 

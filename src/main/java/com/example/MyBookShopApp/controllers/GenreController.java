@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.Dto.TreeGenreDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.GenreServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@GlobalData
 public class GenreController {
 
 
