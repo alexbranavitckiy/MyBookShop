@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -17,57 +18,41 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
-@Controller
+
 @GlobalData
 @RequestMapping("/books")
-public class BookshpCartController {
+@Controller
+public class BookshopCartController {
 
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookshpCartController(BookRepository bookRepository) {
+    public BookshopCartController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping("/postponed")
+
+    @GetMapping("/cart/postponed/")
     public String handlePostponedRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
+                                         @CookieValue(name = "contents", required = false) String contents,
+                                         @RequestParam(name = "slug", required = false) String slug,
+                                         HttpServletResponse response,
                                          Model model) {
-        if (cartContents == null || cartContents.equals("")) {
-            model.addAttribute("isCartEmpty", true);
-        } else {
-            model.addAttribute("isCartEmpty", false);
-            cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
-            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
-                    cartContents;
-            String[] cookieSlugs = cartContents.split("/");
-            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
-            model.addAttribute("bookCart", booksFromCookieSlugs);
-        }
-        return "postponed";
+        cookieValue(cartContents, contents, slug, response, model);
+        return "redirect:/postponed";
     }
 
-
-    @GetMapping("/cart")
-    public String handleCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
-                                    Model model) {
-        if (cartContents == null || cartContents.equals("")) {
-            model.addAttribute("isCartEmpty", true);
-        } else {
-            model.addAttribute("isCartEmpty", false);
-            cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
-            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
-                    cartContents;
-            String[] cookieSlugs = cartContents.split("/");
-            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
-            model.addAttribute("bookCart", booksFromCookieSlugs);
-        }
-        return "cart";
+    @PostMapping("/changeBookStatus/cart/cart/postponed/")
+    public String handlePostponedRequestPost(@CookieValue(value = "cartContents", required = false) String cartContents,
+                                             @CookieValue(name = "contents", required = false) String contents,
+                                             @RequestParam(name = "slug", required = false) String slug,
+                                             HttpServletResponse response,
+                                             Model model) {
+        cookieValue(cartContents, contents, slug, response, model);
+        return "redirect:/postponed";
     }
 
-    @PostMapping("/changeBookStatus/cart/remove/{slug}")
-    public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug,
-                                                  @CookieValue(name = "contents", required = false) String contents,
-                                                  @CookieValue(name = "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
+    private void cookieValue(@CookieValue(value = "cartContents", required = false) String cartContents, @CookieValue(name = "contents", required = false) String contents, @PathVariable(name = "slug", required = false) String slug, HttpServletResponse response, Model model) {
         if (cartContents != null && !cartContents.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             if (cookieBooks.remove(slug)) {
@@ -85,6 +70,38 @@ public class BookshpCartController {
         } else {
             model.addAttribute("isCartEmpty", true);
         }
+    }
+
+    private void countingMoney(List<Book> booksFromCookieSlugs, Model model) {
+        int price = booksFromCookieSlugs.stream().mapToInt(Book::getPriceOld).sum();// calculation of the amount without discount
+        int priceOld = booksFromCookieSlugs.stream().mapToInt(Book::dicsountPrice).sum();// discount calculation/Old price
+        model.addAttribute("priceCart", price);
+        model.addAttribute("priceCartOld", priceOld);
+    }
+
+    @GetMapping("/cart")
+    public String handleCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
+                                    Model model) {
+        if (cartContents == null || cartContents.equals("")) {
+            model.addAttribute("isCartEmpty", true);
+        } else {
+            model.addAttribute("isCartEmpty", false);
+            cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
+            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
+                    cartContents;
+            String[] cookieSlugs = cartContents.split("/");
+            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
+            countingMoney(booksFromCookieSlugs, model);
+            model.addAttribute("bookCart", booksFromCookieSlugs);
+        }
+        return "cart";
+    }
+
+    @PostMapping("/changeBookStatus/cart/remove/{slug}")
+    public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug,
+                                                  @CookieValue(name = "contents", required = false) String contents,
+                                                  @CookieValue(name = "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
+        cookieValue(cartContents, contents, slug, response, model);
         return "redirect:/books/cart";
     }
 
@@ -94,11 +111,9 @@ public class BookshpCartController {
                                          @CookieValue(name = "contents", required = false) String contents, HttpServletResponse response, Model model) {
         Cookie cookieCont;
         if (cartContents == null || cartContents.equals("")) {
-            if (contents == null || contents.equals("")) {
-                cookieCont = new Cookie("contents", "0");
-                cookieCont.setPath("/");
-                response.addCookie(cookieCont);
-            }
+            cookieCont = new Cookie("contents", "1");
+            cookieCont.setPath("/");
+            response.addCookie(cookieCont);
             Cookie cookie = new Cookie("cartContents", slug);
             cookie.setPath("/books");
             response.addCookie(cookie);

@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.Objects;
 
-@ApiOperation("global controller to provide shared elements")
-@ControllerAdvice(annotations = GlobalData.class)
+
+@ControllerAdvice
 public class GlobalController {
 
-    @ModelAttribute
-    public void name(@CookieValue(name = "contents", required = false) String str, Model model){
-        model.addAttribute("cartSize",str);
+    @ModelAttribute(name = "cartSize")
+    public void name(@CookieValue(name = "contents", required = false) String str, Model model) {
+        if (str != null) model.addAttribute("cartSize", str);
+        else model.addAttribute("cartSize", "0");
     }
 
 }
