@@ -15,9 +15,14 @@ import java.util.Objects;
 public class GlobalController {
 
     @ModelAttribute(name = "cartSize")
-    public void name(@CookieValue(name = "contents", required = false) String str, Model model) {
+    public void cartSize(@CookieValue(name = "contents", required = false) String str, Model model) {
         if (str != null) model.addAttribute("cartSize", str);
         else model.addAttribute("cartSize", "0");
     }
 
+    @ModelAttribute(name = "cartPostponedSize")
+    public void cartPostponed(@CookieValue(name = "cartPostponedSize", required = false) String str, Model model) {
+        if (str != null) model.addAttribute("cartPostponedSize", str);
+        else model.addAttribute("cartPostponedSize", "0");
+    }
 }

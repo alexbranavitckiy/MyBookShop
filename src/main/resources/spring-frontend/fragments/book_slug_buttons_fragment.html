@@ -11,6 +11,7 @@
         <div class="ProductCard-cartElement">
             <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
+                    th:attr="data-bookid = ${'postponed/'+slugBook.slug}"
                     data-alttext="Отложена"><span class="btn-icon"><img
                     src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
                     class="btn-content">Отложить</span>

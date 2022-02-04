@@ -23,7 +23,7 @@
     <main class="Middle-main">
         <h1 class="Middle-title">Корзина
         </h1>
-        <h3 th:if="${isCartEmpty}">Корзина пуста:(</h3>
+        <h3 th:if="${isPostponedEmpty}">Корзина пуста:(</h3>
         <form class="form Cart" action="#" method="post">
 
             <div class="Cart-product" th:each="book : ${bookCart}">
@@ -85,11 +85,7 @@
                             </div>
                             <div class="Cart-buttons">
                                 <div class="Cart-btn">
-                                    <button
-                                            class="btn btn_primary btn_outline"><span class="btn-icon"><img
-                                            src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
-                                            class="btn-content"> <a
-                                                                    th:href="@{'/books/cart/postponed/'(slug=${book.slug})}">Отложить</a></span>
+                                    <button     th:attr="data-bookid = ${'cart/postponed/'+book.slug}" class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1133]"><span class="btn-icon"><img src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span class="btn-content">Отложить</span>
                                     </button>
                                 </div>
                                 <div class="Cart-btn">

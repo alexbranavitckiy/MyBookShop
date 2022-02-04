@@ -181,11 +181,6 @@ public class PageController {
         return "profile";
     }
 
-    @GetMapping("/postponed")
-    public String postponedPage() {
-        return "postponed";
-    }
-
     @GetMapping("/")
     public String mainPage() {
         return "index";
