@@ -20,7 +20,6 @@ import java.util.List;
 @GlobalData
 public class GenreController {
 
-
     private final GenreServices genreServices;
     private final BookService bookService;
 

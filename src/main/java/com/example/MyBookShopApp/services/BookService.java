@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.services;
 
 
+import com.example.MyBookShopApp.data.Dto.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
@@ -19,8 +20,11 @@ public interface BookService {
 
     Optional<Book> getBookBySlug(String slug);
 
+    Optional<BookDto> getBookDtoBySlug(String slug);
+
     boolean saveBook(Book book);
 
+    Page<BookDto> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort);
 
     List<Book> findBooksBySlugIn(String[] slugs);
 
@@ -34,10 +38,7 @@ public interface BookService {
 
     List<Book> getBooksWithMaxPrice();
 
-    List<Book> getBestsellers();
-
     Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit);
-
 
     Page<Book> getPageOfDateBooks(Integer offset, Integer limit, String fromDate, String dateTo);
 

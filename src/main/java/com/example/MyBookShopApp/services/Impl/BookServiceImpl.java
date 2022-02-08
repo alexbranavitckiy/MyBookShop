@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.services.Impl;
 
+import com.example.MyBookShopApp.data.Dto.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import com.example.MyBookShopApp.repository.BookRepository;
@@ -21,12 +22,19 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
 
+    private final BookRepository bookRepository;
+    private final GenreEntityRepository genreEntityRepository;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookServiceImpl(BookRepository bookRepository, GenreEntityRepository genreEntityRepository) {
+        this.bookRepository = bookRepository;
+        this.genreEntityRepository = genreEntityRepository;
+    }
 
-    @Autowired
-    private GenreEntityRepository genreEntityRepository;
+    @Override
+    public Optional<BookDto> getBookDtoBySlug(String slug) {
+         return bookRepository.findBookDtoBySlug(slug);
+    }
 
     @Override
     public Page<Book> getPageBookBySlug(String slug, int offset, int limit) {
@@ -54,9 +62,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean saveBook(Book book) {
-
         bookRepository.save(book);
-
         return false;
     }
 
@@ -91,10 +97,6 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getBooksWithMaxDiscount();
     }
 
-    public List<Book> getBestsellers() {
-        return bookRepository.getBestsellers();
-    }
-
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findAll(nextPage);
@@ -115,13 +117,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(nextPage);
     }
 
-    public BookRepository getBookRepository() {
-        return bookRepository;
+    public Page<BookDto> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
+        return bookRepository.findAllBy(nextPage);
     }
 
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
 }
 
 

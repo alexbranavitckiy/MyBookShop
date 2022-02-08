@@ -30,6 +30,7 @@ public class ToolCartAndPostponedServicesImpl implements ToolCartAndPostponedSer
     }
 
 
+
     public Cookie SetCookie(String path, String slug, String name) {
         Cookie cookie = new Cookie(name, slug);
         cookie.setPath(path);

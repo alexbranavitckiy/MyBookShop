@@ -1,12 +1,14 @@
 package com.example.MyBookShopApp.controllers;
 
 
+import com.example.MyBookShopApp.data.Dto.TagDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.Dto.BooksPageDto;
 import com.example.MyBookShopApp.data.Dto.SearchWordDto;
 import com.example.MyBookShopApp.data.other.Tag;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
+import com.example.MyBookShopApp.services.MappingService;
 import com.example.MyBookShopApp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,11 @@ import java.util.List;
 public class TagController {
 
     private final TagService tagService;
+    private final MappingService mappingService;
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagController(MappingService mappingService, TagService tagService) {
+        this.mappingService = mappingService;
         this.tagService = tagService;
     }
 
@@ -50,8 +54,8 @@ public class TagController {
     }
 
     @ModelAttribute("tagList")
-    public List<Tag> getTagListDesc() {
-        return this.tagService.findAllTagsAndSortSizeDesc();
+    public List<TagDto> getTagListDesc() {
+        return  this.mappingService.mapToListTagDto(this.tagService.findAllTagsAndSortSizeDesc());
     }
 
     @ModelAttribute("searchWordDto")

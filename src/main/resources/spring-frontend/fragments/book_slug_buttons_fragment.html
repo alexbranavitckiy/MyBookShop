@@ -2,11 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/assets/css/DownloadBookWindowStyle.css">
 <div th:fragment="panel">
-    <div th:each="bookFile : ${slugBook.getBookFileList()}">
-
-        <p th:text="${bookFile.getBookFileExtensionString()}"></p>
-
-    </div>
     <div class="ProductCard-cart">
         <div class="ProductCard-cartElement">
             <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"

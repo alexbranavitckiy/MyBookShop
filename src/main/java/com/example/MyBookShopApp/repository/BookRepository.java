@@ -1,9 +1,11 @@
 package com.example.MyBookShopApp.repository;
 
 
+import com.example.MyBookShopApp.data.Dto.BookDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.other.Statistics;
 import com.example.MyBookShopApp.data.other.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,10 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
+    Page<BookDto> findAllBy( Pageable nextPage);
+
+    Optional<BookDto> findBookDtoBySlug(String slug);
+
     Page<Book> findBookByTagsContaining(Tag bookTitle, Pageable nextPage);
 
     Page<Book> findAllByGenreEntitiesContaining(GenreEntity genre, Pageable nextPage);
@@ -40,9 +46,6 @@ public interface BookRepository extends JpaRepository<Book, Integer>, PagingAndS
     List<Book> findBooksByPriceOldBetween(Integer min, Integer max);
 
     List<Book> findBooksByPriceOldIs(Integer price);
-
-    @Query("from Book where isBestseller=1")
-    List<Book> getBestsellers();
 
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();

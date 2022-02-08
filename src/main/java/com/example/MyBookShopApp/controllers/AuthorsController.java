@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,7 @@ public class AuthorsController {
         model.addAttribute("SLUG", SLUG);
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
         model.addAttribute("authorsListBook", authorService.getPageBookByAuthorSlag(SLUG, 0, 20));
+        ModelAndView modelAndView=new ModelAndView("/books/author");
         return "/books/author";
     }
 }

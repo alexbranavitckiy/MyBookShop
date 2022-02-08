@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.Objects;
 
 
-@ControllerAdvice
+
+@ControllerAdvice(annotations = {GlobalData.class})
 public class GlobalController {
 
     @ModelAttribute(name = "cartSize")
