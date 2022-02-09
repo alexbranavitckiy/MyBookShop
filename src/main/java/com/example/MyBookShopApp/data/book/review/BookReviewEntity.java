@@ -1,7 +1,10 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.example.MyBookShopApp.data.book.Book;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "book_review")
@@ -11,10 +14,11 @@ public class BookReviewEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(name = "user_id", columnDefinition = "INT NOT NULL")
     private int userId;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
@@ -31,12 +35,12 @@ public class BookReviewEntity {
         this.id = id;
     }
 
-    public int getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public int getUserId() {
@@ -61,5 +65,15 @@ public class BookReviewEntity {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "BookReviewEntity{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", time=" + time +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

@@ -65,8 +65,9 @@ public class PageController {
         if (bookOptional.isPresent()) {
             model.addAttribute("slugBook", bookOptional.get());
             Statistics statistics = bookOptional.get().getStatistics();
-            model.addAttribute("averageValue",  statistics.getAverageValue());
+            model.addAttribute("averageValue", statistics.getAverageValue());
             model.addAttribute("averageNumber", NumberFormat.getInstance().format(statistics.getNumberAverage()));
+            System.out.println(bookOptional.get().getBookReviewEntities());
         }
         return "books/slug";
     }
@@ -171,7 +172,7 @@ public class PageController {
     }
 
     @GetMapping("/books/slugmy")
-    public String  slugmy() {
+    public String slugmy() {
         return "books/slugmy";
     }
 

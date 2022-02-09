@@ -11,10 +11,11 @@ public class BookReviewLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    //идентификатор отзыва
+    @Column(name = "review_id", columnDefinition = "INT NOT NULL")
     private int reviewId;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(name = "user_Id", columnDefinition = "INT NOT NULL")
     private int userId;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
@@ -22,6 +23,8 @@ public class BookReviewLikeEntity {
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
+
+
 
     public int getId() {
         return id;

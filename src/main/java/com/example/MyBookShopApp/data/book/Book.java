@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.book.file.BookFile;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.other.Statistics;
 import com.example.MyBookShopApp.data.other.Tag;
@@ -35,6 +36,9 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<BookFile> bookFileList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<BookReviewEntity> bookReviewEntities;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "statistics_id", referencedColumnName = "id")
@@ -196,5 +200,13 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public List<BookReviewEntity> getBookReviewEntities() {
+        return bookReviewEntities;
+    }
+
+    public void setBookReviewEntities(List<BookReviewEntity> bookReviewEntities) {
+        this.bookReviewEntities = bookReviewEntities;
     }
 }
