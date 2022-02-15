@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.data.user;
 
 import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.data.book.review.BookReviewLikeEntity;
+import com.example.MyBookShopApp.data.book.review.MessageEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,7 +32,18 @@ public class UserEntity {
     private List<BookReviewLikeEntity> bookReviewLikeEntity;
 
     @OneToMany(mappedBy = "userEntities")
+    private List<MessageEntity> MessageEntity;
+
+    @OneToMany(mappedBy = "userEntities")
     private List<BookReviewEntity> bookReviewEntities;
+
+    public List<com.example.MyBookShopApp.data.book.review.MessageEntity> getMessageEntity() {
+        return MessageEntity;
+    }
+
+    public void setMessageEntity(List<com.example.MyBookShopApp.data.book.review.MessageEntity> messageEntity) {
+        MessageEntity = messageEntity;
+    }
 
     public int getId() {
         return id;

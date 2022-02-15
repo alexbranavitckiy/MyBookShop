@@ -4,6 +4,7 @@ import com.example.MyBookShopApp.dtoModel.book.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
 import com.example.MyBookShopApp.dtoModel.convector.BookСonvectorImpl;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreEntityRepository;
@@ -41,9 +42,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> getPageBookBySlug(String slug, int offset, int limit) {
+    public BooksPageDtoModel getPageBookBySlug(String slug, int offset, int limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findAllByGenreEntitiesContaining(genreEntityRepository.getBySlug(slug), nextPage);
+        Page<Book> page = bookRepository.findAllByGenreEntitiesContaining(genreEntityRepository.getBySlug(slug), nextPage);
+        BooksPageDtoModel booksPageDtoModel = new BooksPageDtoModel();
+        booksPageDtoModel.setTotalElement(page.getTotalElements());
+        booksPageDtoModel.setCount(page.getSize());
+        booksPageDtoModel.setBooks(page.getContent().stream().map(bookConvertor::convertToDto).collect(Collectors.toList()));
+        bookRepository.findAllByGenreEntitiesContaining(genreEntityRepository.getBySlug(slug), nextPage).stream().map(bookConvertor::convertToDto).collect(Collectors.toList());
+        return booksPageDtoModel;
     }
 
     public List<Book> getBooksData() {
@@ -87,9 +94,14 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findBooksByPriceOldBetween(min, max);
     }
 
-    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) {
+    public BooksPageDtoModel getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findBookByTitleContaining(searchWord, nextPage);
+        Page<Book> page = bookRepository.findBookByTitleContaining(searchWord, nextPage);
+        BooksPageDtoModel booksPageDtoModel = new BooksPageDtoModel();
+        booksPageDtoModel.setCount(page.getSize());
+        booksPageDtoModel.setTotalElement(page.getTotalElements());
+        booksPageDtoModel.setBooks(page.stream().map(bookConvertor::convertToDto).collect(Collectors.toList()));
+        return booksPageDtoModel;
     }
 
     public List<Book> getBooksWithPrice(Integer price) {

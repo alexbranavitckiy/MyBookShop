@@ -4,6 +4,7 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
@@ -39,33 +40,34 @@ public class SearchController {
 
     @GetMapping("/search/page/{searchWord}")
     @ResponseBody
-    public BooksPageDtoError getNextSearchPage(@RequestParam("offset") Integer offset,
+    public BooksPageDtoModel getNextSearchPage(@RequestParam("offset") Integer offset,
                                                @RequestParam("limit") Integer limit,
                                                @PathVariable(value = "searchWord", required = false)
-                                                  SearchWordDto searchWordDto, Model model) throws EmptySearchExceprtion {
+                                                       SearchWordDto searchWordDto, Model model) throws EmptySearchExceprtion {
         if (searchWordDto != null && !searchWordDto.getExample().equals("")) {
-            if (offset < 0) return new BooksPageDtoError();
-            Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
+            if (offset < 0) return new BooksPageDtoModel();
+            BooksPageDtoModel booksPageDtoModel = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResults",
-                    bookPage.getContent());
-            model.addAttribute("sizeSearch", bookPage.getTotalElements());
-            return new BooksPageDtoError(bookPage.getContent());
+                    booksPageDtoModel);
+            model.addAttribute("sizeSearch", booksPageDtoModel.getTotalElement());
+            return booksPageDtoModel;
         } else throw new EmptySearchExceprtion("Search word error");
     }
+
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                    Model model) throws EmptySearchExceprtion {
-        if (searchWordDto!=null&&!searchWordDto.getExample().equals("favicon.ico")) {
-            Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
+        if (searchWordDto != null && !searchWordDto.getExample().equals("favicon.ico")) {
+            BooksPageDtoModel booksPageDtoModel = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResults",
-                    bookPage.getContent());
-            model.addAttribute("sizeSearch", bookPage.getTotalElements());
+                    booksPageDtoModel);
+            model.addAttribute("sizeSearch", booksPageDtoModel.getTotalElement());
             return "/search/index";
         } else {
-               throw new EmptySearchExceprtion("Not null search");
+            throw new EmptySearchExceprtion("Not null search");
         }
     }
 

@@ -1,5 +1,8 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.example.MyBookShopApp.data.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,9 +17,6 @@ public class MessageEntity {
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
-    @Column(columnDefinition = "INT")
-    private int userId;
-
     @Column(columnDefinition = "VARCHAR(255)")
     private String email;
 
@@ -28,6 +28,19 @@ public class MessageEntity {
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private UserEntity userEntities;
+
+    public UserEntity getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(UserEntity userEntities) {
+        this.userEntities = userEntities;
+    }
 
     public int getId() {
         return id;
@@ -43,14 +56,6 @@ public class MessageEntity {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getEmail() {

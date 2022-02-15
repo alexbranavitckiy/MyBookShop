@@ -77,6 +77,17 @@ public class PageController {
                                                        @RequestParam("limit") Integer limit) {
         return new RecommendedBooksPageBookDtoModel(this.statisticsServices.getPageOfNameSortStatisticsBooksByPopularAndMapping(offset, limit, "coefficient"));
     }
+    //bookReview
+
+    @PostMapping("/bookReview/save")
+    public String saveNewbookReview(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
+        String savePath = storage.saveNewBookImage(file, slug);
+        Optional<Book> bookOptional = bookService.getBookBySlug(slug);
+        bookOptional.ifPresent(book -> book.setImage(savePath));
+        bookOptional.ifPresent(bookService::saveBook);
+        return "redirect:/books/" + slug;
+    }
+
 
     @PostMapping("/books/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
@@ -155,11 +166,6 @@ public class PageController {
     public String popularPage() {
         return "books/popular";
     }
-
-    //    @ModelAttribute("booksList") deprecated method!!!
-    //    public List<Book> bookList() {
-    //        return bookService.getBooksData();
-    //    }
 
 
     @GetMapping("/documents/index")

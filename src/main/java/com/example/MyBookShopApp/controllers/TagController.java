@@ -21,11 +21,9 @@ import java.util.List;
 public class TagController {
 
     private final TagService tagService;
-    private final MappingService mappingService;
 
     @Autowired
-    public TagController(MappingService mappingService, TagService tagService) {
-        this.mappingService = mappingService;
+    public TagController( TagService tagService) {
         this.tagService = tagService;
     }
 

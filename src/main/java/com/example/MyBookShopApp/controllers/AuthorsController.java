@@ -74,7 +74,7 @@ public class AuthorsController {
     @GetMapping(value = {"/books/authors/page/SLUG"})
     public String authorsListBook(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
         model.addAttribute("SLUG", SLUG);
-        model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
+        model.addAttribute("author", authorService.getAuthorBySlugModelDto(SLUG));
         model.addAttribute("authorsListBook", authorService.getPageBookByAuthorSlag(SLUG, 0, 20));
         ModelAndView modelAndView = new ModelAndView("/books/author");
         return "/books/author";

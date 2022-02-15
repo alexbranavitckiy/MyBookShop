@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.dtoModel.TreeGenreDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.GenreServices;
@@ -49,13 +50,13 @@ public class GenreController {
         return genreServices.generationTreeGenre();
     }
 
-    @GetMapping(value = {"/genres/SLUG"})
+    @GetMapping(value = {"/genres/SLUG"})// rewrite!!!
     public String getSearchResults(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) {
         model.addAttribute("SLUG", SLUG);
-        Page<Book> page = bookService.getPageBookBySlug(SLUG, 0, 5);
-        if (page.getTotalElements() > 5) model.addAttribute("flagButton", true);
-        model.addAttribute("flagButton", page.getTotalElements() >= (5));
-        model.addAttribute("genresBooks", page.getContent());
+        BooksPageDtoModel booksPageDtoModel = bookService.getPageBookBySlug(SLUG, 0, 5);
+        if (booksPageDtoModel.getTotalElement() > 5) model.addAttribute("flagButton", true);
+        model.addAttribute("flagButton", booksPageDtoModel.getTotalElement() >= (5));
+        model.addAttribute("genresBooks", booksPageDtoModel.getBooks());
         model.addAttribute("nameGenre", genreServices.getGenreByName(SLUG));
         return "books/genres";
     }
@@ -63,14 +64,14 @@ public class GenreController {
 
     @GetMapping("/genres/page{SLUG}")
     @ResponseBody
-    public BooksPageDtoError getSLUGBook(@RequestParam("offset") Integer offset,
+    public BooksPageDtoModel getSLUGBook(@RequestParam("offset") Integer offset,
                                     @RequestParam("limit") Integer limit,
                                     @PathVariable(value = "SLUG", required = false) String SLUG, Model model) {
         model.addAttribute("SLUG", SLUG);
-        Page<Book> page = bookService.getPageBookBySlug(SLUG, offset, limit);
-        model.addAttribute("flagButton", page.getTotalElements() >= (5 * offset));
+        BooksPageDtoModel booksPageDtoModel = bookService.getPageBookBySlug(SLUG, offset, limit);
+        model.addAttribute("flagButton", booksPageDtoModel.getTotalElement() >= (5 * offset));
         model.addAttribute("nameGenre", genreServices.getGenreByName(SLUG));
-        return new BooksPageDtoError(page.getContent());
+        return booksPageDtoModel;
     }
 
 

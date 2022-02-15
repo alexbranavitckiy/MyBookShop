@@ -4,6 +4,7 @@ package com.example.MyBookShopApp.services;
 import com.example.MyBookShopApp.dtoModel.book.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
 import org.springframework.data.domain.Page;
 
@@ -12,9 +13,9 @@ import java.util.Optional;
 
 public interface BookService {
 
-    Page<Book> getPageBookBySlug(String slug, int offset, int limit);
+    BooksPageDtoModel getPageBookBySlug(String slug, int offset, int limit);
 
-    public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) ;
+    BooksPageDtoModel getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) ;
 
     List<Book> getBooksData();
 
