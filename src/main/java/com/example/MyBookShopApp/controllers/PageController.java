@@ -1,6 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
 
+import com.example.MyBookShopApp.data.ResponseRating;
+import com.example.MyBookShopApp.data.Responseses;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.dtoModel.page.RecommendedBooksPageBookDtoModel;
 import com.example.MyBookShopApp.data.book.Book;
@@ -41,9 +43,9 @@ public class PageController {
 
 
     @Autowired
-    public PageController(TagConvectorImpl tagConvector,StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
+    public PageController(TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
         this.storage = storage;
-        this.tagConvector=tagConvector;
+        this.tagConvector = tagConvector;
         this.statisticsServices = statisticsServices;
         this.mappingService = mappingService;
         this.tagService = tagService;
@@ -74,18 +76,25 @@ public class PageController {
     @GetMapping("/books/popular")
     @ResponseBody// rewrite!
     public RecommendedBooksPageBookDtoModel getBooksPagePopular(@RequestParam("offset") Integer offset,
-                                                       @RequestParam("limit") Integer limit) {
+                                                                @RequestParam("limit") Integer limit) {
         return new RecommendedBooksPageBookDtoModel(this.statisticsServices.getPageOfNameSortStatisticsBooksByPopularAndMapping(offset, limit, "coefficient"));
     }
+
     //bookReview
+    //bookId: 1111
+    //text: rht
+//bookId: book-vlv-654
+//text: 233333333333333333
 
     @PostMapping("/bookReview/save")
-    public String saveNewbookReview(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
-        String savePath = storage.saveNewBookImage(file, slug);
-        Optional<Book> bookOptional = bookService.getBookBySlug(slug);
-        bookOptional.ifPresent(book -> book.setImage(savePath));
-        bookOptional.ifPresent(bookService::saveBook);
-        return "redirect:/books/" + slug;
+    @ResponseBody
+    public Responseses saveNewbookReview(@RequestParam(value = "text", required = false) String text, @RequestParam(value = "bookId", required = false) String slug) {
+
+        System.out.println(text + "//" + slug);
+
+        Responseses response = new Responseses(true);
+
+        return response;
     }
 
 
@@ -118,22 +127,22 @@ public class PageController {
     @GetMapping("/books/recent")
     @ResponseBody
     public RecommendedBooksPageBookDtoModel getBooksRecent(@RequestParam(required = false, value = "offset") Integer offset,
-                                                  @RequestParam(required = false, value = "limit") Integer limit,
-                                                  @RequestParam(required = false, value = "from") String from,
-                                                  @RequestParam(required = false, value = "to") String to) {
+                                                           @RequestParam(required = false, value = "limit") Integer limit,
+                                                           @RequestParam(required = false, value = "from") String from,
+                                                           @RequestParam(required = false, value = "to") String to) {
 
         if (from != null && to != null && !from.isEmpty() && !to.isEmpty()) {
-                    return new RecommendedBooksPageBookDtoModel(bookService.getPageOfDateBooks(offset, limit,
-                            from.substring(6, 10) + "-" + from.substring(3, 5) + "-" + from.substring(0, 2),
-                            to.substring(6, 10) + "-" + to.substring(3, 5) + "-" + to.substring(0, 2)));
-                }
+            return new RecommendedBooksPageBookDtoModel(bookService.getPageOfDateBooks(offset, limit,
+                    from.substring(6, 10) + "-" + from.substring(3, 5) + "-" + from.substring(0, 2),
+                    to.substring(6, 10) + "-" + to.substring(3, 5) + "-" + to.substring(0, 2)));
+        }
 
         return new RecommendedBooksPageBookDtoModel(this.statisticsServices.getPageOfNameSortStatisticsBooksByPopularAndMapping(offset, limit, "coefficient"));
     }
 
     @ModelAttribute("tagList")
     public List<TagDtoModel> getTagListDesc() {
-        return this.tagService.findAllTagsAndSortSizeDesc() ;
+        return this.tagService.findAllTagsAndSortSizeDesc();
     }
 
     @ModelAttribute("recommendedBooks")
