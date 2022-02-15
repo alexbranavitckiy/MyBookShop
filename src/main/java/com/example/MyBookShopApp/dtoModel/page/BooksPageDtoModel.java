@@ -8,6 +8,8 @@ public class BooksPageDtoModel {
 
     private Integer count;
     private List<BookDtoModel> books;
+    private long totalElement;
+
 
     public BooksPageDtoModel(List<BookDtoModel> books) {
         this.books = books;
@@ -16,6 +18,26 @@ public class BooksPageDtoModel {
 
     public BooksPageDtoModel() {
 
+    }
+
+    public BooksPageDtoModel(Integer count, List<BookDtoModel> books) {
+        this.count = count;
+        this.books = books;
+    }
+
+
+    public BooksPageDtoModel(Integer count, List<BookDtoModel> books, long totalElement) {
+        this.count = count;
+        this.books = books;
+        this.totalElement = totalElement;
+    }
+
+    public long getTotalElement() {
+        return totalElement;
+    }
+
+    public void setTotalElement(long totalElement) {
+        this.totalElement = totalElement;
     }
 
     public Integer getCount() {

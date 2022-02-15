@@ -3,8 +3,10 @@ package com.example.MyBookShopApp.services.Impl;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dtoModel.author.AuthorsModel;
+import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
 import com.example.MyBookShopApp.dtoModel.convector.AuthorConvectorImpl;
 import com.example.MyBookShopApp.dtoModel.convector.BookСonvectorImpl;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.repository.AuthorRepository;
 import com.example.MyBookShopApp.repository.BookRepository;
@@ -38,11 +40,13 @@ public class AuthorServiceImpl implements AuthorService {
         this.bookRepository = bookRepository;
     }
 
+
     @Override
-    public Page<Book> getPageBookByAuthorSlag(String slug, int offset, int limit) throws EmptySearchExceprtion {
+    public BooksPageDtoModel getPageBookByAuthorSlag(String slug, int offset, int limit) throws EmptySearchExceprtion {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
-        return
-                bookRepository.findAllByAuthor(getAuthorBySlug(slug), nextPage);
+        Page<Book> page=bookRepository.findAllByAuthor(getAuthorBySlug(slug), nextPage);
+        List<BookDtoModel> bookDtoModelList = page.stream().map(bookConvertor::convertToDto).collect(Collectors.toList());
+        return new BooksPageDtoModel(bookDtoModelList.size(),bookDtoModelList,page.getTotalElements());
     }
 
     @Override
@@ -50,6 +54,14 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> optionalAuthor = authorRepository.getBySlug(slug);
         if (optionalAuthor.isPresent())
             return optionalAuthor.get();
+        else throw new EmptySearchExceprtion("Not found Author by slug");
+    }
+
+    @Override
+    public AuthorsModel getAuthorBySlugModelDto(String slug) throws EmptySearchExceprtion {
+        Optional<Author> optionalAuthor = authorRepository.getBySlug(slug);
+        if (optionalAuthor.isPresent())
+            return authorConvector.toDto(optionalAuthor.get());
         else throw new EmptySearchExceprtion("Not found Author by slug");
     }
 

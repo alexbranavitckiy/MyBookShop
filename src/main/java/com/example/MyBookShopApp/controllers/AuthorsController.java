@@ -4,6 +4,8 @@ import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dtoModel.author.AuthorsModel;
+import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
+import com.example.MyBookShopApp.dtoModel.page.BooksPageDtoModel;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.AuthorService;
@@ -58,14 +60,14 @@ public class AuthorsController {
 
     @GetMapping("/books/author/SLUG{SLUG}")
     @ResponseBody
-    public BooksPageDtoError getNextSearchPage(@RequestParam("offset") Integer offset,
+    public BooksPageDtoModel getNextSearchPage(@RequestParam("offset") Integer offset,
                                                @RequestParam("limit") Integer limit,
                                                @PathVariable(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
-        if (offset < 0) return new BooksPageDtoError();
-        model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
-        Page<Book> bookPage = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
-        model.addAttribute("sizeSearch", bookPage.getTotalElements());
-        return new BooksPageDtoError(bookPage.getContent());
+        if (offset < 0) return new BooksPageDtoModel();
+        model.addAttribute("author", authorService.getAuthorBySlugModelDto(SLUG));
+        BooksPageDtoModel booksPageDtoModel = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
+        model.addAttribute("sizeSearch", booksPageDtoModel.getTotalElement());
+        return booksPageDtoModel;
     }
 
 
@@ -74,7 +76,7 @@ public class AuthorsController {
         model.addAttribute("SLUG", SLUG);
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
         model.addAttribute("authorsListBook", authorService.getPageBookByAuthorSlag(SLUG, 0, 20));
-        ModelAndView modelAndView=new ModelAndView("/books/author");
+        ModelAndView modelAndView = new ModelAndView("/books/author");
         return "/books/author";
     }
 }
