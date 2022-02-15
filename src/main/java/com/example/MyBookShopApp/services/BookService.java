@@ -1,10 +1,10 @@
 package com.example.MyBookShopApp.services;
 
 
-import com.example.MyBookShopApp.data.Dto.BookDto;
+import com.example.MyBookShopApp.dtoModel.book.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
 import com.example.MyBookShopApp.erss.BookStoreApiWrongException;
-import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface BookService {
 
     boolean saveBook(Book book);
 
-    Page<BookDto> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort);
+    List<BookDtoModel> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort);
 
     List<Book> findBooksBySlugIn(String[] slugs);
 
@@ -40,8 +40,8 @@ public interface BookService {
 
     Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit);
 
-    Page<Book> getPageOfDateBooks(Integer offset, Integer limit, String fromDate, String dateTo);
+    List<BookDtoModel> getPageOfDateBooks(Integer offset, Integer limit, String fromDate, String dateTo);
 
-    Page<Book> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort);
+    List<BookDtoModel> getPageOfNameSortBooks(Integer offset, Integer limit, String nameSort);
 
 }

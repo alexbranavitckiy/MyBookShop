@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Dto.SearchWordDto;
+import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;

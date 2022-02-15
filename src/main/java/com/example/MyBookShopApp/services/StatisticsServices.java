@@ -1,8 +1,7 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.Dto.BookDto;
-import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.other.Statistics;
+import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Optional;
 
 public interface StatisticsServices {
 
-    List<Book> getPageOfNameSortStatisticsBooksByPopularAndMapping(Integer offset, Integer limit, String nameSort);
+    List<BookDtoModel>  getPageOfNameSortStatisticsBooksByPopularAndMapping(Integer offset, Integer limit, String nameSort);
 
     boolean addStatisticsAverageValue(int averageValue, String slug);
 

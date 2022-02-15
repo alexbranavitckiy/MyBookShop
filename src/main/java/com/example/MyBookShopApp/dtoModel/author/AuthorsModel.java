@@ -1,9 +1,9 @@
-package com.example.MyBookShopApp.data.Dto;
+package com.example.MyBookShopApp.dtoModel.author;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-public class AuthorDto {
+public class AuthorsModel {
 
     private String firstName;
 
@@ -11,14 +11,16 @@ public class AuthorDto {
 
     private String slug;
 
-
-    public AuthorDto(String firstName, String lastName, String slug) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.slug = slug;
+    @JsonProperty
+    public String authorsFullName() {
+        return firstName + " " + lastName;
     }
 
 
+    @Override
+    public String toString() {
+        return firstName + ' ' + lastName;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -43,6 +45,4 @@ public class AuthorDto {
     public void setSlug(String slug) {
         this.slug = slug;
     }
-
-
 }

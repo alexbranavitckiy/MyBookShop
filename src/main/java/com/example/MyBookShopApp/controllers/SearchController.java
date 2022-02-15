@@ -1,8 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Dto.BooksPageDto;
-import com.example.MyBookShopApp.data.Dto.SearchWordDto;
+import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
+import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
@@ -39,18 +39,18 @@ public class SearchController {
 
     @GetMapping("/search/page/{searchWord}")
     @ResponseBody
-    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
-                                          @RequestParam("limit") Integer limit,
-                                          @PathVariable(value = "searchWord", required = false)
+    public BooksPageDtoError getNextSearchPage(@RequestParam("offset") Integer offset,
+                                               @RequestParam("limit") Integer limit,
+                                               @PathVariable(value = "searchWord", required = false)
                                                   SearchWordDto searchWordDto, Model model) throws EmptySearchExceprtion {
         if (searchWordDto != null && !searchWordDto.getExample().equals("")) {
-            if (offset < 0) return new BooksPageDto();
+            if (offset < 0) return new BooksPageDtoError();
             Page<Book> bookPage = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResults",
                     bookPage.getContent());
             model.addAttribute("sizeSearch", bookPage.getTotalElements());
-            return new BooksPageDto(bookPage.getContent());
+            return new BooksPageDtoError(bookPage.getContent());
         } else throw new EmptySearchExceprtion("Search word error");
     }
 

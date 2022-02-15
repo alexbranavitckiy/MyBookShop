@@ -1,8 +1,9 @@
 package com.example.MyBookShopApp.services.Impl;
 
-import com.example.MyBookShopApp.data.Dto.BookDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.other.Statistics;
+import com.example.MyBookShopApp.dtoModel.book.BookDtoModel;
+import com.example.MyBookShopApp.dtoModel.convector.StatisticsConvectorImpl;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.StatisticsRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,20 +28,23 @@ public class StatisticServiceImpl implements StatisticsServices {
     private final MappingService mappingService;
     private final BookService bookService;
     private final BookRepository bookRepository;
+    private final StatisticsConvectorImpl statisticsConvector;
 
     @Autowired
-    private StatisticServiceImpl( BookRepository bookRepository,BookService bookService,MappingServiceImpl mappingService, StatisticsRepository statisticsRepository) {
+    private StatisticServiceImpl(StatisticsConvectorImpl statisticsConvector, BookRepository bookRepository, BookService bookService, MappingServiceImpl mappingService, StatisticsRepository statisticsRepository) {
         this.statisticsRepository = statisticsRepository;
-        this.bookRepository=bookRepository;
-        this.bookService=bookService;
+        this.statisticsConvector=statisticsConvector;
+        this.bookRepository = bookRepository;
+        this.bookService = bookService;
         this.mappingService = mappingService;
     }
 
     @Override
-    public List<Book> getPageOfNameSortStatisticsBooksByPopularAndMapping(Integer offset, Integer limit, String nameSort) {
+    public List<BookDtoModel> getPageOfNameSortStatisticsBooksByPopularAndMapping(Integer offset, Integer limit, String nameSort) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
-        return this.mappingService.mapStatisticsToBook(statisticsRepository.findAll(nextPage).getContent());
+        return statisticsRepository.findAll(nextPage).getContent().stream().map(statisticsConvector::convertToDtoWithBook).collect(Collectors.toList()).stream().map(x->x.getBook()).collect(Collectors.toList());
     }
+
 
     @Override
     public boolean addStatisticsAverageValue(int averageValue, String slugBook) {

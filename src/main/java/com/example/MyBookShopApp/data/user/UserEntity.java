@@ -1,7 +1,11 @@
 package com.example.MyBookShopApp.data.user;
 
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
+import com.example.MyBookShopApp.data.book.review.BookReviewLikeEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,17 +15,23 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(name = "hash",columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
-    @Column(columnDefinition = "TIMESTAMP NOT NULL")
+    @Column(name = "reg_time",columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime regTime;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(name = "balance",columnDefinition = "INT NOT NULL")
     private int balance;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(name = "name",columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @OneToMany(mappedBy = "userEntity")
+    private List<BookReviewLikeEntity> bookReviewLikeEntity;
+
+    @OneToMany(mappedBy = "userEntities")
+    private List<BookReviewEntity> bookReviewEntities;
 
     public int getId() {
         return id;
@@ -61,5 +71,21 @@ public class UserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<BookReviewLikeEntity> getBookReviewLikeEntity() {
+        return bookReviewLikeEntity;
+    }
+
+    public void setBookReviewLikeEntity(List<BookReviewLikeEntity> bookReviewLikeEntity) {
+        this.bookReviewLikeEntity = bookReviewLikeEntity;
+    }
+
+    public List<BookReviewEntity> getBookReviewEntities() {
+        return bookReviewEntities;
+    }
+
+    public void setBookReviewEntities(List<BookReviewEntity> bookReviewEntities) {
+        this.bookReviewEntities = bookReviewEntities;
     }
 }

@@ -1,10 +1,9 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.Dto.AuthorDto;
-import com.example.MyBookShopApp.data.Dto.BooksPageDto;
-import com.example.MyBookShopApp.data.book.Author;
-import com.example.MyBookShopApp.data.Dto.SearchWordDto;
+import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
+import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.dtoModel.author.AuthorsModel;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.AuthorService;
@@ -35,7 +34,7 @@ public class AuthorsController {
     }
 
     @ModelAttribute("authorsMap")
-    public Map<String, List<AuthorDto>> authorsMap() {
+    public Map<String, List<AuthorsModel>> authorsMap() {
         return authorService.getAllAuthorsMap();
     }
 
@@ -59,14 +58,14 @@ public class AuthorsController {
 
     @GetMapping("/books/author/SLUG{SLUG}")
     @ResponseBody
-    public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
-                                          @RequestParam("limit") Integer limit,
-                                          @PathVariable(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
-        if (offset < 0) return new BooksPageDto();
+    public BooksPageDtoError getNextSearchPage(@RequestParam("offset") Integer offset,
+                                               @RequestParam("limit") Integer limit,
+                                               @PathVariable(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {
+        if (offset < 0) return new BooksPageDtoError();
         model.addAttribute("author", authorService.getAuthorBySlug(SLUG));
         Page<Book> bookPage = authorService.getPageBookByAuthorSlag(SLUG, offset, limit);
         model.addAttribute("sizeSearch", bookPage.getTotalElements());
-        return new BooksPageDto(bookPage.getContent());
+        return new BooksPageDtoError(bookPage.getContent());
     }
 
 

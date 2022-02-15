@@ -1,20 +1,20 @@
-package com.example.MyBookShopApp.data.Dto;
+package com.example.MyBookShopApp.dtoModel;
 
 import com.example.MyBookShopApp.data.book.Book;
 
 import java.util.List;
 
-public class BooksPageDto {
+public class BooksPageDtoError {
 
     private Integer count;
     private List<Book> books;
 
-    public BooksPageDto(List<Book> books) {
+    public BooksPageDtoError(List<Book> books) {
         this.books = books;
         this.count = books.size();
     }
 
-    public BooksPageDto() {
+    public BooksPageDtoError() {
 
     }
 

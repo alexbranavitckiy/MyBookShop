@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data.Dto;
+package com.example.MyBookShopApp.dtoModel;
 
 public class SearchWordDto {
 

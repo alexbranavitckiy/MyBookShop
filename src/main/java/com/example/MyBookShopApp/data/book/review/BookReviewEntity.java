@@ -1,6 +1,8 @@
 package com.example.MyBookShopApp.data.book.review;
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.data.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,17 +17,24 @@ public class BookReviewEntity {
     private int id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
 
-    @Column(name = "user_id", columnDefinition = "INT NOT NULL")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private UserEntity userEntities;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
+
+    @OneToMany(mappedBy = "bookReviewEntity")
+    @JsonIgnore
+    private List<BookReviewLikeEntity> bookReviewLikeEntity;
 
     public int getId() {
         return id;
@@ -43,12 +52,12 @@ public class BookReviewEntity {
         this.book = book;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserEntity getUserEntities() {
+        return userEntities;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserEntities(UserEntity userEntities) {
+        this.userEntities = userEntities;
     }
 
     public LocalDateTime getTime() {
@@ -67,13 +76,11 @@ public class BookReviewEntity {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
-        return "BookReviewEntity{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", time=" + time +
-                ", text='" + text + '\'' +
-                '}';
+    public List<BookReviewLikeEntity> getBookReviewLikeEntity() {
+        return bookReviewLikeEntity;
+    }
+
+    public void setBookReviewLikeEntity(List<BookReviewLikeEntity> bookReviewLikeEntity) {
+        this.bookReviewLikeEntity = bookReviewLikeEntity;
     }
 }

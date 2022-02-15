@@ -1,18 +1,16 @@
 package com.example.MyBookShopApp.repository;
 
 
-import com.example.MyBookShopApp.data.Dto.BookDto;
+import com.example.MyBookShopApp.dtoModel.book.BookDto;
 import com.example.MyBookShopApp.data.book.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
-import com.example.MyBookShopApp.data.other.Statistics;
 import com.example.MyBookShopApp.data.other.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;

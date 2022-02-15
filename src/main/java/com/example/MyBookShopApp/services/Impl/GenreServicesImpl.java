@@ -1,11 +1,10 @@
 package com.example.MyBookShopApp.services.Impl;
 
-import com.example.MyBookShopApp.data.Dto.TreeGenreDto;
+import com.example.MyBookShopApp.dtoModel.TreeGenreDto;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.repository.GenreEntityRepository;
 import com.example.MyBookShopApp.services.GenreServices;
 import com.example.MyBookShopApp.services.MappingService;
-import org.modelmapper.internal.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

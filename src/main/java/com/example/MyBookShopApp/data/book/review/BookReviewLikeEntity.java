@@ -1,7 +1,12 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.example.MyBookShopApp.data.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "book_review_like")
@@ -11,20 +16,21 @@ public class BookReviewLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //идентификатор отзыва
-    @Column(name = "review_id", columnDefinition = "INT NOT NULL")
-    private int reviewId;
+    @ManyToOne
+    @JoinColumn(name = "review_Id")
+    @JsonIgnore
+    private BookReviewEntity bookReviewEntity;
 
-    @Column(name = "user_Id", columnDefinition = "INT NOT NULL")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private UserEntity userEntity;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
-
-
 
     public int getId() {
         return id;
@@ -34,20 +40,20 @@ public class BookReviewLikeEntity {
         this.id = id;
     }
 
-    public int getReviewId() {
-        return reviewId;
+    public BookReviewEntity getBookReviewEntity() {
+        return bookReviewEntity;
     }
 
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
+    public void setBookReviewEntity(BookReviewEntity bookReviewEntity) {
+        this.bookReviewEntity = bookReviewEntity;
     }
 
-    public int getUserId() {
-        return userId;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public LocalDateTime getTime() {

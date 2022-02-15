@@ -5,7 +5,6 @@ import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.other.Statistics;
 import com.example.MyBookShopApp.data.other.Tag;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -55,6 +54,7 @@ public class Book {
     @JsonIgnore
     private List<GenreEntity> genreEntities;
 
+    @JsonProperty
     public String authorsFullName() {
         return author.toString();
     }

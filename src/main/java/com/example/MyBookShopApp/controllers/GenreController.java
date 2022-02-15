@@ -1,9 +1,9 @@
 package com.example.MyBookShopApp.controllers;
 
 
-import com.example.MyBookShopApp.data.Dto.BooksPageDto;
-import com.example.MyBookShopApp.data.Dto.SearchWordDto;
-import com.example.MyBookShopApp.data.Dto.TreeGenreDto;
+import com.example.MyBookShopApp.dtoModel.BooksPageDtoError;
+import com.example.MyBookShopApp.dtoModel.SearchWordDto;
+import com.example.MyBookShopApp.dtoModel.TreeGenreDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.services.BookService;
@@ -63,14 +63,14 @@ public class GenreController {
 
     @GetMapping("/genres/page{SLUG}")
     @ResponseBody
-    public BooksPageDto getSLUGBook(@RequestParam("offset") Integer offset,
+    public BooksPageDtoError getSLUGBook(@RequestParam("offset") Integer offset,
                                     @RequestParam("limit") Integer limit,
                                     @PathVariable(value = "SLUG", required = false) String SLUG, Model model) {
         model.addAttribute("SLUG", SLUG);
         Page<Book> page = bookService.getPageBookBySlug(SLUG, offset, limit);
         model.addAttribute("flagButton", page.getTotalElements() >= (5 * offset));
         model.addAttribute("nameGenre", genreServices.getGenreByName(SLUG));
-        return new BooksPageDto(page.getContent());
+        return new BooksPageDtoError(page.getContent());
     }
 
 
