@@ -61,6 +61,8 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
     }
 
+
+
     @Override
     public Optional<Book> getBookBySlug(String slug) {
         return bookRepository.findBookBySlug(slug);
@@ -127,10 +129,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(nextPage).getContent().stream().map(bookConvertor::convertToDto).collect(Collectors.toList());
     }
 
-    public List<BookDtoModel> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
-        return bookRepository.findAll(nextPage).getContent().stream().map(bookConvertor::convertToDto).collect(Collectors.toList());
-    }
+
 
 }
 

@@ -45,10 +45,7 @@ public class AuthorsController {
         return "/authors/index";
     }
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
+
 
     @GetMapping(value = {"/authors/SLUG/"})
     public String getAuthors(@RequestParam(value = "SLUG", required = false) String SLUG, Model model) throws EmptySearchExceprtion {

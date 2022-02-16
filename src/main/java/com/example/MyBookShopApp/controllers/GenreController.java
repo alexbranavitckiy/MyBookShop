@@ -75,10 +75,7 @@ public class GenreController {
     }
 
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
+
 
     @ModelAttribute("sizeSearch")
     public String sizeList() {

@@ -33,7 +33,7 @@ public class BookReviewEntity {
     private String text;
 
     @OneToMany(mappedBy = "bookReviewEntity")
-    @JsonIgnore
+//    @JsonIgnore
     private List<BookReviewLikeEntity> bookReviewLikeEntity;
 
     public int getId() {

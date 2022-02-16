@@ -129,10 +129,7 @@ public class BookshopCartController {
         return new ArrayList<>();
     }
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
+
 
     private void cookieValue( String cartContents, String contents, String slug, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         if (cartContents != null && !cartContents.equals("")) {

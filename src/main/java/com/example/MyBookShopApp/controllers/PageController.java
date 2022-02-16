@@ -40,11 +40,12 @@ public class PageController {
     private final MappingService mappingService;
     private final StatisticsServices statisticsServices;
     private final TagConvectorImpl tagConvector;
-
+    private final BookReviewServices bookReviewServices;
 
     @Autowired
-    public PageController(TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
+    public PageController(BookReviewServices bookReviewServices,TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
         this.storage = storage;
+        this.bookReviewServices=bookReviewServices;
         this.tagConvector = tagConvector;
         this.statisticsServices = statisticsServices;
         this.mappingService = mappingService;
@@ -80,22 +81,8 @@ public class PageController {
         return new RecommendedBooksPageBookDtoModel(this.statisticsServices.getPageOfNameSortStatisticsBooksByPopularAndMapping(offset, limit, "coefficient"));
     }
 
-    //bookReview
-    //bookId: 1111
-    //text: rht
-//bookId: book-vlv-654
-//text: 233333333333333333
 
-    @PostMapping("/bookReview/save")
-    @ResponseBody
-    public Responseses saveNewbookReview(@RequestParam(value = "text", required = false) String text, @RequestParam(value = "bookId", required = false) String slug) {
 
-        System.out.println(text + "//" + slug);
-
-        Responseses response = new Responseses(true);
-
-        return response;
-    }
 
 
     @PostMapping("/books/{slug}/img/save")
@@ -147,13 +134,9 @@ public class PageController {
 
     @ModelAttribute("recommendedBooks")
     public List<BookDtoModel> recommendedBooks() {
-        return bookService.getPageOfNameSortBooksDto(0, 6, "priceOld");
+        return bookService.getPageOfNameSortBooks(0, 6, "priceOld");
     }
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
 
     @ModelAttribute("popularBooks")
     public List<BookDtoModel> popularBooks() {
@@ -162,7 +145,7 @@ public class PageController {
 
     @ModelAttribute("resentBooks")///+++
     public List<BookDtoModel> bestsellersBooks() {
-        return bookService.getPageOfNameSortBooksDto(0, 10, "pubDate");
+        return bookService.getPageOfNameSortBooks(0, 10, "pubDate");
     }
 
 

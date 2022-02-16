@@ -28,10 +28,7 @@ public class SearchController {
         return "search/index";
     }
 
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
+
 
     @ModelAttribute("sizeSearch")
     public String sizeList() {

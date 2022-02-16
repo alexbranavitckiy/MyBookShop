@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface BookService {
 
+
+
     BooksPageDtoModel getPageBookBySlug(String slug, int offset, int limit);
 
     BooksPageDtoModel getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit) ;
@@ -25,7 +27,7 @@ public interface BookService {
 
     boolean saveBook(Book book);
 
-    List<BookDtoModel> getPageOfNameSortBooksDto(Integer offset, Integer limit, String nameSort);
+
 
     List<Book> findBooksBySlugIn(String[] slugs);
 

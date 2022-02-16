@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers.globalController;
 
 
+import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.ui.Model;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice(annotations = {GlobalData.class})
 public class GlobalController {
+
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
+
 
     @ModelAttribute(name = "cartSize")
     public void cartSize(@CookieValue(name = "contents", required = false) String str, Model model) {
