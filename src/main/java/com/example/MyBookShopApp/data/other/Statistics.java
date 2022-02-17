@@ -46,7 +46,26 @@ public class Statistics {
     @ApiModelProperty("Book popularity P = B + 0,7*C + 0,4*K")
     private double coefficient;
 
-    private String mapStatistics;
+    @Column(name = "one")
+    @ApiModelProperty("grade statistics")
+    private int one;
+
+    @Column(name = "two")
+    @ApiModelProperty("grade statistics")
+    private int two;
+
+    @Column(name = "three")
+    @ApiModelProperty("grade statistics")
+    private int three;
+
+    @Column(name = "four")
+    @ApiModelProperty("grade statistics")
+    private int four;
+
+    @Column(name = "five")
+    @ApiModelProperty("grade statistics")
+    private int five;
+
 
     public void setByNumberB(double byNumberB) {
         this.byNumberB = byNumberB;
@@ -161,5 +180,66 @@ public class Statistics {
                 ", delayedCountK=" + delayedCountK +
                 ", coefficient=" + coefficient +
                 '}';
+    }
+
+    public int getOne() {
+        return one;
+    }
+
+    public void setOne(int one) {
+        this.one = one;
+    }
+
+    public void setOnePlus() {
+        ++this.one;
+    }
+
+
+    public int getTwo() {
+        return two;
+    }
+
+    public void setTwo(int two) {
+        this.two = two;
+    }
+
+    public void setTwoPlus() {
+        ++this.two;
+    }
+
+    public int getThree() {
+        return three;
+    }
+
+    public void setThree(int three) {
+        this.three = three;
+    }
+
+    public void setThreePlus() {
+        ++this.three;
+    }
+
+    public int getFour() {
+        return four;
+    }
+
+    public void setFour(int four) {
+        this.four = four;
+    }
+
+    public void setFourPlus() {
+        ++this.four;
+    }
+
+    public int getFive() {
+        return five;
+    }
+
+    public void setFive(int five) {
+        this.five = five;
+    }
+
+    public void setFivePlus() {
+        ++this.five;
     }
 }

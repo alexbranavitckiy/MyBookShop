@@ -33,7 +33,7 @@ public class StatisticServiceImpl implements StatisticsServices {
     @Autowired
     private StatisticServiceImpl(StatisticsConvectorImpl statisticsConvector, BookRepository bookRepository, BookService bookService, MappingServiceImpl mappingService, StatisticsRepository statisticsRepository) {
         this.statisticsRepository = statisticsRepository;
-        this.statisticsConvector=statisticsConvector;
+        this.statisticsConvector = statisticsConvector;
         this.bookRepository = bookRepository;
         this.bookService = bookService;
         this.mappingService = mappingService;
@@ -42,7 +42,7 @@ public class StatisticServiceImpl implements StatisticsServices {
     @Override
     public List<BookDtoModel> getPageOfNameSortStatisticsBooksByPopularAndMapping(Integer offset, Integer limit, String nameSort) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, nameSort));
-        return statisticsRepository.findAll(nextPage).getContent().stream().map(statisticsConvector::convertToDtoWithBook).collect(Collectors.toList()).stream().map(x->x.getBook()).collect(Collectors.toList());
+        return statisticsRepository.findAll(nextPage).getContent().stream().map(statisticsConvector::convertToDtoWithBook).collect(Collectors.toList()).stream().map(x -> x.getBook()).collect(Collectors.toList());
     }
 
 
@@ -51,7 +51,8 @@ public class StatisticServiceImpl implements StatisticsServices {
         Optional<Book> optionalStatistics = bookRepository.findBookBySlug(slugBook);
         if (optionalStatistics.isPresent() && averageValue > 0 && averageValue < 6) {
             optionalStatistics.get().getStatistics().countAverage(averageValue);
-            return statisticsRepository.save(optionalStatistics.get().getStatistics()) == statisticsRepository.save(optionalStatistics.get().getStatistics());
+            statisticsRepository.save(setStatisticsHistory(averageValue, optionalStatistics.get().getStatistics()));
+            return true;
         }
         return false;
     }
@@ -87,4 +88,33 @@ public class StatisticServiceImpl implements StatisticsServices {
         }
         return false;
     }
+
+    @Override
+    public Statistics setStatisticsHistory(int x, Statistics statistics) {
+        switch (x) {
+            case 1: {
+                statistics.setOnePlus();
+                break;
+            }
+            case 2: {
+                statistics.setTwoPlus();
+                break;
+            }
+            case 3: {
+                statistics.setThreePlus();
+                break;
+            }
+            case 4: {
+                statistics.setFourPlus();
+                break;
+            }
+            case 5: {
+                statistics.setFivePlus();
+                break;
+            }
+
+        }
+        return  statistics;
+    }
+
 }

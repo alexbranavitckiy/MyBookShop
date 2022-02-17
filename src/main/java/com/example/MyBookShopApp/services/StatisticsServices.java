@@ -20,4 +20,6 @@ public interface StatisticsServices {
     Optional<Statistics> getStatistics(String slug);
 
     boolean addStatisticsAverageValue(int averageValue, Optional<Statistics> statistics);
+
+    Statistics setStatisticsHistory(int x, Statistics statistics);
 }

@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.ResponseRating;
 import com.example.MyBookShopApp.data.Responseses;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.dtoModel.page.RecommendedBooksPageBookDtoModel;
 import com.example.MyBookShopApp.data.book.Book;
@@ -43,9 +44,9 @@ public class PageController {
     private final BookReviewServices bookReviewServices;
 
     @Autowired
-    public PageController(BookReviewServices bookReviewServices,TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
+    public PageController(BookReviewServices bookReviewServices, TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
         this.storage = storage;
-        this.bookReviewServices=bookReviewServices;
+        this.bookReviewServices = bookReviewServices;
         this.tagConvector = tagConvector;
         this.statisticsServices = statisticsServices;
         this.mappingService = mappingService;
@@ -67,8 +68,10 @@ public class PageController {
         if (bookOptional.isPresent()) {
             model.addAttribute("slugBook", bookOptional.get());
             Statistics statistics = bookOptional.get().getStatistics();
-            model.addAttribute("averageValue", statistics.getAverageValue()/statistics.getNumberAverage());
-            model.addAttribute("averageNumber",statistics.getNumberAverage());// NumberFormat.getInstance().format(
+            model.addAttribute("averageValue", statistics.getAverageValue() / statistics.getNumberAverage());
+            model.addAttribute("averageNumber", statistics.getNumberAverage());
+            model.addAttribute("valueLike", bookOptional.get().getBookReviewEntities().stream().mapToInt(BookReviewEntity::getLikeSum).sum());
+            model.addAttribute("valueSize", bookOptional.get().getBookReviewEntities().stream().mapToInt(x -> x.getBookReviewLikeEntity().size()).sum());
         }
         return "books/slug";
     }
@@ -80,9 +83,6 @@ public class PageController {
                                                                 @RequestParam("limit") Integer limit) {
         return new RecommendedBooksPageBookDtoModel(this.statisticsServices.getPageOfNameSortStatisticsBooksByPopularAndMapping(offset, limit, "coefficient"));
     }
-
-
-
 
 
     @PostMapping("/books/{slug}/img/save")

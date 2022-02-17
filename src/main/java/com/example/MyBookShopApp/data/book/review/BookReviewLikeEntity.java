@@ -19,7 +19,7 @@ public class BookReviewLikeEntity {
     @ManyToOne
     @JoinColumn(name = "review_Id")
     @JsonIgnore
-    private BookReviewEntity bookReviewEntity;
+    private BookReviewEntity bookReviewEntitys;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -47,11 +47,11 @@ public class BookReviewLikeEntity {
     }
 
     public BookReviewEntity getBookReviewEntity() {
-        return bookReviewEntity;
+        return bookReviewEntitys;
     }
 
     public void setBookReviewEntity(BookReviewEntity bookReviewEntity) {
-        this.bookReviewEntity = bookReviewEntity;
+        this.bookReviewEntitys = bookReviewEntity;
     }
 
     public UserEntity getUserEntity() {
@@ -93,4 +93,6 @@ public class BookReviewLikeEntity {
     public void setAverageValue(Double averageValue) {
         this.averageValue = averageValue;
     }
+
+
 }

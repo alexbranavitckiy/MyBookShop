@@ -2,17 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="reviewBlock">
     <div th:each="review:${slugBook.getBookReviewEntities()}" class="Comments">
+
         <div class="Comment">
             <div class="Comment-column Comment-column_pict">
                 <div class="Comment-avatar">
                 </div>
             </div>
-            <div class="Comment-column">
-                <header class="Comment-header">
+            <div class="Comment-column"  th:fragment="test_frag">
+                <header class="Comment-header" id="id_star_comment">
                     <div>
                         <strong class="Comment-title">Дмитрий Петров<span class="Comment-rating"><span
                                 class="Rating Rating_comment"><span class="Rating-stars"><span
-                                class="Rating-star Rating-star_view">
+                                th:classappend="${((review.getLikeSum()*100)/ review.getBookReviewLikeEntity().size())>5} ? Rating-star_view : Rating-star"   >
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>
@@ -20,7 +21,7 @@
                                           d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                                   </g>
                                 </g>
-                              </svg></span><span class="Rating-star Rating-star_view">
+                              </svg></span><span    th:classappend="${((review.getLikeSum()*100)/ review.getBookReviewLikeEntity().size())>35} ? Rating-star_view : Rating-star" >
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>
@@ -28,7 +29,7 @@
                                           d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                                   </g>
                                 </g>
-                              </svg></span><span class="Rating-star Rating-star_view">
+                              </svg></span><span     th:classappend="${((review.getLikeSum()*100)/ review.getBookReviewLikeEntity().size())>55} ? Rating-star_view : Rating-star" >
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>
@@ -36,7 +37,7 @@
                                           d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                                   </g>
                                 </g>
-                              </svg></span><span class="Rating-star Rating-star_view">
+                              </svg></span><span     th:classappend="${((review.getLikeSum()*100)/ review.getBookReviewLikeEntity().size())>65} ? Rating-star_view : Rating-star" >
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>
@@ -44,7 +45,7 @@
                                           d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                                   </g>
                                 </g>
-                              </svg></span><span class="Rating-star">
+                              </svg></span><span    th:classappend="${((review.getLikeSum()*100)/ review.getBookReviewLikeEntity().size())>75} ? Rating-star_view : Rating-star" >
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>
@@ -53,7 +54,7 @@
                                   </g>
                                 </g>
                               </svg></span></span></span></span>
-                        </strong><span class="Comment-date">17.04.2020 16:40</span>
+                        </strong><span th:text="${review.getTime()}" class="Comment-date">17.04.2020 16:40</span>
                     </div>
                 </header>
                 <div class="Comment-content">

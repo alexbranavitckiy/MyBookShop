@@ -44,7 +44,8 @@
                 <div class="Product-comments">
                     <div class="Product-comments-header">
                         <h3 class="Product-comments-title">Отзывы
-                        </h3><span class="Rating"><span class="Rating-stars"><span class="Rating-star Rating-star_view">
+                        </h3><span class="Rating"><span class="Rating-stars"><span
+                            th:classappend="${((valueLike*100)/valueSize)>5} ? Rating-star_view : Rating-star">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -52,7 +53,8 @@
                                 d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:classappend="${((valueLike*100)/valueSize)>15} ? Rating-star_view : Rating-star">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -60,7 +62,8 @@
                                 d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:classappend="${((valueLike*100)/valueSize)>35} ? Rating-star_view : Rating-star">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -68,7 +71,8 @@
                                 d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:classappend="${((valueLike*100)/valueSize)>55} ? Rating-star_view : Rating-star">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -76,7 +80,8 @@
                                 d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:classappend="${((valueLike*100)/valueSize)>75} ? Rating-star_view : Rating-star">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -84,7 +89,7 @@
                                 d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                         </g>
                       </g>
-                    </svg></span></span><span class="Rating-title">567 отзывов</span></span>
+                    </svg></span></span><span class="Rating-title" th:text="${slugBook.getBookReviewEntities().size()}">567 отзывов</span></span>
                     </div>
                 </div>
 

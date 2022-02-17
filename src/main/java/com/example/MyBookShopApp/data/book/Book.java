@@ -39,8 +39,12 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> bookReviewEntities;
 
+    public void getReviewStatisics() {
+        //int sum = this.bookReviewEntities.stream().mapToInt(x -> x.getBookReviewLikeEntity().size()).sum();
+    }
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "statistics_id", referencedColumnName = "id")
+    @JoinColumn(name = "statistics_id")
     @JsonIgnore
     private Statistics statistics;
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @Service
 public class BookReviewServicesImpl implements BookReviewServices {
@@ -29,13 +30,7 @@ public class BookReviewServicesImpl implements BookReviewServices {
     }
 
 
-    public void getSumLikeReview(int IdReview) {
-        BookReviewEntity bookReviewEntity = this.bookReviewEntityRepository.getOne(IdReview);
-        int like = bookReviewEntity.getBookReviewLikeEntity().stream().filter(x -> x.getValue() > 0).mapToInt(BookReviewLikeEntity::getValue).sum();
-        int notLike = bookReviewEntity.getBookReviewLikeEntity().stream().filter(x -> x.getValue() < 0).mapToInt(BookReviewLikeEntity::getValue).sum();
-        System.out.println(like);
-        System.out.println(notLike);
-    }
+
 
 
     @Override
@@ -55,6 +50,8 @@ public class BookReviewServicesImpl implements BookReviewServices {
     }
 
 
+
+
     @Override
     public boolean saveLikeReview(int value, String reviewId) {//reviewId id отзыва
         BookReviewEntity bookReviewEntity = bookReviewEntityRepository.getOne(Integer.parseInt(reviewId));
@@ -63,7 +60,6 @@ public class BookReviewServicesImpl implements BookReviewServices {
         bookReviewLikeEntity.setTime(LocalDateTime.now());
         bookReviewLikeEntity.setBookReviewEntity(bookReviewEntity);
         bookReviewLikeEntityRepository.save(bookReviewLikeEntity);
-        getSumLikeReview(Integer.parseInt(reviewId));
         return false;
     }
 

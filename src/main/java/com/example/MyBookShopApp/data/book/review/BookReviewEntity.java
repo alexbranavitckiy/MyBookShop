@@ -33,10 +33,9 @@ public class BookReviewEntity {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    @OneToMany(mappedBy = "bookReviewEntity")
+    @OneToMany(mappedBy = "bookReviewEntitys")
     //@JsonIgnore
     private List<BookReviewLikeEntity> bookReviewLikeEntity;
-
 
     @JsonProperty
     public int getLikeSum(){
