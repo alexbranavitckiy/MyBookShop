@@ -32,6 +32,12 @@ public class BookReviewLikeEntity {
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
 
+    @Column(name = "number_average")
+    private Integer numberAverage;
+
+    @Column(name = "number_value")
+    private Double averageValue;
+
     public int getId() {
         return id;
     }
@@ -70,5 +76,21 @@ public class BookReviewLikeEntity {
 
     public void setValue(short value) {
         this.value = value;
+    }
+
+    public Integer getNumberAverage() {
+        return numberAverage;
+    }
+
+    public void setNumberAverage(Integer numberAverage) {
+        this.numberAverage = numberAverage;
+    }
+
+    public Double getAverageValue() {
+        return averageValue;
+    }
+
+    public void setAverageValue(Double averageValue) {
+        this.averageValue = averageValue;
     }
 }

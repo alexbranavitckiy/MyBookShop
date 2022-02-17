@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.data.book.review;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,8 +34,19 @@ public class BookReviewEntity {
     private String text;
 
     @OneToMany(mappedBy = "bookReviewEntity")
-//    @JsonIgnore
+    //@JsonIgnore
     private List<BookReviewLikeEntity> bookReviewLikeEntity;
+
+
+    @JsonProperty
+    public int getLikeSum(){
+        return  this.bookReviewLikeEntity.stream().filter(x -> x.getValue() > 0).mapToInt(BookReviewLikeEntity::getValue).sum();
+    }
+
+    @JsonProperty
+    public int getNotLikeSum(){
+        return  this.bookReviewLikeEntity.stream().filter(x -> x.getValue() < 0).mapToInt(BookReviewLikeEntity::getValue).sum();
+    }
 
     public int getId() {
         return id;

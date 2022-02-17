@@ -24,9 +24,9 @@ public class ReviewAndLikeController {
     private final BookReviewServices bookReviewServices;
 
     @Autowired
-    public ReviewAndLikeController(BookReviewServices bookReviewServices,TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
+    public ReviewAndLikeController(BookReviewServices bookReviewServices, TagConvectorImpl tagConvector, StatisticsServices statisticsServices, MappingService mappingService, ResourceStorage storage, BookService bookService, TagService tagService) {
         this.storage = storage;
-        this.bookReviewServices=bookReviewServices;
+        this.bookReviewServices = bookReviewServices;
         this.tagConvector = tagConvector;
         this.statisticsServices = statisticsServices;
         this.mappingService = mappingService;
@@ -37,20 +37,19 @@ public class ReviewAndLikeController {
     @PostMapping("/bookReview/save")
     @ResponseBody// rewrite!
     public Responseses saveNewbookReview(@RequestParam(value = "text", required = false) String text, @RequestParam(value = "bookId", required = false) String slug) {
-        bookReviewServices.saveReview(text,slug);
+        bookReviewServices.saveReview(text, slug);
         Responseses response = new Responseses(true);
         return response;
     }
 
-    @PostMapping("/bookReview/like")
+
+    @PostMapping("rateBookReview/like")
     @ResponseBody// rewrite!
-    public Responseses savelikeReview(@RequestParam(value = "text", required = false) String text, @RequestParam(value = "bookId", required = false) String slug) {
-        bookReviewServices.saveReview(text,slug);
+    public Responseses savelikeReview(@RequestParam(value = "value", required = false) int value, @RequestParam(value = "reviewid", required = false) String reviewid) {
+        bookReviewServices.saveLikeReview(value, reviewid);
         Responseses response = new Responseses(true);
         return response;
     }
-
-
 
 
 }

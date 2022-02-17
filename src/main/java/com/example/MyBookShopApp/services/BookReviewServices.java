@@ -4,5 +4,5 @@ public interface BookReviewServices {
 
     boolean saveReview(String text, String slug);
 
-    boolean saveLikeReview(String text, String slug,int value);
+    boolean saveLikeReview(int value, String reviewId);
 }

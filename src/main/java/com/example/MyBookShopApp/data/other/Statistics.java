@@ -87,9 +87,8 @@ public class Statistics {
     }
 
     public void countAverage(int grade) {
-        numberAverage = numberAverage + 1;
-        this.averageValue=this.averageValue+grade;
-        this.averageValue = this.averageValue  / numberAverage;
+        ++this.numberAverage;
+        this.setAverageValue((this.averageValue + grade));
     }
 
     private void count() {

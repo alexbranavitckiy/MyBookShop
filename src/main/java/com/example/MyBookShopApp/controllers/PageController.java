@@ -67,8 +67,8 @@ public class PageController {
         if (bookOptional.isPresent()) {
             model.addAttribute("slugBook", bookOptional.get());
             Statistics statistics = bookOptional.get().getStatistics();
-            model.addAttribute("averageValue", statistics.getAverageValue());
-            model.addAttribute("averageNumber", NumberFormat.getInstance().format(statistics.getNumberAverage()));
+            model.addAttribute("averageValue", statistics.getAverageValue()/statistics.getNumberAverage());
+            model.addAttribute("averageNumber",statistics.getNumberAverage());// NumberFormat.getInstance().format(
         }
         return "books/slug";
     }

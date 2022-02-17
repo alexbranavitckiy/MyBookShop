@@ -11,9 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.text.NumberFormat;
 import java.util.Optional;
 
 @Controller
@@ -21,8 +18,6 @@ public class EstimatesRatingController {
 
     private final StatisticsServices statisticsServices;
     private final BookService bookService;
-
-
 
 
     @Autowired
@@ -42,7 +37,9 @@ public class EstimatesRatingController {
         if (bookOptional.isPresent()) {
             responseRating.setResult(true);
             Statistics statistics = bookOptional.get().getStatistics();
-            responseRating.setAverageValue(statistics.getAverageValue());
+            if (statistics.getAverageValue() != 0) {
+                responseRating.setAverageValue(statistics.getAverageValue()/statistics.getNumberAverage());
+            } else responseRating.setAverageValue(1d);
             responseRating.setNumberAverage(statistics.getNumberAverage());
         } else responseRating.setResult(false);
         return responseRating;
