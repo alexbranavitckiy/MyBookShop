@@ -84,7 +84,11 @@
                             </div>
                             <div class="Cart-buttons">
                                 <div class="Cart-btn">
-                                    <button     th:attr="data-bookid = ${'cart/postponed/'+book.slug}" class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1133]"><span class="btn-icon"><img src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span class="btn-content">Отложить</span>
+                                    <button th:attr="data-bookid = ${'cart/postponed/'+book.slug}"
+                                            class="btn btn_primary btn_outline" data-sendstatus="KEPT"
+                                            data-bookid="[1133]"><span class="btn-icon"><img
+                                            src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
+                                            class="btn-content">Отложить</span>
                                     </button>
                                 </div>
                                 <div class="Cart-btn">
@@ -111,13 +115,10 @@
                 </div>
             </div>
 
-            <div class="Cart-total">
-                <div class="Cart-block Cart-block_total">
-                    <strong class="Cart-title">Итого:
-                    </strong><span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
-                </div>
-                <div class="Cart-block"><a class="btn btn_success btn_md" href="/order.html">Купить</a>
-                </div>
+            <div class="Cart-block Cart-block_total">
+                <strong class="Cart-title">Итого:
+                </strong><span class="Cart-price" th:text="${bookPostponedPriseSum}">534 р.</span><span
+                    class="Cart-price_old" th:text="${bookPostponedPriseSumOld}">658 р.</span>
             </div>
         </form>
     </main>

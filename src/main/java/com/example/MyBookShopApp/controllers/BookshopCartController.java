@@ -1,6 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
 
+import com.example.MyBookShopApp.controllers.globalController.GlobalController;
+import com.example.MyBookShopApp.data.Responseses;
 import com.example.MyBookShopApp.dtoModel.SearchWordDto;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
@@ -25,13 +27,15 @@ import java.util.List;
 @Controller
 public class BookshopCartController {
 
+    private final GlobalController globalController;
     private final BookRepository bookRepository;
     private final ToolCartAndPostponedServices toolCartAndPostponedServices;
     private final RecommendedService recommendedService;
 
     @Autowired
-    public BookshopCartController(RecommendedService recommendedService, ToolCartAndPostponedServices toolCartAndPostponedServices, BookRepository bookRepository) {
+    public BookshopCartController(GlobalController globalController,RecommendedService recommendedService, ToolCartAndPostponedServices toolCartAndPostponedServices, BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+        this.globalController=globalController;
         this.recommendedService = recommendedService;
         this.toolCartAndPostponedServices = toolCartAndPostponedServices;
     }
@@ -64,7 +68,7 @@ public class BookshopCartController {
     @PostMapping("/changeBookStatus/postponed/remove/{slug}")
     public String handleRemoveBookFromPostponedRequest(@PathVariable("slug") String slug,
                                                        @CookieValue(name = "cartPostponedSize", required = false) String cartPostponedSize,
-                                                                                       @CookieValue(name = "contentsPostponed", required = false) String contentsPostponed, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
+                                                       @CookieValue(name = "contentsPostponed", required = false) String contentsPostponed, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         removeCartPostmone(slug, cartPostponedSize, contentsPostponed, response, model);
         return "redirect:/books/cart";
     }
@@ -75,9 +79,14 @@ public class BookshopCartController {
                                 Model model) {
         if (contentsPostponed == null || contentsPostponed.equals("")) {
             model.addAttribute("isPostponedEmpty", true);
+            model.addAttribute("bookPostponedPriseSum", 0);
+            model.addAttribute("bookPostponedPriseSumOld", 0);
         } else {
+            List<Book> books = bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(contentsPostponed));
             model.addAttribute("isPostponedEmpty", false);
-            model.addAttribute("bookPostponed", bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(contentsPostponed)));
+            model.addAttribute("bookPostponed", books);
+            model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());
+            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::getPrice).sum());
         }
         return "postponed";
     }
@@ -95,9 +104,15 @@ public class BookshopCartController {
                                     Model model) {
         if (cartContents == null || cartContents.equals("")) {
             model.addAttribute("isCartEmpty", true);
+            model.addAttribute("bookPostponedPriseSumOld", 0);
+            model.addAttribute("bookPostponedPriseSum", 0);
         } else {
+            List<Book> books = bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(cartContents));
             model.addAttribute("isCartEmpty", false);
-            model.addAttribute("bookCart", bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(cartContents)));
+            model.addAttribute("bookCart", books);
+            model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());
+            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::getPrice).sum());
+
         }
         return "cart";
     }
@@ -130,8 +145,7 @@ public class BookshopCartController {
     }
 
 
-
-    private void cookieValue( String cartContents, String contents, String slug, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
+    private void cookieValue(String cartContents, String contents, String slug, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         if (cartContents != null && !cartContents.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             if (cookieBooks.remove(slug)) {
@@ -153,7 +167,7 @@ public class BookshopCartController {
         model.addAttribute("priceCartOld", priceOld);
     }
 
-    private void eddCartPostmone(  String cartPostponedSize, String contentsPostponed, String slug, HttpServletResponse response) throws EmptySearchExceprtion {
+    private void eddCartPostmone(String cartPostponedSize, String contentsPostponed, String slug, HttpServletResponse response) throws EmptySearchExceprtion {
         if (contentsPostponed == null || contentsPostponed.equals("")) {
             response.addCookie(this.toolCartAndPostponedServices.defaultCartSize(cartPostponedSize, "cartPostponedSize"));
             response.addCookie(this.toolCartAndPostponedServices.SetCookie("/books", slug, "contentsPostponed"));
@@ -164,7 +178,7 @@ public class BookshopCartController {
         this.recommendedService.listener(slug, "K");
     }
 
-    private void eddCartSlug( String slug,  String cartContents,String contents, HttpServletResponse response) throws EmptySearchExceprtion {
+    private void eddCartSlug(String slug, String cartContents, String contents, HttpServletResponse response) throws EmptySearchExceprtion {
         if (cartContents == null || cartContents.equals("")) {
             response.addCookie(this.toolCartAndPostponedServices.defaultCartSize(contents, "contents"));
             response.addCookie(this.toolCartAndPostponedServices.SetCookie("/books", slug, "cartContents"));
@@ -175,7 +189,7 @@ public class BookshopCartController {
         this.recommendedService.listener(slug, "C");
     }
 
-    private void  removeCartPostmone(String slug, String cartPostponedSize, String contentsPostponed, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
+    private void removeCartPostmone(String slug, String cartPostponedSize, String contentsPostponed, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         if (contentsPostponed != null && !contentsPostponed.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(contentsPostponed.split("/")));
             if (cookieBooks.remove(slug) && cartPostponedSize != null) {
@@ -190,7 +204,7 @@ public class BookshopCartController {
         }
     }
 
-    private void removeCartSlug( String slug,String contents,String cartContents, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
+    private void removeCartSlug(String slug, String contents, String cartContents, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         if (cartContents != null && !cartContents.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             if (cookieBooks.remove(slug) && contents != null) {

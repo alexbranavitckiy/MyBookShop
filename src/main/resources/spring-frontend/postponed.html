@@ -87,7 +87,7 @@
                                     <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK"
                                             th:attr="data-bookid = ${'postponed/by/'+book.slug}"
                                             data-bookid="[1133]"><span class="btn-icon"><img
-                                            src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
+                                            src="/assets/img/icons/shopping-basket.svg" alt="trash.svg"/></span><span
                                             class="btn-content">Купить</span>
                                     </button>
                                 </div>
@@ -106,9 +106,7 @@
                             </div>
                             <div class="Cart-price Cart-price_old" th:text="${book.priceOld}">150 р.
                             </div>
-                            <!--   <div class="Cart-price" th:text="${book.discountPrice()}">100 р.
-                               </div>-->
-                            <div class="Cart-sale" th:text="${'-' + book.price * 100}">-30%
+                            <div class="Cart-sale" th:text="${'-' + book.price }">-30%
                             </div>
                         </div>
                     </div>
@@ -118,7 +116,7 @@
             <div class="Cart-total">
                 <div class="Cart-block Cart-block_total">
                     <strong class="Cart-title">Итого:
-                    </strong><span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
+                    </strong><span class="Cart-price" th:text="${bookPostponedPriseSum}">534 р.</span><span class="Cart-price_old" th:text="${bookPostponedPriseSumOld}">658 р.</span>
                 </div>
                 <div class="Cart-block"><a class="btn btn_success btn_md" href="/order.html">Купить</a>
                 </div>
