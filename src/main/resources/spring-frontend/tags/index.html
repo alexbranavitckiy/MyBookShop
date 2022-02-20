@@ -59,7 +59,7 @@
                 <div class="Cards Cards_refresh">
                     <div class="Cards Cards_search Cards_refresh">
                         <div class="Card" th:each="book : ${tagBooks}">
-                            <div class="Card-picture"><a href="#"><img th:src="${book.image}"   th:href="@{'/books/'+${book.slug}}"
+                            <div class="Card-picture"><a th:href="@{'/books/'+${book.slug}}"><img th:src="${book.image}"   th:href="@{'/books/'+${book.slug}}"
                                                                        src="/assets/img/content/main/card.jpg"
                                                                        alt="card.jpg"/></a>
                             </div>

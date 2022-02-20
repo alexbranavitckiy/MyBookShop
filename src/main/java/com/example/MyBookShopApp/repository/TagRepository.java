@@ -16,8 +16,7 @@ public interface TagRepository extends JpaRepository<Tag, Integer>, PagingAndSor
     @Query("from Tag order by listBook.size desc")
     List<Tag> getTagsOrderByDesc();
 
-   Optional<Tag> getTagById(Integer id);
-
+    Optional<Tag> getTagById(Integer id);
 
 
 }

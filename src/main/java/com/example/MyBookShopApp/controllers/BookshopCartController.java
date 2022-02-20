@@ -49,7 +49,7 @@ public class BookshopCartController {
                                              HttpServletResponse response,
                                              Model model) throws EmptySearchExceprtion {
         removeCartSlug(slug, contentsCartSize, cartContents, response, model);
-        eddCartPostmone(cartPostponedSize, contentsPostponed, slug, response);
+        eddCartPostmone(cartPostponedSize, contentsPostponed, slug, response,model);
         return "postponed";
     }
 
@@ -60,7 +60,7 @@ public class BookshopCartController {
                                                          @CookieValue(name = "contentsPostponed", required = false) String contentsPostponed, @CookieValue(name = "cartContents", required = false) String cartContents,
                                                          @CookieValue(name = "contents", required = false) String contents, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
         removeCartPostmone(slug, cartPostponedSize, contentsPostponed, response, model);
-        eddCartSlug(slug, cartContents, contents, response);
+        eddCartSlug(slug, cartContents, contents, response,model);
         return "redirect:/books/cart";
     }
 
@@ -95,7 +95,7 @@ public class BookshopCartController {
     public String handleChangeBookStatusPostponed(@PathVariable("slug") String slug,
                                                   @CookieValue(name = "cartPostponedSize", required = false) String cartPostponedSize,
                                                   @CookieValue(name = "contentsPostponed", required = false) String contentsPostponed, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
-        eddCartPostmone(cartPostponedSize, contentsPostponed, slug, response);
+        eddCartPostmone(cartPostponedSize, contentsPostponed, slug, response,model);
         return "redirect:/books/" + slug;
     }
 
@@ -130,7 +130,7 @@ public class BookshopCartController {
     public String handleChangeBookStatus(@PathVariable("slug") String slug,
                                          @CookieValue(name = "cartContents", required = false) String cartContents,
                                          @CookieValue(name = "contents", required = false) String contents, HttpServletResponse response, Model model) throws EmptySearchExceprtion {
-        eddCartSlug(slug, cartContents, contents, response);
+        eddCartSlug(slug, cartContents, contents, response,model);
         return "redirect:/books/" + slug;
     }
 
@@ -167,24 +167,31 @@ public class BookshopCartController {
         model.addAttribute("priceCartOld", priceOld);
     }
 
-    private void eddCartPostmone(String cartPostponedSize, String contentsPostponed, String slug, HttpServletResponse response) throws EmptySearchExceprtion {
+    private void eddCartPostmone(String cartPostponedSize, String contentsPostponed, String slug, HttpServletResponse response,Model model) throws EmptySearchExceprtion {
         if (contentsPostponed == null || contentsPostponed.equals("")) {
             response.addCookie(this.toolCartAndPostponedServices.defaultCartSize(cartPostponedSize, "cartPostponedSize"));
             response.addCookie(this.toolCartAndPostponedServices.SetCookie("/books", slug, "contentsPostponed"));
         } else if (!contentsPostponed.contains(slug)) {
             response.addCookie(this.toolCartAndPostponedServices.addSlugCart(contentsPostponed, slug, "contentsPostponed", "/books"));
-            response.addCookie(this.toolCartAndPostponedServices.plusSizeCart(cartPostponedSize, "cartPostponedSize"));
+            response.addCookie(this.toolCartAndPostponedServices.plusSizeCart(cartPostponedSize, "cartPostponedSize",model));
         }
         this.recommendedService.listener(slug, "K");
     }
 
-    private void eddCartSlug(String slug, String cartContents, String contents, HttpServletResponse response) throws EmptySearchExceprtion {
+
+    @ModelAttribute(name = "cartSize")
+    public void cartSize(@CookieValue(name = "contents", required = false) String str, Model model) {
+        if (str != null) model.addAttribute("cartSize", str);
+        else model.addAttribute("cartSize", "0");
+    }
+
+    private void eddCartSlug(String slug, String cartContents, String contents, HttpServletResponse response,Model model) throws EmptySearchExceprtion {
         if (cartContents == null || cartContents.equals("")) {
             response.addCookie(this.toolCartAndPostponedServices.defaultCartSize(contents, "contents"));
             response.addCookie(this.toolCartAndPostponedServices.SetCookie("/books", slug, "cartContents"));
         } else if (!cartContents.contains(slug)) {
             response.addCookie(this.toolCartAndPostponedServices.addSlugCart(cartContents, slug, "cartContents", "/books"));
-            response.addCookie(this.toolCartAndPostponedServices.plusSizeCart(contents, "contents"));
+            response.addCookie(this.toolCartAndPostponedServices.plusSizeCart(contents, "contents",model));
         }
         this.recommendedService.listener(slug, "C");
     }

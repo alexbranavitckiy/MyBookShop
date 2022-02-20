@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
 
@@ -16,6 +17,6 @@ public interface ToolCartAndPostponedServices {
 
      Cookie minesSizeCart(String cookie, String nameCookie) throws EmptySearchExceprtion;
 
-     Cookie plusSizeCart(String cookie, String nameCookie) throws EmptySearchExceprtion;
+     Cookie plusSizeCart(String cookie, String nameCookie, Model model) throws EmptySearchExceprtion;
 
 }

@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.services.ToolCartAndPostponedServices;
 import com.sun.istack.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class ToolCartAndPostponedServicesImpl implements ToolCartAndPostponedSer
     }
 
 
-
     public Cookie SetCookie(String path, String slug, String name) {
         Cookie cookie = new Cookie(name, slug);
         cookie.setPath(path);
@@ -43,11 +43,13 @@ public class ToolCartAndPostponedServicesImpl implements ToolCartAndPostponedSer
         return cookieCont;
     }
 
-    public Cookie plusSizeCart(String cookie, String nameCookie) throws EmptySearchExceprtion {
+    public Cookie plusSizeCart(String cookie, String nameCookie, Model model) throws EmptySearchExceprtion {
         if (cookie != null && !cookie.equals("")) {
             Cookie cookieCont;
-            cookieCont = new Cookie(nameCookie, String.valueOf(Integer.parseInt(cookie) + 1));
+            int size = Integer.parseInt(cookie) + 1;
+            cookieCont = new Cookie(nameCookie, String.valueOf(size));
             cookieCont.setPath("/");
+            model.addAttribute("cartSize", size);
             return cookieCont;
         }
         throw new EmptySearchExceprtion("Error type in  ToolCartAndPostponedServices method plusSizeCart");
