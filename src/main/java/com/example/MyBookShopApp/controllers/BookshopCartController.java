@@ -86,7 +86,7 @@ public class BookshopCartController {
             model.addAttribute("isPostponedEmpty", false);
             model.addAttribute("bookPostponed", books);
             model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());
-            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::getPrice).sum());
+            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::dicsountPrice).sum());
         }
         return "postponed";
     }
@@ -111,7 +111,7 @@ public class BookshopCartController {
             model.addAttribute("isCartEmpty", false);
             model.addAttribute("bookCart", books);
             model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());
-            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::getPrice).sum());
+            model.addAttribute("bookPostponedPriseSum", books.stream().mapToDouble(Book::dicsountPrice).sum());
 
         }
         return "cart";
