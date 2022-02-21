@@ -8,6 +8,7 @@ import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.erss.EmptySearchExceprtion;
 import com.example.MyBookShopApp.myAnnotations.GlobalData;
 import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.Impl.RecommendedService;
 import com.example.MyBookShopApp.services.ToolCartAndPostponedServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,14 @@ import java.util.List;
 @Controller
 public class BookshopCartController {
 
-    private final GlobalController globalController;
-    private final BookRepository bookRepository;
+
+    private final BookService bookService;
     private final ToolCartAndPostponedServices toolCartAndPostponedServices;
     private final RecommendedService recommendedService;
 
     @Autowired
-    public BookshopCartController(GlobalController globalController,RecommendedService recommendedService, ToolCartAndPostponedServices toolCartAndPostponedServices, BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-        this.globalController=globalController;
+    public BookshopCartController(RecommendedService recommendedService, ToolCartAndPostponedServices toolCartAndPostponedServices, BookService bookService) {
+        this.bookService = bookService;
         this.recommendedService = recommendedService;
         this.toolCartAndPostponedServices = toolCartAndPostponedServices;
     }
@@ -82,7 +82,7 @@ public class BookshopCartController {
             model.addAttribute("bookPostponedPriseSum", 0);
             model.addAttribute("bookPostponedPriseSumOld", 0);
         } else {
-            List<Book> books = bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(contentsPostponed));
+            List<Book> books = bookService.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(contentsPostponed));
             model.addAttribute("isPostponedEmpty", false);
             model.addAttribute("bookPostponed", books);
             model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());
@@ -107,7 +107,7 @@ public class BookshopCartController {
             model.addAttribute("bookPostponedPriseSumOld", 0);
             model.addAttribute("bookPostponedPriseSum", 0);
         } else {
-            List<Book> books = bookRepository.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(cartContents));
+            List<Book> books = bookService.findBooksBySlugIn(this.toolCartAndPostponedServices.generateCookieSlugsToSlugs(cartContents));
             model.addAttribute("isCartEmpty", false);
             model.addAttribute("bookCart", books);
             model.addAttribute("bookPostponedPriseSumOld", books.stream().mapToInt(Book::getPriceOld).sum());

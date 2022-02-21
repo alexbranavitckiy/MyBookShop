@@ -8,7 +8,7 @@
                                                        alt="card.jpg"/></a>
             </div>
             <div class="Card-content">
-                <strong class="Card-title"><a href="#" th:text="${book.title}"></a>
+                <strong class="Card-title"><a th:href="@{'/books/'+${book.slug}}" th:text="${book.title}"></a>
                 </strong>
                 <div class="Card-description" th:text="${book.author}"><p th:text="${book.pubDate}"></p>
 
